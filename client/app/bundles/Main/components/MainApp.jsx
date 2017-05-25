@@ -1,6 +1,6 @@
+// import SimpleChatBot from '../components/SimpleChatBot/SimpleChatBot'
+import SentimentBot from '../components/SentimentBot/SentimentBot'
 import ChatBot from 'react-simple-chatbot';
-//
-
 
 // ReactDOM.render(
 //   <div>
@@ -12,7 +12,7 @@ import ChatBot from 'react-simple-chatbot';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default class HelloWorld extends React.Component {
+export default class MainApp extends React.Component {
   // static propTypes = {
   //   name: PropTypes.string.isRequired, // this is passed from the Rails view
   // };
@@ -24,7 +24,8 @@ export default class HelloWorld extends React.Component {
   constructor(props, _railsContext) {
     super(props);
     this.state = {
-      steps: this.props.steps
+      steps: this.props.steps,
+      response: '',
     };
 
     // How to set initial state in ES6 class syntax
@@ -40,24 +41,8 @@ export default class HelloWorld extends React.Component {
     return (
         <div>
           <ChatBot steps={this.state.steps} />
+          <SentimentBot response={this.state.response} />
         </div>
-      // <div>
-      //   <h3>
-      //     Hello, {this.state.name}!
-      //   </h3>
-      //   <hr />
-      //   <form >
-      //     <label htmlFor="name">
-      //       Say hello to:
-      //     </label>
-      //     <input
-      //       id="name"
-      //       type="text"
-      //       value={this.state.name}
-      //       onChange={(e) => this.updateName(e.target.value)}
-      //     />
-      //   </form>
-      // </div>
     );
   }
 }
