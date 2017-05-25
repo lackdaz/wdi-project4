@@ -1,38 +1,6 @@
 import ChatBot from 'react-simple-chatbot';
 //
-const steps = [
-  {
-    id: '0',
-    message: 'Welcome!!',
-    trigger: '1',
-  },
-  {
-    id: '1',
-    message: 'I am Raymond. What is your name?',
-    trigger: '2',
-  },
-  {
-    id: '2',
-    user: true,
-    trigger: '3',
-  },
-  {
-    id: '3',
-    message: 'Hello {previousValue}!',
-    end: true,
-    trigger: '6'
-  },
-  {
-    id: '5',
-    message: 'You are so smart!',
-    end: true,
-  },
-  {
-    id: '6',
-    message: 'Bye!',
-    end: true,
-  },
-];
+
 
 // ReactDOM.render(
 //   <div>
@@ -55,6 +23,9 @@ export default class HelloWorld extends React.Component {
    */
   constructor(props, _railsContext) {
     super(props);
+    this.state = {
+      steps: this.props.steps
+    };
 
     // How to set initial state in ES6 class syntax
     // https://facebook.github.io/react/docs/reusable-components.html#es6-classes
@@ -68,7 +39,7 @@ export default class HelloWorld extends React.Component {
   render() {
     return (
         <div>
-          <ChatBot steps={steps} />
+          <ChatBot steps={this.state.steps} />
         </div>
       // <div>
       //   <h3>
