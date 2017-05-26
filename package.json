@@ -8,8 +8,7 @@
   },
   "scripts": {
     "postinstall": "cd client && yarn install",
-    "rails-server": "echo 'visit http://localhost:3000/chat_bot' && foreman start -f Procfile.dev",
+    "rails-server": "echo 'visit http://localhost:3000/hello_world' && foreman start -f Procfile.dev",
     "test": "rspec"
-  },
-  "dependencies": {}
+  }
 }
