@@ -5,6 +5,7 @@
 const webpack = require('webpack');
 const pathLib = require('path');
 
+
 const devBuild = process.env.NODE_ENV !== 'production';
 
 const config = {
@@ -44,6 +45,9 @@ const config = {
         exclude: /node_modules/,
       },
     ],
+  },
+  node: {
+    fs: "empty",
   },
 };
 
