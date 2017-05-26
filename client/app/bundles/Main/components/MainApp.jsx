@@ -3,7 +3,7 @@
 import SentimentBot from '../components/SentimentBot/SentimentBot'
 import ChatBot from 'react-simple-chatbot'
 import { Wit, log } from 'node-wit'
-var watson = require('watson-developer-cloud')
+// var watson = require('watson-developer-cloud')
 
 // ReactDOM.render(
 //   <div>
@@ -41,22 +41,22 @@ export default class MainApp extends React.Component {
   // };
 
   componentDidMount () {
-    var tone_analyzer = watson.tone_analyzer({
-      username: 'zkYEACBbE6Ws',
-      password: 'bffbcc36-f252-4380-ac1a-35e46b935dd9',
-      version: 'v3',
-      version_date: '2016-05-19'
-    })
-
-    tone_analyzer.tone({
-      text: 'A word is dead when it is said, some say. Emily Dickinson'
-    }, function (err, tone) {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log(JSON.stringify(tone, null, 2))
-      }
-    })
+    // var tone_analyzer = watson.tone_analyzer({
+    //   username: 'zkYEACBbE6Ws',
+    //   password: 'bffbcc36-f252-4380-ac1a-35e46b935dd9',
+    //   version: 'v3',
+    //   version_date: '2016-05-19'
+    // })
+    //
+    // tone_analyzer.tone({
+    //   text: 'A word is dead when it is said, some say. Emily Dickinson'
+    // }, function (err, tone) {
+    //   if (err) {
+    //     console.log(err)
+    //   } else {
+    //     console.log(JSON.stringify(tone, null, 2))
+    //   }
+    // })
 
     // const client = new Wit({accessToken: 'H5SI45AK4BQA5YLWNYST576YCAI7JTSJ'})
     // client.message('what is the weather in London?', {})
