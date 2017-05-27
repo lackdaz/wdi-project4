@@ -5,6 +5,13 @@ import ChatBot from 'react-simple-chatbot'
 import { Wit, log } from 'node-wit'
 // var watson = require('watson-developer-cloud')
 
+// ReactDOM.render(
+//   <div>
+//     <ChatBot steps={steps} />
+//   </div>,
+//   // document.getElementById('root')
+// );
+
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -26,7 +33,7 @@ export default class MainApp extends React.Component {
       sentiment: '',
       intent: '',
       previousTrigger: '',
-      nextTrigger: ''
+      nextTrigger: '',
     }
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
   }
@@ -76,13 +83,13 @@ export default class MainApp extends React.Component {
     //   })
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
   // make new step
     let newStep = {
-      'id': '',
-      'message': 'Bye!',
-      'end': true
-    }
+        "id": '',
+        "message": "Bye!",
+        "end": true
+      }
 
     let results = this.state.steps
     console.log(results[results.length])
@@ -97,87 +104,7 @@ export default class MainApp extends React.Component {
     // const { name, gender, age } = this.state;
     return (
       <div>
-        <ChatBot userDelay={10} botDelay={10} steps={[
-          {
-            id: 'onboarding-1',
-            message: 'Welcome to GA Postal Services!',
-            trigger: 'onboarding-2'
-          },
-          {
-            id: 'onboarding-2',
-            message: 'How may I address you?',
-            trigger: 'name'
-          },
-          {
-            id: 'intent-1',
-            message: 'Hi {previousValue}!',
-            trigger: 'intent-2'
-          },
-          {
-            id: 'intent-2',
-            options: [
-                { value: 'Rates', label: 'Rates', trigger: '' },
-                { value: 'Check Status', label: 'Check Status', trigger: 'status-1' },
-                { value: 'Others', label: 'Others', trigger: 'others-1'}
-            ]
-          },
-          {
-            id: 'others-1',
-            message: 'I am all ears',
-            trigger: 'intent'
-          },
-          {
-            id: 'gender',
-            options: [
-                { value: 'male', label: 'Male', trigger: '5' },
-                { value: 'female', label: 'Female', trigger: '5' }
-            ]
-          },
-          {
-            id: 'age',
-            user: true,
-            trigger: '7',
-            validator: (value) => {
-              if (isNaN(value)) {
-                return 'value must be a number'
-              } else if (value < 0) {
-                return 'value must be positive'
-              } else if (value > 120) {
-                return `${value}? Come on!`
-              }
-              value = 15
-              return true
-            }
-          },
-          {
-            id: 'intent',
-            user: true,
-            trigger: 'end-message',
-            validator: (value) => {
-              if (!value) return 'Please try again!'
-              else {
-                return true
-              }
-            }
-          },
-          {
-            id: 'name',
-            user: true,
-            trigger: 'intent-1',
-            validator: (value) => {
-              if (!value) {
-                return 'Please try again'
-              }
-              return true
-            }
-          },
-          {
-            id: 'end-message',
-            message: 'Thanks! Your data was submitted successfully!',
-            end: true
-          }
-        ]}
-        />
+        <ChatBot userDelay= {10} botDelay={10} steps={this.state.steps} />
         <SentimentBot response={this.state.response} />
       </div>
     )

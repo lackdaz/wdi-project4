@@ -11,5 +11,7 @@
     "rails-server": "echo 'visit http://localhost:3000/chat_bot' && foreman start -f Procfile.dev",
     "test": "rspec"
   },
-  "dependencies": {}
+  "dependencies": {
+    "npm-check-updates": "^2.11.2"
+  }
 }
