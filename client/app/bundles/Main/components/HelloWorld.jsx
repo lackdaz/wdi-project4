@@ -6,12 +6,12 @@ class Review extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      name: '',
-      gender: '',
-      age: '',
-      type: 'alien',
-    };
+    // this.state = {
+    //   name: '',
+    //   gender: '',
+    //   age: '',
+    //   type: 'alien',
+    // };
   }
 
   // componentDidUpdate() {
@@ -19,18 +19,19 @@ class Review extends Component {
   // }
 
   componentWillMount() {
-    console.log(this.props)
-    console.log(this.state)
+    // console.log(this.props)
+    // console.log(this.state)
 
     const { steps } = this.props;
-    console.log(steps);
+    // console.log(steps);
     const { name, gender, age } = steps;
 
-    this.setState({ name, gender, age });
+    // this.setState({ name, gender, age });
   }
 
   render() {
-    const { name, gender, age } = this.state;
+    // const { name, gender, age } = this.state;
+    const { name, gender, age } = this.props.steps
     // console.log(this.state)
     return (
       <div style={{ width: '100%' }}>
@@ -67,6 +68,16 @@ Review.defaultProps = {
 
 
 class SimpleForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: 'name from state',
+      // gender: '',
+      // age: '',
+      // type: 'alien',
+    };
+  }
 
   render() {
     return (
@@ -133,7 +144,7 @@ class SimpleForm extends Component {
           },
           {
             id: 'review',
-            component: <Review />,
+            component: <Review name={this.state.name}/>,
             asMessage: true,
             trigger: 'update',
           },
@@ -187,7 +198,7 @@ class SimpleForm extends Component {
             id: 'end-message',
             message: 'Thanks! Your data was submitted successfully!',
             end: true,
-          },
+          }
         ]}
       />
     );

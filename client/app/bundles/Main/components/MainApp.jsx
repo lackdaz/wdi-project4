@@ -36,61 +36,24 @@ export default class MainApp extends React.Component {
   // };
 
   componentDidMount () {
-
-    // var tone_analyzer = watson.tone_analyzer({
-    //   username: 'zkYEACBbE6Ws',
-    //   password: 'bffbcc36-f252-4380-ac1a-35e46b935dd9',
-    //   version: 'v3',
-    //   version_date: '2016-05-19'
-    // })
-    //
-    // tone_analyzer.tone({
-    //   text: 'A word is dead when it is said, some say. Emily Dickinson'
-    // }, function (err, tone) {
-    //   if (err) {
-    //     console.log(err)
-    //   } else {
-    //     console.log(JSON.stringify(tone, null, 2))
-    //   }
-    // })
-
-    // const client = new Wit({accessToken: 'H5SI45AK4BQA5YLWNYST576YCAI7JTSJ'})
-    // client.message('what is the weather in London?', {})
-    //   .then((response) => {
-    //     // console.log('Yay, got Wit.ai response: ' + JSON.stringify(response));
-    //     return response
-    //   })
-    //   .then((data) => {
-    //     // need to update the state based on the received data
-    //     console.log(data.entities)
-    //     for (let entity in data.entities) {
-    //       console.log(data.entities[entity])
-    //     }
-    //     // this.setState({
-    //     //   lastresults: results,
-    //     //   sentiment:
-    //     // })
-    //   })
-    //   .catch((err) => {
-    //     alert(err)
-    //   })
   }
 
   componentDidUpdate (prevProps, prevState) {
   // make new step
-    let newStep = {
-      'id': '',
-      'message': 'Bye!',
-      'end': true
-    }
+    // let newStep = {
+    //   'id': '',
+    //   'message': 'Bye!',
+    //   'end': true
+    // }
 
-    let results = this.state.steps
-    console.log(results[results.length])
+    // let results = this.state.steps
+    // console.log('updated')
+    // console.log(results[results.length])
     // modify previous step
 
-    this.setState({
-      steps: results
-    })
+    // this.setState({
+    //   steps: results
+    // })
   }
 
   render () {
@@ -122,37 +85,14 @@ export default class MainApp extends React.Component {
             ]
           },
           {
-            id: 'others-1',
-            message: 'I am all ears',
-            trigger: 'intent'
+            id: 'ask-intent-1',
+            message: 'I\'m all ears',
+            trigger: 'ask-intent'
           },
           {
-            id: 'gender',
-            options: [
-                { value: 'male', label: 'Male', trigger: '5' },
-                { value: 'female', label: 'Female', trigger: '5' }
-            ]
-          },
-          {
-            id: 'age',
+            id: 'ask-intent-2',
             user: true,
-            trigger: '7',
-            validator: (value) => {
-              if (isNaN(value)) {
-                return 'value must be a number'
-              } else if (value < 0) {
-                return 'value must be positive'
-              } else if (value > 120) {
-                return `${value}? Come on!`
-              }
-              value = 15
-              return true
-            }
-          },
-          {
-            id: 'intent',
-            user: true,
-            trigger: 'end-message',
+            trigger: 'intent',
             validator: (value) => {
               if (!value) return 'Please try again!'
               else {
@@ -161,13 +101,24 @@ export default class MainApp extends React.Component {
             }
           },
           {
+            id: 'intent',
+            component: <Wit-ai />,
+            waitAction: true,
+            trigger: 'intent',
+          },
+          {
             id: 'name',
+
             user: true,
             trigger: 'intent-1',
             validator: (value) => {
               if (!value) {
                 return 'Please try again'
               }
+              let newResponse = value
+              this.setState({
+
+              })
               return true
             }
           },
