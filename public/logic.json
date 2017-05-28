@@ -13,12 +13,11 @@
 }, {
     "id": "3",
     "message": "Hello {previousValue}!",
-    "end": true,
-    "trigger": "6"
+    "trigger": "4"
 }, {
-    "id": "5",
+    "id": "4",
     "message": "You are so smart!",
-    "end": true
+    "trigger": "5"
 }, {
     "id": "6",
     "message": "Bye!",
