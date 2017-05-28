@@ -52,9 +52,10 @@ class DBPedia extends Component {
     xhr.send();
   }
 
-  triggetNext() {
+  triggetNext(end) {
     this.setState({ trigger: true }, () => {
-      this.props.triggerNextStep();
+      // this.props.triggerNextStep(null,{ end });
+       this.props.triggerNextStep({ value: null, trigger: end });
     });
   }
 
@@ -75,7 +76,7 @@ class DBPedia extends Component {
             {
               !trigger &&
               <button
-                onClick={() => this.triggetNext()}
+                onClick={() => this.triggetNext(this.props.steps.search.value)}
               >
                 Search Again
               </button>
@@ -112,8 +113,18 @@ const ExampleDBPedia = () => (
       },
       {
         id: '3',
-        component: <DBPedia loading={true} />,
+        component: <DBPedia loading={true} result="" trigger="" />,
         waitAction: true,
+        trigger: '1',
+      },
+      {
+        id: 'end',
+        message: 'Thank you so much react-simple-chatbot!',
+        end: true,
+      },
+      {
+        id: 'brazil',
+        message: 'This is insane!',
         trigger: '1',
       },
     ]}

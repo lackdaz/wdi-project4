@@ -1,4 +1,4 @@
-import ChatBot, { Loading } from 'react-simple-chatbot'
+import ChatBot from 'react-simple-chatbot'
 import React, { Component } from 'react';
 import { Wit, log } from 'node-wit'
 
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 export default class WitAi extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props.loading)
     this.state = {
       loading: true,
       result: '',
@@ -20,22 +21,21 @@ export default class WitAi extends Component {
   componentWillMount() {
     const self = this;
     const { steps } = this.props;
-    const search = steps.intentinput.value;
+    const search = steps.search.value;
 
-    const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'});
-    console.log(search)
-    client.message(search, {})
+    const client = new Wit({accessToken: 'MY_TOKEN'});
+    client.message('what is the weather in London?', {})
     .then((data) => {
       console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-      const entities = data.entities
-
-
-        console.log(Object.keys(entities).length)
-        if (entities && Object.keys(entities).length > 0) {
-          self.setState({ loading: false, result: entities.intent[0].value });
+      if (this.readyState === 4) {
+        const data = JSON.parse(this.responseText);
+        const bindings = data.results.bindings;
+        if (bindings && bindings.length > 0) {
+          self.setState({ loading: false, result: bindings[0].comment.value });
         } else {
           self.setState({ loading: false, result: 'Not found.' });
         }
+      }
     })
     .catch(console.error);
 
@@ -44,10 +44,7 @@ export default class WitAi extends Component {
   triggetNext(triggerInput) {
     this.setState({ trigger: true }, () => {
       // this.props.triggerNextStep(null,{ end });
-      if (triggerInput) {
-        this.props.triggerNextStep({ value: null, trigger: triggerInput });
-      }
-      else this.props.triggerNextStep();
+       this.props.triggerNextStep({ value: null, trigger: triggerInput });
     });
   }
 
@@ -56,8 +53,6 @@ export default class WitAi extends Component {
 
     return (
       <div className="dbpedia">
-
-        {/* change this to a different output */}
         { loading ? <Loading /> : result }
         {
           !loading &&
@@ -70,19 +65,11 @@ export default class WitAi extends Component {
             {
               !trigger &&
               <button
-                onClick={() => this.triggetNext(result)}
+                onClick={() => this.triggetNext(this.props.steps.search.value)}
               >
-                Yes
+                Search Again
               </button>
             }
-            {
-            !trigger &&
-            <button
-              onClick={() => this.triggetNext()}
-              >
-              Search Again
-            </button>
-          }
           </div>
         }
       </div>
