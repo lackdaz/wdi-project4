@@ -3,7 +3,7 @@
 import SentimentBot from '../components/SentimentBot/SentimentBot'
 import Wit_ai from '../components/ChatBotComponents/Intent'
 import Missing from '../components/ChatBotComponents/Missing'
-import ChatBot from 'react-simple-chatbot'
+import ChatBot from '../components/ReactSimpleChatBot/ChatBot'
 import { Wit, log } from 'node-wit'
 // var watson = require('watson-developer-cloud')
 
@@ -153,7 +153,7 @@ export default class MainApp extends React.Component {
       floating: true,
       response: '',
       sentiment: '',
-
+      endDelay: 4000,
     }
 
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
@@ -162,7 +162,6 @@ export default class MainApp extends React.Component {
   handleEnd ({ steps, values }) {
   // console.log(steps);
   // console.log(values);
-    this.setState({ opened: false });
   }
 
   //
@@ -194,10 +193,10 @@ export default class MainApp extends React.Component {
   }
 
   render () {
-    const { opened, floating } = this.state;
+    const { opened, floating, steps, endDelay } = this.state;
     return (
       <div>
-        <ChatBot userDelay={10} handleEnd={this.handleEnd} floating={floating} botDelay={10} steps={this.state.steps} testproc={'test'} headerTitle={'Postal Bot'}
+        <ChatBot userDelay={10} opened={opened} handleEnd={this.handleEnd} floating={floating} botDelay={10} steps={steps} testproc={'test'} headerTitle={'Postal Bot'} endDelay={endDelay}
         />
         <SentimentBot response={this.state.response} />
       </div>
