@@ -61,7 +61,7 @@ export default class MainApp extends React.Component {
     // const { name, gender, age } = this.state;
     return (
       <div>
-        <ChatBot userDelay={10} botDelay={10} steps={[
+        {/* <ChatBot userDelay={10} botDelay={10} steps={[
           {
             id: 'onboarding1',
             message: 'Welcome to GA Postal Services!',
@@ -133,7 +133,7 @@ export default class MainApp extends React.Component {
             end: true
           }
         ]}
-        />
+        /> */}
         <SentimentBot response={this.state.response} />
       </div>
     )
