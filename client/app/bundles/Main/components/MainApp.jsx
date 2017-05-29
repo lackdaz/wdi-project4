@@ -164,6 +164,18 @@ export default class MainApp extends React.Component {
   // console.log(values);
   }
 
+  handleMessage(e) {
+    this.setState({
+      response: document.getElementById("inputText").value
+    })
+    document.getElementById("messageBtn").innerHTML = "loading"
+    document.getElementById("messageBtn").setAttribute("disabled", "");
+  }
+
+  handleLoadingDone() {
+    document.getElementById("messageBtn").innerHTML = "Submit"
+    document.getElementById("messageBtn").removeAttribute("disabled");
+  }
   //
   // updateName = (name) => {
   //   this.setState({ name });
@@ -195,10 +207,22 @@ export default class MainApp extends React.Component {
   render () {
     const { opened, floating, steps, endDelay } = this.state;
     return (
-      <div>
-        <ChatBot userDelay={10} opened={opened} handleEnd={this.handleEnd} floating={floating} botDelay={10} steps={steps} testproc={'test'} headerTitle={'Postal Bot'} endDelay={endDelay}
-        />
-        <SentimentBot response={this.state.response} />
+      <div className="container">
+          <div className="row">
+            <div  className="col-md-6">
+              <ChatBot userDelay={10} opened={opened} handleEnd={this.handleEnd} floating={floating} botDelay={10} steps={steps} testproc={'test'} headerTitle={'Postal Bot'} endDelay={endDelay}
+            />
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <input className="form-control" type="text" id="inputText" placeholder="type something" />
+            </div>
+            <div className="form-group">
+              <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
+            </div>
+            <SentimentBot response={this.state.response} handleLoadingDone={ () => this.handleLoadingDone() } />
+          </div>
+        </div>
       </div>
     )
   }
