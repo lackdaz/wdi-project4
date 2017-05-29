@@ -31,8 +31,10 @@ export default class WitAi extends Component {
       console.log(Object.keys(entities).length)
       if (entities && Object.keys(entities).length > 0) {
         self.setState({ loading: false, result: entities.intent[0].value })
+        this.triggetNext(this.state.result)
       } else {
-        self.setState({ loading: false, result: 'Not found.' })
+        self.setState({ loading: false, result: 'dunno' })
+        this.triggetNext(this.state.result)
       }
     })
     .catch(console.error)

@@ -81,47 +81,97 @@ export default class MainApp extends React.Component {
         id: 'intent',
         component: <Wit_ai />,
         waitAction: true,
+        asMessage: true,
         trigger: 'askintent1'
       },
       {
-        id: 'MissingParcelCheck',
+        id: 'Others',
+        message: '!',
+        trigger: 'Missing1'
+      },
+      {
+        id: 'Are you looking for a parcel?',
         message: 'Welcome to the Missing Parcels Department!',
         trigger: 'Missing1'
       },
       {
         id: 'Missing1',
-        message: 'What is the name of your parcel?',
-        trigger: 'Missing2'
+        message: 'What is your tracking number?',
+        trigger: 'inputTracking'
       },
       {
-        id: 'Missing2',
-        message: 'Welcome to the !',
-        trigger: 'Missing3'
+        id: 'inputTracking',
+        user: true,
+        trigger: 'missing',
+        validator: (value) => {
+          if (!value) return 'Please try again!'
+          else {
+            return true
+          }
+        }
+      },
+      {
+        id: 'missing',
+        component: <Missing />,
+        waitAction: true,
+        asMessage: true,
+        replace: true,
+        trigger: 'inputTrackingMissing'
+      },
+      {
+        id: 'inputTrackingMissing',
+        message: 'Whoops! Would you like to try again?',
+        trigger: 'inputTrackingMissingOptions',
+      },
+      {
+        id: 'inputTrackingMissingOptions',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'Missing1'},
+            { value: 'no', label: 'No', trigger: 'end-message'}
+        ]
+      },
+      {
+        id: 'trackingSuccess',
+        message: 'We are currently checking the status of {previousValue}!',
+        trigger: 'trackingEnd',
+      },
+      {
+        id: 'trackingEnd',
+        message: 'We will get back to you within 3 working days',
+        trigger: 'end-message',
       },
       {
         id: 'end-message',
-        message: 'Thanks! Your data was submitted successfully!',
+        message: 'Thank you! Do let me know if you need any help!',
         end: true
       }
     ]
 
     this.state = {
       steps: steps,
+      opened: false,
+      floating: true,
       response: '',
-      lastresults: {},
       sentiment: '',
-      intent: '',
-      previousTrigger: '',
-      nextTrigger: ''
+
     }
+
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
   }
+
+  handleEnd ({ steps, values }) {
+  // console.log(steps);
+  // console.log(values);
+    this.setState({ opened: false });
+  }
+
   //
   // updateName = (name) => {
   //   this.setState({ name });
   // };
 
   componentDidMount () {
+    this.handleEnd = this.handleEnd.bind(this)
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -144,10 +194,10 @@ export default class MainApp extends React.Component {
   }
 
   render () {
-    // const { name, gender, age } = this.state;
+    const { opened, floating } = this.state;
     return (
       <div>
-        <ChatBot userDelay={10} botDelay={10} steps={this.state.steps} testproc={'test'}
+        <ChatBot userDelay={10} handleEnd={this.handleEnd} floating={floating} botDelay={10} steps={this.state.steps} testproc={'test'} headerTitle={'Postal Bot'}
         />
         <SentimentBot response={this.state.response} />
       </div>
