@@ -132,13 +132,13 @@ export default class SentimentBot extends React.Component {
     render() {
       this.checktone(this.props.response)
       return (
-          <div>
+          <div className="graph">
             {/* <input type="text" placeholder="type something" id="message" /> */}
             {/* <button onClick={ (e) => this.checktone(e, this.props.response)}>Check Tone!</button> */}
 
-            <div>
+            {/* <div> */}
               <svg width="480" height="300"></svg>
-            </div>
+            {/* </div> */}
               {/* write logic for sentiment bot here  */}
           </div>
       );

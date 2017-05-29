@@ -73,83 +73,93 @@ export default class MainApp extends React.Component {
   render () {
     // const { name, gender, age } = this.state;
     return (
-      <div>
-        <ChatBot userDelay={10} botDelay={10} steps={[
-          {
-            id: 'onboarding1',
-            message: 'Welcome to GA Postal Services!',
-            trigger: 'onboarding2'
-          },
-          {
-            id: 'onboarding2',
-            message: 'How may I address you?',
-            trigger: 'name'
-          },
-          {
-            id: 'name',
-            user: true,
-            trigger: 'intent1',
-            validator: (value) => {
-              if (!value) {
-                return 'Please try again'
-              }
-              let newResponse = value
-              this.setState({
+      <div className="container">
+          <div className="row">
+            <div  className="col-md-6">
+              <ChatBot userDelay={10} botDelay={10} steps={[
+                {
+                  id: 'onboarding1',
+                  message: 'Welcome to GA Postal Services!',
+                  trigger: 'onboarding2'
+                },
+                {
+                  id: 'onboarding2',
+                  message: 'How may I address you?',
+                  trigger: 'name'
+                },
+                {
+                  id: 'name',
+                  user: true,
+                  trigger: 'intent1',
+                  validator: (value) => {
+                    if (!value) {
+                      return 'Please try again'
+                    }
+                    let newResponse = value
+                    this.setState({
 
-              })
-              return true
-            }
-          },
-          {
-            id: 'intent1',
-            message: 'Hi {previousValue}!',
-            trigger: 'intent2'
-          },
-          {
-            id: 'intent2',
-            options: [
-                { value: 'Rates', label: 'Rates', trigger: '' },
-                { value: 'Check Status', label: 'Check Status', trigger: 'status1' },
-                { value: 'Others', label: 'Others', trigger: 'askintent1'}
-            ]
-          },
-          {
-            id: 'askintent1',
-            message: 'I\'m all ears',
-            trigger: 'intentinput'
-          },
-          {
-            id: 'intentinput',
-            user: true,
-            trigger: 'intent',
-            validator: (value) => {
-              if (!value) return 'Please try again!'
-              else {
-                return true
-              }
-            }
-          },
-          {
-            id: 'intent',
-            component: <Wit_ai />,
-            waitAction: true,
-            trigger: 'askintent1',
-          },
-          {
-            id: 'MissingParcelCheck',
-            message: "Welcome to the Missing Parcels Department!",
-            trigger: 'end-message',
-          },
-          {
-            id: 'end-message',
-            message: 'Thanks! Your data was submitted successfully!',
-            end: true
-          }
-        ]}
-        />
-        <input type="text" id="inputText" placeholder="type something" />
-        <button id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
-        <SentimentBot response={this.state.response} handleLoadingDone={ () => this.handleLoadingDone() } />
+                    })
+                    return true
+                  }
+                },
+                {
+                  id: 'intent1',
+                  message: 'Hi {previousValue}!',
+                  trigger: 'intent2'
+                },
+                {
+                  id: 'intent2',
+                  options: [
+                    { value: 'Rates', label: 'Rates', trigger: '' },
+                    { value: 'Check Status', label: 'Check Status', trigger: 'status1' },
+                    { value: 'Others', label: 'Others', trigger: 'askintent1'}
+                  ]
+                },
+                {
+                  id: 'askintent1',
+                  message: 'I\'m all ears',
+                  trigger: 'intentinput'
+                },
+                {
+                  id: 'intentinput',
+                  user: true,
+                  trigger: 'intent',
+                  validator: (value) => {
+                    if (!value) return 'Please try again!'
+                    else {
+                      return true
+                    }
+                  }
+                },
+                {
+                  id: 'intent',
+                  component: <Wit_ai />,
+                  waitAction: true,
+                  trigger: 'askintent1',
+                },
+                {
+                  id: 'MissingParcelCheck',
+                  message: "Welcome to the Missing Parcels Department!",
+                  trigger: 'end-message',
+                },
+                {
+                  id: 'end-message',
+                  message: 'Thanks! Your data was submitted successfully!',
+                  end: true
+                }
+              ]}
+            />
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <input className="form-control" type="text" id="inputText" placeholder="type something" />
+            </div>
+            <div className="form-group">
+              <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
+            </div>
+            <SentimentBot response={this.state.response} handleLoadingDone={ () => this.handleLoadingDone() } />
+          </div>
+        </div>
       </div>
     )
   }

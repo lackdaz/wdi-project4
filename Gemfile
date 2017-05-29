@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 gem "react_on_rails"
 
 gem 'json'
+gem 'bootstrap-sass', '~> 3.3.6'
 
 # database
 gem 'pg'
