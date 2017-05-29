@@ -1,7 +1,8 @@
 
 // import SimpleChatBot from '../components/SimpleChatBot/SimpleChatBot'
 import SentimentBot from '../components/SentimentBot/SentimentBot'
-import Wit_ai from '../components/ChatBotComponents/Wit'
+import Wit_ai from '../components/ChatBotComponents/Intent'
+import Missing from '../components/ChatBotComponents/Missing'
 import ChatBot from 'react-simple-chatbot'
 import { Wit, log } from 'node-wit'
 // var watson = require('watson-developer-cloud')
@@ -20,8 +21,92 @@ export default class MainApp extends React.Component {
    */
   constructor (props, _railsContext) {
     super(props)
+
+    let steps = [
+      {
+        id: 'onboarding1',
+        message: 'Welcome to GA Postal Services!',
+        trigger: 'onboarding2'
+      },
+      {
+        id: 'onboarding2',
+        message: 'How may I address you?',
+        trigger: 'name'
+      },
+      {
+        id: 'name',
+        user: true,
+        trigger: 'intent1',
+        validator: (value) => {
+          if (!value) {
+            return 'Please try again'
+          }
+          let newResponse = value
+          this.setState({
+
+          })
+          return true
+        }
+      },
+      {
+        id: 'intent1',
+        message: 'Hi {previousValue}!',
+        trigger: 'intent2'
+      },
+      {
+        id: 'intent2',
+        options: [
+            { value: 'Rates', label: 'Rates', trigger: '' },
+            { value: 'Check Status', label: 'Check Status', trigger: 'status1' },
+            { value: 'Others', label: 'Others', trigger: 'askintent1'}
+        ]
+      },
+      {
+        id: 'askintent1',
+        message: 'I\'m all ears',
+        trigger: 'intentinput'
+      },
+      {
+        id: 'intentinput',
+        user: true,
+        trigger: 'intent',
+        validator: (value) => {
+          if (!value) return 'Please try again!'
+          else {
+            return true
+          }
+        }
+      },
+      {
+        id: 'intent',
+        component: <Wit_ai />,
+        waitAction: true,
+        trigger: 'askintent1'
+      },
+      {
+        id: 'MissingParcelCheck',
+        message: 'Welcome to the Missing Parcels Department!',
+        trigger: 'Missing1'
+      },
+      {
+        id: 'Missing1',
+        message: 'What is the name of your parcel?',
+        trigger: 'Missing2'
+      },
+      {
+        id: 'Missing2',
+        message: 'Welcome to the !',
+        trigger: 'Missing3'
+      },
+      {
+        id: 'end-message',
+        message: 'Thanks! Your data was submitted successfully!',
+        end: true
+      }
+    ]
+
     this.state = {
-      steps: this.props.steps,
+      steps: steps,
       response: '',
       lastresults: {},
       sentiment: '',
@@ -41,6 +126,7 @@ export default class MainApp extends React.Component {
 
   componentDidUpdate (prevProps, prevState) {
   // make new step
+
     // let newStep = {
     //   'id': '',
     //   'message': 'Bye!',
@@ -61,78 +147,7 @@ export default class MainApp extends React.Component {
     // const { name, gender, age } = this.state;
     return (
       <div>
-        <ChatBot userDelay={10} botDelay={10} steps={[
-          {
-            id: 'onboarding1',
-            message: 'Welcome to GA Postal Services!',
-            trigger: 'onboarding2'
-          },
-          {
-            id: 'onboarding2',
-            message: 'How may I address you?',
-            trigger: 'name'
-          },
-          {
-            id: 'name',
-            user: true,
-            trigger: 'intent1',
-            validator: (value) => {
-              if (!value) {
-                return 'Please try again'
-              }
-              let newResponse = value
-              this.setState({
-
-              })
-              return true
-            }
-          },
-          {
-            id: 'intent1',
-            message: 'Hi {previousValue}!',
-            trigger: 'intent2'
-          },
-          {
-            id: 'intent2',
-            options: [
-                { value: 'Rates', label: 'Rates', trigger: '' },
-                { value: 'Check Status', label: 'Check Status', trigger: 'status1' },
-                { value: 'Others', label: 'Others', trigger: 'askintent1'}
-            ]
-          },
-          {
-            id: 'askintent1',
-            message: 'I\'m all ears',
-            trigger: 'intentinput'
-          },
-          {
-            id: 'intentinput',
-            user: true,
-            trigger: 'intent',
-            validator: (value) => {
-              if (!value) return 'Please try again!'
-              else {
-                return true
-              }
-            }
-          },
-          {
-            id: 'intent',
-            component: <Wit_ai />,
-            waitAction: true,
-            trigger: 'askintent1',
-          },
-          {
-            id: 'MissingParcelCheck',
-            message: "Welcome to the Missing Parcels Department!",
-            trigger: 'end-message',
-          },
-          {
-            id: 'end-message',
-            message: 'Thanks! Your data was submitted successfully!',
-            end: true
-          }
-        ]}
+        <ChatBot userDelay={10} botDelay={10} steps={this.state.steps} testproc={'test'}
         />
         <SentimentBot response={this.state.response} />
       </div>
