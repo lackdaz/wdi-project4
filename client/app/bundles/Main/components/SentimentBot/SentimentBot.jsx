@@ -68,6 +68,13 @@ export default class SentimentBot extends React.Component {
 
       var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
       var y = d3.scaleLinear().rangeRound([height, 0]);
+
+      // Define the axes
+      // var xAxis = d3.svg.axis().scale(x)
+          // .orient("bottom").ticks(5);
+
+      // var yAxis = d3.svg.axis().scale(y)
+          // .orient("left").ticks(5);
       if(document.getElementsByTagName("rect").length === 0) {
 
         var g = svg.append("g")
@@ -94,7 +101,7 @@ export default class SentimentBot extends React.Component {
             .attr("y", 6)
             .attr("dy", "0.71em")
             .attr("text-anchor", "end")
-            .text("Frequency");
+            .text("Score");
 
         g.selectAll(".svg")
           .data(data)
@@ -121,6 +128,13 @@ export default class SentimentBot extends React.Component {
             .attr("y", function(d) { return y(d.score); })
             .attr("width", x.bandwidth())
             .attr("height", function(d) { return height - y(d.score); })
+
+        // y axis
+        svg.select(".axis--y")
+          .transition()
+          .duration(1000)
+          .call(d3.axisLeft(y).ticks(10, "%"))
+
       }
       this.props.handleLoadingDone()
     }
