@@ -31,6 +31,19 @@ export default class MainApp extends React.Component {
     }
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
   }
+
+  handleMessage(e) {
+    this.setState({
+      response: document.getElementById("inputText").value
+    })
+    document.getElementById("messageBtn").innerHTML = "loading"
+    document.getElementById("messageBtn").setAttribute("disabled", "");
+  }
+
+  handleLoadingDone() {
+    document.getElementById("messageBtn").innerHTML = "Submit"
+    document.getElementById("messageBtn").removeAttribute("disabled");
+  }
   //
   // updateName = (name) => {
   //   this.setState({ name });
@@ -134,7 +147,9 @@ export default class MainApp extends React.Component {
           }
         ]}
         /> */}
-        <SentimentBot response={this.state.response} />
+        <SentimentBot response={this.state.response} handleLoadingDone={ () => this.handleLoadingDone() } />
+        <input type="text" id="inputText" placeholder="type something" />
+        <button id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
       </div>
     )
   }

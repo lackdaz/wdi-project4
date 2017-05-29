@@ -22,45 +22,107 @@ export default class SentimentBot extends React.Component {
         // this.state = { name: this.props.name };
     }
 
-    checktone(e) {
-      let message = encodeURIComponent(document.getElementById('message').value)
-      // fetch(`http://omdbapi.com/?s=${message}`)
-      fetch(`https://watson-api-explorer.mybluemix.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=${message}`)
-      .then((response) => {
-        // console.log('first fetch response')
-        return response.json()
-      })
-      .then((json) => {
-        // console.log('second fetch json')
-        console.log(json)
-        // this.setState({
-        //   searchResult: json.Search.map((movies) => movies.Title ),
-        // })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-      // logic
-      // console.log(document.getElementById('message').value)
-      // let message = document.getElementById('message').value
-      // var tone_analyzer = new ToneAnalyzerV3({
-      //   password: 'VkYEACBbE6Ws',
-      //   username: 'bffbcc36-f252-4380-ac1a-35e46b935dd9',
-      //   version_date: '2016-05-19'
-      // });
-      // // Parameters for the call are defined in the tone.json file.
-      // // var params = require('./public/tone.json');
-      // var params = { text: message }
-      //
-      // tone_analyzer.tone(params, function(error, response) {
-      //   if (error)
-      //     console.log('error:', error);
-      //   else
-      //     console.log(JSON.stringify(response, null, 2));
-      //     // res.setHeader('Content-Type', 'application/json');
-      //     // res.send(JSON.stringify(response, null, 2));
-      //   }
-      // );
+    checktone(message) {
+      if(message) {
+        message = encodeURIComponent(message)
+        // let message = encodeURIComponent(document.getElementById('message').value)
+        // fetch(`http://omdbapi.com/?s=${message}`)
+        fetch(`https://watson-api-explorer.mybluemix.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=${message}`)
+        .then((response) => {
+          // console.log('first fetch response')
+          return response.json()
+        })
+        .then((json) => {
+          // console.log('second fetch json')
+          console.log(json)
+          // console.log(input)
+          var tonesArr = []
+          // var res = JSON.parse(input)
+          // var res = json
+          // console.log(res.document_tone.tone_categories)
+          json.document_tone.tone_categories.map( (tones) => {
+            // console.log(val)
+            tones['tones'].map((tone) => {
+              var toneObj = {}
+              toneObj.tone_name = tone['tone_name']
+              toneObj.score = tone['score']
+              tonesArr.push(toneObj)
+            })
+          })
+          this.renderGraph(tonesArr)
+          // this.setState({
+          //   searchResult: json.Search.map((movies) => movies.Title ),
+          // })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+    }
+
+    renderGraph(data) {
+      var svg = d3.select("svg"),
+        margin = {top: 20, right: 20, bottom: 100, left: 40},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom;
+
+      var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+      var y = d3.scaleLinear().rangeRound([height, 0]);
+      if(document.getElementsByTagName("rect").length === 0) {
+
+        var g = svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        x.domain(data.map(function(d) { return d.tone_name; }));
+        y.domain([0, d3.max(data, function(d) { return d.score; })]);
+
+        g.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+              .style("text-anchor", "end")
+              .attr("dx", "-.8em")
+              .attr("dy", ".15em")
+              .attr("transform", "rotate(-65)" );
+
+        g.append("g")
+            .attr("class", "axis axis--y")
+            .call(d3.axisLeft(y).ticks(10, "%"))
+          .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "0.71em")
+            .attr("text-anchor", "end")
+            .text("Frequency");
+
+        g.selectAll(".svg")
+          .data(data)
+          .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d) { return x(d.tone_name); })
+            .attr("y", function(d) { return y(d.score); })
+            .attr("width", x.bandwidth())
+            .attr("height", function(d) { return height - y(d.score); });
+      } else {
+        // udpate the graph
+
+        x.domain(data.map(function(d) { return d.tone_name; }));
+        y.domain([0, d3.max(data, function(d) { return d.score; })]);
+
+        svg.selectAll("rect")
+            .data(data)
+            // .enter()
+        		// .append("rect")
+        		// .attr("class", "bar")
+            .transition()
+            .duration(1000)
+            .attr("x", function(d) { return x(d.tone_name); })
+            .attr("y", function(d) { return y(d.score); })
+            .attr("width", x.bandwidth())
+            .attr("height", function(d) { return height - y(d.score); })
+      }
+      this.props.handleLoadingDone()
     }
 
     // updateName (name) {
@@ -68,12 +130,17 @@ export default class SentimentBot extends React.Component {
     // };
 
     render() {
-        return (
+      this.checktone(this.props.response)
+      return (
+          <div>
+            {/* <input type="text" placeholder="type something" id="message" /> */}
+            {/* <button onClick={ (e) => this.checktone(e, this.props.response)}>Check Tone!</button> */}
+
             <div>
-              <input type="text" placeholder="type something" id="message" />
-              <button onClick={ (e) => this.checktone(e)}>Check Tone!</button>
-                {/* write logic for sentiment bot here  */}
+              <svg width="480" height="300"></svg>
             </div>
-        );
+              {/* write logic for sentiment bot here  */}
+          </div>
+      );
     }
 }
