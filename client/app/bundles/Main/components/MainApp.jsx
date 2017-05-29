@@ -1,15 +1,10 @@
 
 // import SimpleChatBot from '../components/SimpleChatBot/SimpleChatBot'
 import SentimentBot from '../components/SentimentBot/SentimentBot'
+import Wit_ai from '../components/ChatBotComponents/Wit'
 import ChatBot from 'react-simple-chatbot'
 import { Wit, log } from 'node-wit'
-
-// ReactDOM.render(
-//   <div>
-//     <ChatBot steps={steps} />
-//   </div>,
-//   // document.getElementById('root')
-// );
+// var watson = require('watson-developer-cloud')
 
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -31,8 +26,23 @@ export default class MainApp extends React.Component {
       lastresults: {},
       sentiment: '',
       intent: '',
+      previousTrigger: '',
+      nextTrigger: ''
     }
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
+  }
+
+  handleMessage(e) {
+    this.setState({
+      response: document.getElementById("inputText").value
+    })
+    document.getElementById("messageBtn").innerHTML = "loading"
+    document.getElementById("messageBtn").setAttribute("disabled", "");
+  }
+
+  handleLoadingDone() {
+    document.getElementById("messageBtn").innerHTML = "Submit"
+    document.getElementById("messageBtn").removeAttribute("disabled");
   }
   //
   // updateName = (name) => {
@@ -40,33 +50,116 @@ export default class MainApp extends React.Component {
   // };
 
   componentDidMount () {
-    const client = new Wit({accessToken: 'H5SI45AK4BQA5YLWNYST576YCAI7JTSJ'})
-    client.message('what is the weather in London?', {})
-      .then((response) => {
-        // console.log('Yay, got Wit.ai response: ' + JSON.stringify(response));
-        return response
-      })
-      .then((data) => {
-        // need to update the state based on the received data
-        console.log(data.entities)
-        for (let entity in data.entities) {
-          console.log(data.entities[entity])
-        }
-        // this.setState({
-        //   lastresults: results,
-        //   sentiment:
-        // })
-      })
-      .catch((err) => {
-        alert(err)
-      })
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+  // make new step
+    // let newStep = {
+    //   'id': '',
+    //   'message': 'Bye!',
+    //   'end': true
+    // }
+
+    // let results = this.state.steps
+    // console.log('updated')
+    // console.log(results[results.length])
+    // modify previous step
+
+    // this.setState({
+    //   steps: results
+    // })
   }
 
   render () {
+    // const { name, gender, age } = this.state;
     return (
-      <div>
-        <ChatBot steps={this.state.steps} />
-        <SentimentBot response={this.state.response} />
+      <div className="container">
+          <div className="row">
+            <div  className="col-md-6">
+              <ChatBot userDelay={10} botDelay={10} steps={[
+                {
+                  id: 'onboarding1',
+                  message: 'Welcome to GA Postal Services!',
+                  trigger: 'onboarding2'
+                },
+                {
+                  id: 'onboarding2',
+                  message: 'How may I address you?',
+                  trigger: 'name'
+                },
+                {
+                  id: 'name',
+                  user: true,
+                  trigger: 'intent1',
+                  validator: (value) => {
+                    if (!value) {
+                      return 'Please try again'
+                    }
+                    let newResponse = value
+                    this.setState({
+
+                    })
+                    return true
+                  }
+                },
+                {
+                  id: 'intent1',
+                  message: 'Hi {previousValue}!',
+                  trigger: 'intent2'
+                },
+                {
+                  id: 'intent2',
+                  options: [
+                    { value: 'Rates', label: 'Rates', trigger: '' },
+                    { value: 'Check Status', label: 'Check Status', trigger: 'status1' },
+                    { value: 'Others', label: 'Others', trigger: 'askintent1'}
+                  ]
+                },
+                {
+                  id: 'askintent1',
+                  message: 'I\'m all ears',
+                  trigger: 'intentinput'
+                },
+                {
+                  id: 'intentinput',
+                  user: true,
+                  trigger: 'intent',
+                  validator: (value) => {
+                    if (!value) return 'Please try again!'
+                    else {
+                      return true
+                    }
+                  }
+                },
+                {
+                  id: 'intent',
+                  component: <Wit_ai />,
+                  waitAction: true,
+                  trigger: 'askintent1',
+                },
+                {
+                  id: 'MissingParcelCheck',
+                  message: "Welcome to the Missing Parcels Department!",
+                  trigger: 'end-message',
+                },
+                {
+                  id: 'end-message',
+                  message: 'Thanks! Your data was submitted successfully!',
+                  end: true
+                }
+              ]}
+            />
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <input className="form-control" type="text" id="inputText" placeholder="type something" />
+            </div>
+            <div className="form-group">
+              <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
+            </div>
+            <SentimentBot response={this.state.response} handleLoadingDone={ () => this.handleLoadingDone() } />
+          </div>
+        </div>
       </div>
     )
   }
