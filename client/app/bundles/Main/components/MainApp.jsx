@@ -162,7 +162,8 @@ export default class MainApp extends React.Component {
 
   handleMessage(e) {
     this.setState({
-      response: document.getElementById("inputText").value
+      // response: document.getElementById("inputText").value
+      inputValue: document.getElementById("inputText").value
     })
     document.getElementById("messageBtn").innerHTML = "loading"
     document.getElementById("messageBtn").setAttribute("disabled", "");

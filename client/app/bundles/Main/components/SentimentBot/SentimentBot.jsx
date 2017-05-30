@@ -61,7 +61,7 @@ export default class SentimentBot extends React.Component {
     }
 
     renderGraph(data) {
-      var svg = d3.select("svg"),
+      var svg = d3.select("#sentiment-graph"),
         margin = {top: 20, right: 20, bottom: 100, left: 40},
         width = +svg.attr("width") - margin.left - margin.right,
         height = +svg.attr("height") - margin.top - margin.bottom;
@@ -151,7 +151,7 @@ export default class SentimentBot extends React.Component {
             {/* <button onClick={ (e) => this.checktone(e, this.props.response)}>Check Tone!</button> */}
 
             {/* <div> */}
-              <svg width="480" height="300"></svg>
+              <svg id="sentiment-graph" width="480" height="300"></svg>
             {/* </div> */}
               {/* write logic for sentiment bot here  */}
           </div>
