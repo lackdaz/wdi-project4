@@ -159,10 +159,6 @@ export default class MainApp extends React.Component {
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
   }
 
-  handleEnd ({ steps, values }) {
-  // console.log(steps);
-  // console.log(values);
-  }
 
   handleMessage(e) {
     this.setState({
@@ -181,8 +177,16 @@ export default class MainApp extends React.Component {
   //   this.setState({ name });
   // };
 
-  componentDidMount () {
-    this.handleEnd = this.handleEnd.bind(this)
+  handleEnd ({ steps, values }) {
+  console.log(steps);
+  console.log(values);
+  setTimeout(() => {
+    this.setState({ opened: false });
+  }, this.state.endDelay)
+  }
+
+  componentDidMount() {
+    this.handleEnd = this.handleEnd.bind(this);
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -210,7 +214,16 @@ export default class MainApp extends React.Component {
       <div className="container">
           <div className="row">
             <div  className="col-md-6">
-              <ChatBot userDelay={10} opened={opened} handleEnd={this.handleEnd} floating={floating} botDelay={10} steps={steps} testproc={'test'} headerTitle={'Postal Bot'} endDelay={endDelay}
+              <ChatBot
+                userDelay={10}
+                opened={opened}
+                handleEnd={this.handleEnd}
+                floating={floating}
+                botDelay={10}
+                steps={steps}
+                testproc={'test'}
+                headerTitle={'Postal Bot'}
+                endDelay={endDelay}
             />
           </div>
           <div className="col-md-6">

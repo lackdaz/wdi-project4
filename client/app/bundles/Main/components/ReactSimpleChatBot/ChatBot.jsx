@@ -104,7 +104,9 @@ class ChatBot extends Component {
 
   componentWillReceiveProps(nextProps) {
     console.log("called receive props!")
-    console.log(nextProps)
+    console.log(this.props.opened)
+    console.log(nextProps.opened)
+    console.log(this.props.opened !== nextProps.opened)
     if (this.props.opened !== nextProps.opened) {
       this.setState({ opened: nextProps.opened })
     }
@@ -220,6 +222,10 @@ class ChatBot extends Component {
     }
   }
 
+  handleResponse(){
+
+  }
+
   handleEnd() {
     const { previousSteps } = this.state;
 
@@ -240,9 +246,9 @@ class ChatBot extends Component {
     if (this.props.handleEnd) {
       this.props.handleEnd({ renderedSteps, steps, values });
     }
-    setTimeout(() => {
-              this.setState({ opened: false });
-    }, this.props.endDelay)
+    // setTimeout(() => {
+    //           this.setState({ opened: false });
+    // }, this.props.endDelay)
   }
 
   isLastPosition(step) {
@@ -548,10 +554,12 @@ ChatBot.propTypes = {
   userDelay: PropTypes.number,
   userFontColor: PropTypes.string,
   handleEnd: PropTypes.func,
+  handleResponse: PropTypes.func,
 };
 
 ChatBot.defaultProps = {
   handleEnd: undefined,
+  handleResponse: undefined,
   headerComponent: undefined,
   headerBgColor: '#6e48aa',
   headerFontColor: '#fff',
@@ -560,7 +568,7 @@ ChatBot.defaultProps = {
   hideBotAvatar: false,
   hideUserAvatar: false,
   floating: false,
-  opened: false,
+  opened: undefined,
   style: {},
   contentStyle: {},
   footerStyle: {},
@@ -569,7 +577,7 @@ ChatBot.defaultProps = {
   bubbleStyle: {},
   customStyle: {},
   customDelay: 1000,
-  endDelay: 1000,
+  endDelay: undefined,
   className: '',
   botBubbleColor: '#6E48AA',
   botDelay: 1000,
