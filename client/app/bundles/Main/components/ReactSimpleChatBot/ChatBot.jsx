@@ -248,9 +248,9 @@ class ChatBot extends Component {
     if (this.props.handleEnd) {
       this.props.handleEnd({ renderedSteps, steps, values });
     }
-    // setTimeout(() => {
-    //           this.setState({ opened: false });
-    // }, this.props.endDelay)
+    setTimeout(() => {
+              this.setState({ opened: false });
+    }, this.props.endDelay)
   }
 
   isLastPosition(step) {

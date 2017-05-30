@@ -177,15 +177,15 @@ export default class MainApp extends React.Component {
   handleEnd ({ steps, values }) {
   // console.log(steps);
   // console.log(values);
-  setTimeout(() => {
-    this.setState({ opened: false });
-  }, this.state.endDelay)
+    setTimeout(() => {
+      this.setState({ opened: false });
+    }, this.state.endDelay)
   }
 
   handleInputValue (inputValue, res) {
   console.log(inputValue);
   console.log(res);
-  this.setState({ inputValue: true });
+  this.setState({ inputValue });
   }
 
 
@@ -206,8 +206,8 @@ export default class MainApp extends React.Component {
               <ChatBot
                 userDelay={10}
                 opened={opened}
-                handleEnd={this.handleEnd}
-                handleInputValue={this.handleInputValue}
+                handleEnd={this.handleEnd.bind(this)}
+                handleInputValue={this.handleInputValue.bind(this)}
                 floating={floating}
                 botDelay={10}
                 steps={steps}
