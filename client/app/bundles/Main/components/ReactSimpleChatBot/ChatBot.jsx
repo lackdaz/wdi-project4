@@ -103,10 +103,10 @@ class ChatBot extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("called receive props!")
-    console.log(this.props.opened)
-    console.log(nextProps.opened)
-    console.log(this.props.opened !== nextProps.opened)
+    // console.log("called receive props!")
+    // console.log(this.props.opened)
+    // console.log(nextProps.opened)
+    // console.log(this.props.opened !== nextProps.opened)
     if (this.props.opened !== nextProps.opened) {
       this.setState({ opened: nextProps.opened })
     }
@@ -222,8 +222,10 @@ class ChatBot extends Component {
     }
   }
 
-  handleResponse(){
-
+  handleInputValue( message, response ){
+    if (this.props.handleInputValue) {
+      this.props.handleInputValue(message);
+    }
   }
 
   handleEnd() {
@@ -325,6 +327,7 @@ class ChatBot extends Component {
           disabled: true,
           inputValue: '',
         });
+        this.handleInputValue(inputValue)
       }
     }
   }
@@ -554,12 +557,12 @@ ChatBot.propTypes = {
   userDelay: PropTypes.number,
   userFontColor: PropTypes.string,
   handleEnd: PropTypes.func,
-  handleResponse: PropTypes.func,
+  handleInputValue: PropTypes.func,
 };
 
 ChatBot.defaultProps = {
   handleEnd: undefined,
-  handleResponse: undefined,
+  handleInputValue: undefined,
   headerComponent: undefined,
   headerBgColor: '#6e48aa',
   headerFontColor: '#fff',

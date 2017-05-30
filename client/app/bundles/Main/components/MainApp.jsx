@@ -151,7 +151,7 @@ export default class MainApp extends React.Component {
       steps: steps,
       opened: false,
       floating: true,
-      response: '',
+      inputValue: '',
       sentiment: '',
       endDelay: 4000,
     }
@@ -172,44 +172,32 @@ export default class MainApp extends React.Component {
     document.getElementById("messageBtn").innerHTML = "Submit"
     document.getElementById("messageBtn").removeAttribute("disabled");
   }
-  //
-  // updateName = (name) => {
-  //   this.setState({ name });
-  // };
 
   handleEnd ({ steps, values }) {
-  console.log(steps);
-  console.log(values);
+  // console.log(steps);
+  // console.log(values);
   setTimeout(() => {
     this.setState({ opened: false });
   }, this.state.endDelay)
   }
 
+  handleInputValue (inputValue, res) {
+  console.log(inputValue);
+  console.log(res);
+  this.setState({ inputValue: true });
+  }
+
+
   componentDidMount() {
     this.handleEnd = this.handleEnd.bind(this);
+    this.handleInputValue = this.handleInputValue.bind(this)
   }
 
   componentDidUpdate (prevProps, prevState) {
-  // make new step
-
-    // let newStep = {
-    //   'id': '',
-    //   'message': 'Bye!',
-    //   'end': true
-    // }
-
-    // let results = this.state.steps
-    // console.log('updated')
-    // console.log(results[results.length])
-    // modify previous step
-
-    // this.setState({
-    //   steps: results
-    // })
   }
 
   render () {
-    const { opened, floating, steps, endDelay } = this.state;
+    const { opened, floating, steps, endDelay, inputValue } = this.state;
     return (
       <div className="container">
           <div className="row">
@@ -218,6 +206,7 @@ export default class MainApp extends React.Component {
                 userDelay={10}
                 opened={opened}
                 handleEnd={this.handleEnd}
+                handleInputValue={this.handleInputValue}
                 floating={floating}
                 botDelay={10}
                 steps={steps}
@@ -233,7 +222,7 @@ export default class MainApp extends React.Component {
             <div className="form-group">
               <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
             </div>
-            <SentimentBot response={this.state.response} handleLoadingDone={ () => this.handleLoadingDone() } />
+            <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
           </div>
         </div>
       </div>
