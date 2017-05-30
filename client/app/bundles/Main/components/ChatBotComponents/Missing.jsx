@@ -11,35 +11,55 @@ export default class WitAi extends Component {
       loading: true,
       result: '',
       show: '',
-      trigger: false
+      trigger: false,
     }
 
     this.triggetNext = this.triggetNext.bind(this)
   }
 
-  componentWillMount () {
-    const self = this
-    // const { loading, result, show } = this.state
-    const { steps } = this.props
-    const search = steps.inputTracking.value
+  componentWillReceiveProps(nextProps){
+    if (this.props.angerScore !== nextProps.angerScore) {
+      const self = this
+      // const { loading, result, show } = this.state
+      const { steps, angerScore } = this.props
+      const search = steps.inputTracking.value
 
-    const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'})
-    console.log(search)
-    client.message(search, {})
-    .then((data) => {
-      console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
-      const entities = data.entities
+      const client = new Wit({accessToken: 'IKOX36ZK6SVACQGYK2BDE7OTDFWMMXX4'})
+      console.log(search)
+      client.message(search, {})
+      .then((data) => {
+        console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
+        const entities = data.entities
 
-      console.log(Object.keys(entities).length)
-      if (entities && Object.keys(entities).length > 0) {
-        self.setState({ loading: false, result: entities.tracking[0].value, show: 'Got it!' })
-        self.triggetNext(this.state.result,"trackingSuccess")
-      } else {
-        self.setState({ loading: false, result: 'inputTrackingMissing', show: 'Not Found' })
-        self.triggetNext()
-      }
-    })
-    .catch(console.error)
+        console.log(Object.keys(entities).length)
+
+        // this is the fuck you condition
+        console.log(angerScore)
+        if (angerScore >= 0.5) {
+          self.setState({ loading: false, result: entities.tracking[0].value, show: 'Chill!' })
+          self.triggetNext(this.state.result,"operator")
+        }
+        // if there is a tracking entity value
+        if (entities && Object.keys(entities).length > 0 && entities.tracking[0].value ) {
+          self.setState({ loading: false, result: entities.tracking[0].value, show: 'Got it!' })
+          self.triggetNext(this.state.result,"trackingSuccess")
+        }
+        // else if there is a intent entity value
+        else if (entities && Object.keys(entities).length > 0 && entities.intent[0].value) {
+          self.setState({ loading: false, result: entities.intent[0].value, show: 'No worries...' })
+          self.triggetNext(this.state.result,"unsure")
+        }
+        else {
+          self.setState({ loading: false, result: 'inputTrackingMissing', show: 'Not Found' })
+          self.triggetNext()
+        }
+      })
+      .catch(console.error)
+    }
+  }
+
+  componentWillUpdate () {
+
   }
 
   triggetNext (value,triggerInput) {
@@ -96,12 +116,14 @@ WitAi.propTypes = {
   steps: PropTypes.object,
   triggerNextStep: PropTypes.func,
   step: PropTypes.object,
-  previousStep: PropTypes.object
+  previousStep: PropTypes.object,
+  angerScore: PropTypes.number,
 }
 
 WitAi.defaultProps = {
   steps: undefined,
   triggerNextStep: undefined,
   step: undefined,
-  previousStep: undefined
+  previousStep: undefined,
+  angerScore: undefined,
 }

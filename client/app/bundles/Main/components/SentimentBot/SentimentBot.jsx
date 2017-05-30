@@ -34,22 +34,30 @@ export default class SentimentBot extends React.Component {
         })
         .then((json) => {
           // console.log('second fetch json')
-          console.log(json)
+          // console.log(json)
           // console.log(input)
           var tonesArr = []
+          let angerScore = 0
           // var res = JSON.parse(input)
           // var res = json
           // console.log(res.document_tone.tone_categories)
           json.document_tone.tone_categories.map( (tones) => {
             // console.log(val)
             tones['tones'].map((tone) => {
+
+              if (tone['tone_name'] === 'Anger') {
+                angerScore = tone['score']
+              }
               var toneObj = {}
               toneObj.tone_name = tone['tone_name']
               toneObj.score = tone['score']
               tonesArr.push(toneObj)
             })
           })
-          this.renderGraph(tonesArr)
+
+          console.log('checktone is' + angerScore)
+
+          this.renderGraph(tonesArr, angerScore)
           // this.setState({
           //   searchResult: json.Search.map((movies) => movies.Title ),
           // })
@@ -60,7 +68,7 @@ export default class SentimentBot extends React.Component {
       }
     }
 
-    renderGraph(data) {
+    renderGraph(data, angerScore) {
       var svg = d3.select("#sentiment-graph"),
         margin = {top: 20, right: 20, bottom: 100, left: 40},
         width = +svg.attr("width") - margin.left - margin.right,
@@ -136,15 +144,21 @@ export default class SentimentBot extends React.Component {
           .call(d3.axisLeft(y).ticks(10, "%"))
 
       }
-      this.props.handleLoadingDone()
+      console.log('Before handleLoadingDone: ', angerScore)
+      this.props.handleLoadingDone(angerScore)
     }
 
-    // updateName (name) {
-    //   this.setState({ name });
-    // };
+    componentWillReceiveProps(nextProps) {
+      // console.log("called receive props!")
+      // console.log(this.props.opened)
+      // console.log(nextProps.opened)
+      // console.log(this.props.opened !== nextProps.opened)
+      if (this.props.response !== nextProps.response) {
+        this.checktone(nextProps.response)
+      }
+    }
 
     render() {
-      this.checktone(this.props.response)
       return (
           <div className="graph">
             {/* <input type="text" placeholder="type something" id="message" /> */}

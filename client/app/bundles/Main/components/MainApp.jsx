@@ -51,6 +51,11 @@ export default class MainApp extends React.Component {
       {
         id: 'intent1',
         message: 'Hi {previousValue}!',
+        trigger: 'start'
+      },
+      {
+        id: 'start',
+        message: 'What would you like to do today?',
         trigger: 'intent2'
       },
       {
@@ -127,18 +132,42 @@ export default class MainApp extends React.Component {
         id: 'inputTrackingMissingOptions',
         options: [
             { value: 'yes', label: 'Yes', trigger: 'Missing1'},
-            { value: 'no', label: 'No', trigger: 'end-message'}
+            { value: 'no', label: 'No', trigger: 'before-end'}
         ]
       },
       {
         id: 'trackingSuccess',
         message: 'We are currently checking the status of {previousValue}!',
-        trigger: 'trackingEnd',
+        trigger: 'before-end',
       },
       {
-        id: 'trackingEnd',
-        message: 'We will get back to you within 3 working days',
-        trigger: 'end-message',
+        id: 'operator',
+        message: 'Hello operator speaking here',
+        trigger: 'before-end',
+      },
+      {
+        id: 'unsure',
+        message: '?',
+        trigger: 'inputTrackingMissingOptions',
+      },
+      {
+        id: 'unsureInput',
+        options: [
+            { value: 'friend', label: 'A friend', trigger: 'start'},
+            { value: 'end', label: 'End Session', trigger: 'end-message'}
+        ]
+      },
+      {
+        id: 'before-end',
+        message: 'Do you still need any help?',
+        trigger: 'before-endInput',
+      },
+      {
+        id: 'before-endInput',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'start'},
+            { value: 'end', label: 'End Session', trigger: 'end-message'}
+        ]
       },
       {
         id: 'end-message',
@@ -153,7 +182,8 @@ export default class MainApp extends React.Component {
       floating: true,
       inputValue: '',
       sentiment: '',
-      endDelay: 4000,
+      endDelay: 2000,
+      angerScore: 0,
     }
 
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
@@ -169,9 +199,11 @@ export default class MainApp extends React.Component {
     document.getElementById("messageBtn").setAttribute("disabled", "");
   }
 
-  handleLoadingDone() {
+  handleLoadingDone(angerScore) {
+    console.log('handleLoadingDone is ' + angerScore)
     document.getElementById("messageBtn").innerHTML = "Submit"
     document.getElementById("messageBtn").removeAttribute("disabled");
+    this.setState({ angerScore });
   }
 
   handleEnd ({ steps, values }) {
@@ -179,6 +211,7 @@ export default class MainApp extends React.Component {
   // console.log(values);
     setTimeout(() => {
       this.setState({ opened: false });
+      console.log('opened window')
     }, this.state.endDelay)
   }
 
@@ -192,13 +225,16 @@ export default class MainApp extends React.Component {
   componentDidMount() {
     this.handleEnd = this.handleEnd.bind(this);
     this.handleInputValue = this.handleInputValue.bind(this)
+    setTimeout(() => {
+      this.setState({ opened: true });
+    }, this.state.endDelay)
   }
 
   componentDidUpdate (prevProps, prevState) {
   }
 
   render () {
-    const { opened, floating, steps, endDelay, inputValue } = this.state;
+    const { opened, floating, steps, endDelay, inputValue, angerScore } = this.state;
     return (
       <div className="container">
           <div className="row">
@@ -214,6 +250,7 @@ export default class MainApp extends React.Component {
                 testproc={'test'}
                 headerTitle={'Postal Bot'}
                 endDelay={endDelay}
+                angerScore={angerScore}
             />
           </div>
           <div className="col-md-6">
@@ -223,7 +260,7 @@ export default class MainApp extends React.Component {
             <div className="form-group">
               <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
             </div>
-            <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
+            <SentimentBot response={this.state.inputValue} handleLoadingDone={ (angerScore) => this.handleLoadingDone(angerScore) } />
           </div>
         </div>
       </div>

@@ -16,20 +16,32 @@ export default class WitAi extends Component {
     this.triggetNext = this.triggetNext.bind(this)
   }
 
-  componentWillMount () {
-    const self = this
-    const { steps } = this.props
-    const search = steps.intentinput.value
+  componentWillReceiveProps (nextProps) {
+    console.log(this.props.angerScore)
+    console.log(nextProps.angerScore)
 
-    const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'})
-    console.log(search)
-    client.message(search, {})
+    if (this.props.angerScore !== nextProps.angerScore) {
+      const self = this
+      const { steps } = this.props
+      const { angerScore } = nextProps
+
+      const search = steps.intentinput.value
+
+      const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'})
+      console.log(search)
+      client.message(search, {})
     .then((data) => {
       console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
       const entities = data.entities
 
       console.log(Object.keys(entities).length)
-      if (entities && Object.keys(entities).length > 0) {
+
+      console.log('Anger score is ' + angerScore)
+
+      if (angerScore >= 0.5) {
+        self.setState({ loading: false, result: entities.tracking[0].value, show: 'Chill!' })
+        self.triggetNext(this.state.result, 'operator')
+      } else if (entities && Object.keys(entities).length > 0) {
         self.setState({ loading: false, result: entities.intent[0].value })
         this.triggetNext(this.state.result)
       } else {
@@ -38,6 +50,7 @@ export default class WitAi extends Component {
       }
     })
     .catch(console.error)
+    }
   }
 
   triggetNext (triggerInput) {
@@ -90,10 +103,16 @@ export default class WitAi extends Component {
 
 WitAi.propTypes = {
   steps: PropTypes.object,
-  triggerNextStep: PropTypes.func
+  triggerNextStep: PropTypes.func,
+  step: PropTypes.object,
+  previousStep: PropTypes.object,
+  angerScore: PropTypes.number
 }
 
 WitAi.defaultProps = {
   steps: undefined,
-  triggerNextStep: undefined
+  triggerNextStep: undefined,
+  step: undefined,
+  previousStep: undefined,
+  angerScore: undefined,
 }
