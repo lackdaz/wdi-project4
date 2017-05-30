@@ -35,7 +35,6 @@ class CustomStep extends Component {
       steps,
       previousStep,
       triggerNextStep,
-      angerScore,
     });
   }
 

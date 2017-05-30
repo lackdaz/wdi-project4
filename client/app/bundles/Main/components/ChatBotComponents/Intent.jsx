@@ -16,14 +16,17 @@ export default class WitAi extends Component {
     this.triggetNext = this.triggetNext.bind(this)
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props.angerScore)
-    console.log(nextProps.angerScore)
+  // componentWillReceiveProps (nextProps) {
+  componentWillMount () {
 
-    if (this.props.angerScore !== nextProps.angerScore) {
+    // console.log(this.props.angerScore)
+    // console.log(nextProps.angerScore)
+
+    // if (this.props.angerScore !== nextProps.angerScore) {
       const self = this
       const { steps } = this.props
-      const { angerScore } = nextProps
+      // const { angerScore } = nextProps
+      const { angerScore } = this.props
 
       const search = steps.intentinput.value
 
@@ -50,7 +53,7 @@ export default class WitAi extends Component {
       }
     })
     .catch(console.error)
-    }
+    // }
   }
 
   triggetNext (triggerInput) {
@@ -61,6 +64,12 @@ export default class WitAi extends Component {
       } else this.props.triggerNextStep()
     })
   }
+
+  // findAngerScore () {
+  //   if (this.props.findAngerScore) {
+  //     this.props.findAngerScore(message)
+  //   }
+  // }
 
   render () {
     const { loading, result, trigger } = this.state

@@ -90,7 +90,6 @@ class ChatBot extends Component {
       currentStep,
       renderedSteps,
       previousSteps,
-      angerScore,
     })
   }
 
@@ -108,6 +107,13 @@ class ChatBot extends Component {
     console.log("chatbot", this.props.angerScore)
     console.log("chatbot", nextProps.angerScore)
     // console.log(this.props.opened !== nextProps.opened)
+
+    if (this.props.angerScore !== nextProps.angerScore) {
+      this.setState({
+        angerScore: nextProps.angerScore,
+       })
+    }
+
     if (this.props.opened !== nextProps.opened || this.props.angerScore !== nextProps.angerScore) {
       this.setState({
         opened: nextProps.opened,
@@ -450,6 +456,7 @@ class ChatBot extends Component {
         hideUserAvatar={hideUserAvatar}
         isFirst={this.isFirstPosition(step)}
         isLast={this.isLastPosition(step)}
+        angerScore={angerScore}
       />
     )
   }
