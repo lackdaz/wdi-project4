@@ -59,7 +59,6 @@ export default class WitAi extends Component {
   }
 
   componentWillUpdate () {
-
   }
 
   triggetNext (value,triggerInput) {

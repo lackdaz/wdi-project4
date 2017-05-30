@@ -31,8 +31,7 @@ class ChatBot extends Component {
       inputValue: '',
       inputInvalid: false,
       defaulBotSettings: {},
-      defaulUserSettings: {},
-      angerScore: 0,
+      defaulUserSettings: {}
     }
 
     this.renderStep = this.renderStep.bind(this)
@@ -51,7 +50,7 @@ class ChatBot extends Component {
       endDelay,
       userAvatar,
       userBubbleColor,
-      userFontColor
+      userFontColor,
     } = this.props
     const steps = {}
 
@@ -90,7 +89,8 @@ class ChatBot extends Component {
       steps,
       currentStep,
       renderedSteps,
-      previousSteps
+      previousSteps,
+      angerScore,
     })
   }
 
@@ -104,16 +104,14 @@ class ChatBot extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log("Chatbot Props changed!")
+    // console.log("called receive props!")
+    console.log("chatbot", this.props.angerScore)
+    console.log("chatbot", nextProps.angerScore)
     // console.log(this.props.opened !== nextProps.opened)
-    if (this.props.angerScore !== nextProps.angerScore) {
-      console.log(this.props.angerScore)
-      console.log(nextProps.angerScore)
-      console.log("angerScore changed!")
-      this.setState({ angerScore: nextProps.angerScore })
-    }
-    if (this.props.opened !== nextProps.opened) {
-      this.setState({ opened: nextProps.opened })
+    if (this.props.opened !== nextProps.opened || this.props.angerScore !== nextProps.angerScore) {
+      this.setState({
+        opened: nextProps.opened,
+       })
     }
   }
 
@@ -396,7 +394,7 @@ class ChatBot extends Component {
       customDelay,
       hideBotAvatar,
       hideUserAvatar,
-      angerScore,
+      angerScore
     } = this.props
     const { options, component, asMessage } = step
     const steps = {}
@@ -414,7 +412,6 @@ class ChatBot extends Component {
     }
 
     if (component && !asMessage) {
-      console.log("inside ChatBot: " + angerScore)
       return (
         <CustomStep
           key={index}
@@ -476,7 +473,8 @@ class ChatBot extends Component {
       contentStyle,
       footerStyle,
       inputStyle,
-      className
+      className,
+      angerScore,
     } = this.props
 
     const header = headerComponent || (
@@ -596,7 +594,7 @@ ChatBot.defaultProps = {
   hideHeader: false,
   hideBotAvatar: false,
   hideUserAvatar: false,
-  angerScore: undefined,
+  angerScore: 0,
   floating: false,
   opened: undefined,
   style: {},

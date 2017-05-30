@@ -203,7 +203,7 @@ export default class MainApp extends React.Component {
     console.log('handleLoadingDone is ' + angerScore)
     document.getElementById("messageBtn").innerHTML = "Submit"
     document.getElementById("messageBtn").removeAttribute("disabled");
-    this.setState({ angerScore });
+    this.setState({ angerScore: angerScore });
   }
 
   handleEnd ({ steps, values }) {

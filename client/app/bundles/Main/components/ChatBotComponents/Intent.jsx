@@ -106,7 +106,7 @@ WitAi.propTypes = {
   triggerNextStep: PropTypes.func,
   step: PropTypes.object,
   previousStep: PropTypes.object,
-  angerScore: PropTypes.number
+  angerScore: PropTypes.number,
 }
 
 WitAi.defaultProps = {
