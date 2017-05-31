@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomerServiceChat from './CustomerServiceChat'
+
 // import ToneAnalyzerV3 from 'watson-developer-cloud/tone-analyzer/v3'
 
 export default class SentimentBot extends React.Component {
@@ -152,7 +152,6 @@ export default class SentimentBot extends React.Component {
             {/* <button onClick={ (e) => this.checktone(e, this.props.response)}>Check Tone!</button> */}
 
             {/* <div> */}
-              <CustomerServiceChat />
               <svg id="sentiment-graph" width="480" height="300"></svg>
             {/* </div> */}
               {/* write logic for sentiment bot here  */}

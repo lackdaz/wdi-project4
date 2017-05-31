@@ -18,3 +18,8 @@
 .graph {
   margin-top:50px;
 }
+
+#messages {
+  max-height: 500px;
+  overflow: auto;
+}

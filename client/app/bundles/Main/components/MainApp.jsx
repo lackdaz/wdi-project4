@@ -5,6 +5,7 @@ import Wit_ai from '../components/ChatBotComponents/Intent'
 import Missing from '../components/ChatBotComponents/Missing'
 import ChatBot from '../components/ReactSimpleChatBot/ChatBot'
 import { Wit, log } from 'node-wit'
+import CustomerServiceChat from './CustomerServiceChat/CustomerServiceChat'
 // var watson = require('watson-developer-cloud')
 
 import PropTypes from 'prop-types'
@@ -175,17 +176,17 @@ export default class MainApp extends React.Component {
   }
 
   handleEnd ({ steps, values }) {
-  // console.log(steps);
-  // console.log(values);
+    // console.log(steps);
+    // console.log(values);
     setTimeout(() => {
       this.setState({ opened: false });
     }, this.state.endDelay)
   }
 
   handleInputValue (inputValue, res) {
-  console.log(inputValue);
-  console.log(res);
-  this.setState({ inputValue });
+    console.log(inputValue);
+    console.log(res);
+    this.setState({ inputValue });
   }
 
 
@@ -203,7 +204,7 @@ export default class MainApp extends React.Component {
       <div className="container">
           {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
           <div className="row">
-            <div  className="col-md-6">
+            <div className="col-md-12">
               <ChatBot
                 userDelay={10}
                 opened={opened}
@@ -215,17 +216,22 @@ export default class MainApp extends React.Component {
                 testproc={'test'}
                 headerTitle={'Postal Bot'}
                 endDelay={endDelay}
-            />
-          </div>
-          <div className="col-md-6">
-            {/* <div className="form-group">
-              <input className="form-control" type="text" id="inputText" placeholder="type something" />
+              />
             </div>
-            <div className="form-group">
-              <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
-            </div> */}
-            <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
           </div>
+          <div className="row">
+            <div className="col-md-6">
+              <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
+            </div>
+            <div className="col-md-6">
+              {/* <div className="form-group">
+                <input className="form-control" type="text" id="inputText" placeholder="type something" />
+              </div>
+              <div className="form-group">
+                <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
+              </div> */}
+              <CustomerServiceChat />
+            </div>
         </div>
       </div>
     )

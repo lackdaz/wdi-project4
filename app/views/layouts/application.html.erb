@@ -9,26 +9,19 @@
   </head>
 
   <body>
-    <p class="navbar-text pull-right">
-      <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.email %></strong>.
-        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-      <% else %>
-        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-        <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+    <div class="container">
+      <%= render "partials/nav" %>
+      <% if notice %>
+        <p class="alert alert-success"><%= notice %></p>
       <% end %>
-    </p>
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
-    <p class="alert alert-default">
-      <%= current_user.try(:admin?)? 'logged in as admin' : '' %>
-    </p>
-    <%= yield %>
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
+      <p class="alert alert-info">
+        <%= current_user.try(:admin?)? 'logged in as admin' : '' %>
+      </p>
+      <%= yield %>
+    </div>
     <script src="https://d3js.org/d3.v4.min.js"></script>
   </body>
 </html>
