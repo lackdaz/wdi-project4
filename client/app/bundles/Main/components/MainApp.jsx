@@ -224,12 +224,6 @@ export default class MainApp extends React.Component {
               <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
             </div>
             <div className="col-md-6">
-              {/* <div className="form-group">
-                <input className="form-control" type="text" id="inputText" placeholder="type something" />
-              </div>
-              <div className="form-group">
-                <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
-              </div> */}
               <CustomerServiceChat />
             </div>
         </div>
