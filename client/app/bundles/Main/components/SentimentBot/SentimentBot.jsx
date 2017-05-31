@@ -38,7 +38,6 @@ export default class SentimentBot extends React.Component {
           // console.log(json)
           // console.log(input)
           var tonesArr = []
-          let angerScore = 0
           // var res = JSON.parse(input)
           // var res = json
           // console.log(res.document_tone.tone_categories)
@@ -46,18 +45,17 @@ export default class SentimentBot extends React.Component {
             // console.log(val)
             tones['tones'].map((tone) => {
 
-              if (tone['tone_name'] === 'Anger') {
-                angerScore = tone['score']
-              }
+              // if (tone['tone_name'] === 'Anger') {
+              //   angerScore = tone['score']
+              // }
               var toneObj = {}
               toneObj.tone_name = tone['tone_name']
               toneObj.score = tone['score']
               tonesArr.push(toneObj)
             })
           })
-          console.log('checktone is' + angerScore)
 
-          this.renderGraph(tonesArr, angerScore)
+          this.renderGraph(tonesArr)
           // this.setState({
           //   searchResult: json.Search.map((movies) => movies.Title ),
           // })
@@ -68,7 +66,7 @@ export default class SentimentBot extends React.Component {
       }
     }
 
-    renderGraph(data, angerScore) { // seth
+    renderGraph(data) { // seth
       var svg = d3.select("#sentiment-graph"),
         margin = {top: 20, right: 20, bottom: 100, left: 40},
         width = +svg.attr("width") - margin.left - margin.right,
@@ -144,7 +142,7 @@ export default class SentimentBot extends React.Component {
           .call(d3.axisLeft(y).ticks(10, "%"))
 
       }
-      this.props.handleLoadingDone(angerScore, data) // seth
+      this.props.handleLoadingDone(data) // seth
     }
 
     componentWillReceiveProps(nextProps) {

@@ -20,8 +20,8 @@ export default class WitAi extends Component {
 
   witCall () {
       const self = this
-      const { steps, angerScore } = this.props
-      const search = steps.inputTracking.value
+      const { steps } = this.props
+      const search = steps.trackingInput.value
 
       const client = new Wit({accessToken: 'IKOX36ZK6SVACQGYK2BDE7OTDFWMMXX4'})
       console.log(search)
@@ -29,21 +29,33 @@ export default class WitAi extends Component {
       .then((data) => {
         console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
         const entities = data.entities
-        const { angerScore } = self.props
         const { tonesArr } = self.props
 
+        /*iterating through objects for feelings
+        { Anger, Disgust, Fear, Joy, Sadness, Analytical, Confident, Tentative, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Range}
+        */
+        var tonesObj = {}
+        tonesArr.map((val, ind) => tonesObj[val.tone_name] = val.score)
         console.log(Object.keys(entities).length)
 
-        // this is the fuck you condition
-        console.log(angerScore)
-        if (angerScore >= 0.5) {
-          // this is the angry man condition
+        // this is the angry man condition
+        if (tonesObj.Anger >= 0.5) {
           self.setState({ loading: false, result: 'angry', show: 'Chill!' })
           self.triggetNext(self.state.result)
-        } else if (entities && Object.keys(entities).length > 0 && entities.tracking[0].value) {
+        }
+        else if (entities && Object.keys(entities).length > 0 && entities.tracking[0].value && tonesObj.Sadness >= 0.5) {
+          self.setState({ loading: false, result: entities.tracking[0].value })
+          self.triggetNext('trackingSuccessSad')
+        }
+        else if (entities && Object.keys(entities).length > 0 && entities.tracking[0].value) {
           // this is triggered if there are intent entities from wit.ai
           self.setState({ loading: false, result: entities.tracking[0].value })
-          self.triggetNext('trackingSuccess')
+          self.triggetNext('unsure')
+        }
+        else if (entities && Object.keys(entities).length > 0 && entities.intent[0].value) {
+          // this is triggered if there are intent entities from wit.ai
+          self.setState({ loading: false, result: entities.intent[0].value })
+          self.triggetNext('unsure')
         } else {
           // this is the I'm unsure condition
           self.setState({ loading: false, result: 'inputTrackingMissing', show: 'Not Found' })
@@ -63,11 +75,6 @@ export default class WitAi extends Component {
     }
 
     componentWillReceiveProps (nextProps) {
-      if (this.props.angerScore !== nextProps.angerScore) {
-        this.setState({
-          angerScore: nextProps.angerScore
-        })
-      }
       if (this.props.tonesArr !== nextProps.tonesArr) {
         this.setState({
           tonesArr: nextProps.tonesArr
@@ -76,7 +83,6 @@ export default class WitAi extends Component {
     }
 
     shouldComponentUpdate (nextProps, nextState) {
-      // console.log(this.props.angerScore !== nextProps.angerScore)
       return this.props.tonesArr !== nextProps.tonesArr
     }
 
@@ -102,7 +108,6 @@ WitAi.propTypes = {
   triggerNextStep: PropTypes.func,
   step: PropTypes.object,
   previousStep: PropTypes.object,
-  angerScore: PropTypes.number,
   tonesArr: PropTypes.array,
 }
 
@@ -111,6 +116,5 @@ WitAi.defaultProps = {
   triggerNextStep: undefined,
   step: undefined,
   previousStep: undefined,
-  angerScore: undefined,
   tonesArr: undefined,
 }

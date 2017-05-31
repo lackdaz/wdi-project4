@@ -23,28 +23,39 @@ export default class WitAi extends Component {
     const { steps } = self.props
     const search = steps.intentinput.value
 
+
     const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'})
     console.log(search)
     client.message(search, {}).then((data) => {
       console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
       const entities = data.entities
-      const { angerScore } = self.props
       const { tonesArr } = self.props
 
-      console.log(Object.keys(entities).length)
-      // console.log('Anger score is ' + angerScore)
+      /*iterating through objects for feelings
+      { Anger, Disgust, Fear, Joy, Sadness, Analytical, Confident, Tentative, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Range}
+      */
+      var tonesObj = {}
+      tonesArr.map((val, ind) => tonesObj[val.tone_name] = val.score)
 
-      if (angerScore >= 0.5) {
+      console.log(Object.keys(entities).length)
+
+      if (tonesObj.Anger >= 0.5) {
         // this is the angry man condition
         self.setState({ loading: false, result: 'angry', show: 'Chill!' })
         self.triggetNext(self.state.result)
-      } else if (entities && Object.keys(entities).length > 0) {
+      }
+      else if (entities && Object.keys(entities).length > 0 && entities.intent[0].value && tonesObj.Sadness >= 0.5) {
+      self.setState({ loading: false, result: entities.intent[0].value })
+      self.triggetNext('Are you looking for a parcel? Sad')
+    }
+      else if (entities && Object.keys(entities).length > 0) {
         // this is triggered if there are intent entities from wit.ai
         self.setState({ loading: false, result: entities.intent[0].value })
         self.triggetNext(self.state.result)
-      } else {
+      }
+      else {
         // this is the I'm unsure condition
-        self.setState({ loading: false, result: 'unsure' })
+        self.setState({ loading: false, result: 'default' })
         self.triggetNext(self.state.result)
       }
     }).catch(console.error)
@@ -60,11 +71,7 @@ export default class WitAi extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.angerScore !== nextProps.angerScore) {
-      this.setState({
-        angerScore: nextProps.angerScore
-      })
-    }
+
     if (this.props.tonesArr !== nextProps.tonesArr) {
       this.setState({
         tonesArr: nextProps.tonesArr
@@ -73,7 +80,6 @@ export default class WitAi extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    // console.log(this.props.angerScore !== nextProps.angerScore)
     return this.props.tonesArr !== nextProps.tonesArr
   }
 
@@ -124,7 +130,6 @@ WitAi.propTypes = {
   triggerNextStep: PropTypes.func,
   step: PropTypes.object,
   previousStep: PropTypes.object,
-  angerScore: PropTypes.number,
   tonesArr: PropTypes.array,
 }
 
@@ -133,6 +138,5 @@ WitAi.defaultProps = {
   triggerNextStep: undefined,
   step: undefined,
   previousStep: undefined,
-  angerScore: undefined,
   tonesArr: undefined,
 }

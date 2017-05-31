@@ -32,18 +32,17 @@ class TextStep extends Component {
   }
 
   renderMessage() {
-    const { previousValue, step, angerScore } = this.props;
+    const { previousValue, step } = this.props;
     const { component } = step;
     let { message } = step;
 
     if (component) {
-      const { steps, previousStep, triggerNextStep, angerScore, tonesArr } = this.props;
+      const { steps, previousStep, triggerNextStep, tonesArr } = this.props;
       return React.cloneElement(component, {
         step,
         steps,
         previousStep,
         triggerNextStep,
-        angerScore,
         tonesArr,
       });
     }
@@ -62,7 +61,6 @@ class TextStep extends Component {
       bubbleStyle,
       hideBotAvatar,
       hideUserAvatar,
-      angerScore,
     } = this.props;
     const {
       avatar,
@@ -127,7 +125,6 @@ TextStep.propTypes = {
   previousStep: PropTypes.object,
   previousValue: PropTypes.any,
   steps: PropTypes.object,
-  angerScore: PropTypes.any,
   tonesArr: PropTypes.array,
 };
 
@@ -135,7 +132,6 @@ TextStep.defaultProps = {
   previousStep: {},
   steps: {},
   previousValue: '',
-  angerScore: '',
   tonesArr: [],
 };
 

@@ -31,7 +31,9 @@ class ChatBot extends Component {
       inputValue: '',
       inputInvalid: false,
       defaulBotSettings: {},
-      defaulUserSettings: {}
+      defaulUserSettings: {},
+      update: false,
+      reset: true,
     }
 
     this.renderStep = this.renderStep.bind(this)
@@ -103,22 +105,26 @@ class ChatBot extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    // console.log("called receive props!")
-    console.log("chatbot", this.props.angerScore)
-    console.log("chatbot", nextProps.angerScore)
-    // console.log(this.props.opened !== nextProps.opened)
 
-    if (this.props.angerScore !== nextProps.angerScore) {
+    if (this.props.tonesArr !== nextProps.tonesArr) {
       this.setState({
-        angerScore: nextProps.angerScore,
+        update: true,
        })
     }
 
-    if (this.props.opened !== nextProps.opened || this.props.angerScore !== nextProps.angerScore) {
+    if (this.props.opened !== nextProps.opened) {
       this.setState({
         opened: nextProps.opened,
+        update: true,
        })
     }
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    if (this.state.update === true ) {
+      return true
+    }
+    return false
   }
 
   componentWillUnmount () {
@@ -230,7 +236,7 @@ class ChatBot extends Component {
     }
   }
 
-  handleInputValue (message, response) {
+  handleInputValue (message) {
     if (this.props.handleInputValue) {
       this.props.handleInputValue(message)
     }
@@ -353,7 +359,7 @@ class ChatBot extends Component {
           renderedSteps,
           previousSteps,
           disabled: true,
-          inputValue: ''
+          inputValue: '',
         })
       }
     }
@@ -400,7 +406,6 @@ class ChatBot extends Component {
       customDelay,
       hideBotAvatar,
       hideUserAvatar,
-      angerScore,
       tonesArr,
     } = this.props
     const { options, component, asMessage } = step
@@ -428,8 +433,7 @@ class ChatBot extends Component {
           style={customStyle}
           previousStep={previousStep}
           triggerNextStep={this.triggerNextStep}
-          angerScore={angerScore}
-          tones={tonesArr}
+          tonesArr={tonesArr}
         />
       )
     }
@@ -444,7 +448,6 @@ class ChatBot extends Component {
         />
       )
     }
-    console.log("before props :",angerScore)
     return (
       <TextStep
         key={index}
@@ -458,7 +461,6 @@ class ChatBot extends Component {
         hideUserAvatar={hideUserAvatar}
         isFirst={this.isFirstPosition(step)}
         isLast={this.isLastPosition(step)}
-        angerScore={angerScore}
         tonesArr={tonesArr}
       />
     )
@@ -484,7 +486,6 @@ class ChatBot extends Component {
       footerStyle,
       inputStyle,
       className,
-      angerScore,
     } = this.props
 
     const header = headerComponent || (
@@ -569,7 +570,6 @@ ChatBot.propTypes = {
   hideHeader: PropTypes.bool,
   hideBotAvatar: PropTypes.bool,
   hideUserAvatar: PropTypes.bool,
-  angerScore: PropTypes.number,
   tonesArr: PropTypes.array,
   floating: PropTypes.bool,
   opened: PropTypes.bool,
@@ -605,7 +605,6 @@ ChatBot.defaultProps = {
   hideHeader: false,
   hideBotAvatar: false,
   hideUserAvatar: false,
-  angerScore: 0,
   tonesArr: [],
   floating: false,
   opened: undefined,

@@ -3,6 +3,7 @@
 import SentimentBot from '../components/SentimentBot/SentimentBot'
 import Wit_ai from '../components/ChatBotComponents/Intent'
 import Missing from '../components/ChatBotComponents/Missing'
+import Summary from '../components/ChatBotComponents/Summary'
 import ChatBot from '../components/ReactSimpleChatBot/ChatBot'
 import { Wit, log } from 'node-wit'
 // var watson = require('watson-developer-cloud')
@@ -101,12 +102,17 @@ export default class MainApp extends React.Component {
         trigger: 'Missing1'
       },
       {
-        id: 'Missing1',
-        message: 'What is your tracking number?',
-        trigger: 'inputTracking'
+        id: 'Are you looking for a parcel? Sad',
+        message: 'I\'m sorry for your loss. We\'re trying our best to locate your parcel',
+        trigger: 'Missing1'
       },
       {
-        id: 'inputTracking',
+        id: 'Missing1',
+        message: 'What is your tracking number?',
+        trigger: 'trackingInput'
+      },
+      {
+        id: 'trackingInput',
         user: true,
         trigger: 'missing',
         validator: (value) => {
@@ -125,6 +131,12 @@ export default class MainApp extends React.Component {
         trigger: 'inputTrackingMissing'
       },
       {
+        id: 'summary',
+        component: <Summary />,
+        asMessage: true,
+        trigger: 'confirmation'
+      },
+      {
         id: 'inputTrackingMissing',
         message: 'Whoops! Would you like to try again?',
         trigger: 'inputTrackingMissingOptions',
@@ -138,8 +150,57 @@ export default class MainApp extends React.Component {
       },
       {
         id: 'trackingSuccess',
-        message: 'We are currently checking the status of {previousValue}!',
+        message: 'We will be working on recovering your parcel shortly! I just need some more details',
+        trigger: 'address',
+      },
+      {
+        id: 'trackingSuccessSad',
+        message: 'Cheer up! 90% of our missing parcels are redelivered within the first 48 hours',
         trigger: 'before-end',
+      },
+      {
+        id: 'address',
+        message: 'What is your address?',
+        trigger: 'addressInput',
+      },
+      {
+        id: 'addressInput',
+        user: true,
+        trigger: 'missing',
+        validator: (value) => {
+          if (!value) return 'Please try again!'
+          else {
+            return true
+          }
+        }
+      },
+      {
+        id: 'contact',
+        message: 'What is your contact?',
+        trigger: 'contactInput',
+      },
+      {
+        id: 'contactInput',
+        user: true,
+        trigger: 'summary',
+        validator: (value) => {
+          if (!value) return 'Please try again!'
+          else {
+            return true
+          }
+        }
+      },
+      {
+        id: 'confirmation',
+        message: 'Before I forget, are these details correct?',
+        trigger: 'confirmationInput',
+      },
+      {
+        id: 'confirmationInput',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'before-end'},
+            { value: 'no', label: 'No', trigger: 'before-end'}
+        ]
       },
       {
         id: 'angry',
@@ -160,14 +221,26 @@ export default class MainApp extends React.Component {
       },
       {
         id: 'unsure',
-        message: '?',
+        message: 'No worries. Are you expecting a package from an online retailer?',
         trigger: 'unsureInput',
       },
       {
         id: 'unsureInput',
         options: [
-            { value: 'friend', label: 'A friend', trigger: 'start'},
-            { value: 'end', label: 'End Session', trigger: 'end-message'}
+            { value: 'yes', label: 'Yes', trigger: 'start'},
+            { value: 'no', label: 'No', trigger: 'end-message'}
+        ]
+      },
+      {
+        id: 'default',
+        message: 'Sorry I don\t quite understand you. Would you like to try again?',
+        trigger: 'defaultInput',
+      },
+      {
+        id: 'defaultInput',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'start'},
+            { value: 'no', label: 'No', trigger: 'end-message'}
         ]
       },
       {
@@ -196,7 +269,6 @@ export default class MainApp extends React.Component {
       inputValue: '',
       sentiment: '',
       endDelay: 2000,
-      angerScore: 0,
       tonesArr: [],
     }
 
@@ -213,12 +285,11 @@ export default class MainApp extends React.Component {
     document.getElementById("messageBtn").setAttribute("disabled", "");
   }
 
-  handleLoadingDone(angerScore,tonesArr) {
-    console.log('MainApp is ' + angerScore)
-    console.log(tonesArr)
+  handleLoadingDone(tonesArr) {
+    // console.log(tonesArr)
     document.getElementById("messageBtn").innerHTML = "Submit"
     document.getElementById("messageBtn").removeAttribute("disabled");
-    this.setState({ angerScore, tonesArr });
+    this.setState({ tonesArr });
   }
 
   handleEnd ({ steps, values }) {
@@ -249,7 +320,7 @@ export default class MainApp extends React.Component {
   }
 
   render () {
-    const { opened, floating, steps, endDelay, inputValue, angerScore, tonesArr } = this.state;
+    const { opened, floating, steps, endDelay, inputValue, tonesArr } = this.state;
     return (
       <div className="container">
           {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
@@ -266,7 +337,6 @@ export default class MainApp extends React.Component {
                 testproc={'test'}
                 headerTitle={'Postal Bot'}
                 endDelay={endDelay}
-                angerScore={angerScore}
                 tonesArr={tonesArr}
             />
           </div>
@@ -277,7 +347,7 @@ export default class MainApp extends React.Component {
             <div className="form-group">
               <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
             </div>
-            <SentimentBot response={this.state.inputValue} handleLoadingDone={ (angerScore,tonesArr) => this.handleLoadingDone(angerScore,tonesArr) } />
+            <SentimentBot response={this.state.inputValue} handleLoadingDone={ (tonesArr) => this.handleLoadingDone(tonesArr) } />
 
           </div>
         </div>
