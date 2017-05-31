@@ -5,7 +5,7 @@ class ChatBotController < ApplicationController
 
   def index
     steps = JSON.parse(@@file)
-    @chat_bot_props = { steps: steps }
+    @chat_bot_props = { steps: steps, isadmin: current_user.try(:admin?) }
   end
 
   private

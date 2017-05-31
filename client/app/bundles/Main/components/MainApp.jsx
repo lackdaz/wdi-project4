@@ -201,6 +201,7 @@ export default class MainApp extends React.Component {
     const { opened, floating, steps, endDelay, inputValue } = this.state;
     return (
       <div className="container">
+          {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
           <div className="row">
             <div  className="col-md-6">
               <ChatBot
@@ -217,12 +218,12 @@ export default class MainApp extends React.Component {
             />
           </div>
           <div className="col-md-6">
-            <div className="form-group">
+            {/* <div className="form-group">
               <input className="form-control" type="text" id="inputText" placeholder="type something" />
             </div>
             <div className="form-group">
               <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
-            </div>
+            </div> */}
             <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
           </div>
         </div>

@@ -44,6 +44,14 @@ gem 'pg'
 # devise
 gem 'devise'
 
+# redis
+gem 'redis', '~> 3.2'
+
+# Use jquery as the JavaScript library
+gem 'jquery-turbolinks'
+gem 'jquery-ui-rails'
+gem 'jquery-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
