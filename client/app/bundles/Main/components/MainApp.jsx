@@ -142,8 +142,20 @@ export default class MainApp extends React.Component {
         trigger: 'before-end',
       },
       {
+        id: 'angry',
+        message: 'I\'m sorry to have offended you, would you like to talk to an operator instead?',
+        trigger: 'angryInput',
+      },
+      {
+        id: 'angryInput',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'operator'},
+            { value: 'no', label: 'No', trigger: 'start'}
+        ]
+      },
+      {
         id: 'operator',
-        message: 'Hello operator speaking here',
+        message: 'Hello! Operator speaking here, how may I help you!',
         trigger: 'before-end',
       },
       {

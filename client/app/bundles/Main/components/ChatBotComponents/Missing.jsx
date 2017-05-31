@@ -15,13 +15,11 @@ export default class WitAi extends Component {
     }
 
     this.triggetNext = this.triggetNext.bind(this)
+    this.witCall = this.witCall.bind(this)
   }
 
-  // componentWillReceiveProps(nextProps){
-componentsWillMount() {
-    if (this.props.angerScore !== nextProps.angerScore) {
+  witCall () {
       const self = this
-      // const { loading, result, show } = this.state
       const { steps, angerScore } = this.props
       const search = steps.inputTracking.value
 
@@ -31,47 +29,54 @@ componentsWillMount() {
       .then((data) => {
         console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
         const entities = data.entities
+        const { angerScore } = self.props
 
         console.log(Object.keys(entities).length)
 
         // this is the fuck you condition
         console.log(angerScore)
         if (angerScore >= 0.5) {
-          self.setState({ loading: false, result: entities.tracking[0].value, show: 'Chill!' })
-          self.triggetNext(this.state.result,"operator")
-        }
-        // if there is a tracking entity value
-        if (entities && Object.keys(entities).length > 0 && entities.tracking[0].value ) {
-          self.setState({ loading: false, result: entities.tracking[0].value, show: 'Got it!' })
-          self.triggetNext(this.state.result,"trackingSuccess")
-        }
-        // else if there is a intent entity value
-        else if (entities && Object.keys(entities).length > 0 && entities.intent[0].value) {
-          self.setState({ loading: false, result: entities.intent[0].value, show: 'No worries...' })
-          self.triggetNext(this.state.result,"unsure")
-        }
-        else {
+          // this is the angry man condition
+          self.setState({ loading: false, result: 'angry', show: 'Chill!' })
+          self.triggetNext(self.state.result)
+        } else if (entities && Object.keys(entities).length > 0 && entities.intent[0].value) {
+          // this is triggered if there are intent entities from wit.ai
+          self.setState({ loading: false, result: entities.tracking[0].value })
+          self.triggetNext(self.state.result)
+        } else {
+          // this is the I'm unsure condition
           self.setState({ loading: false, result: 'inputTrackingMissing', show: 'Not Found' })
           self.triggetNext()
         }
       })
       .catch(console.error)
     }
-  }
 
-  componentWillUpdate () {
-  }
+    triggetNext (triggerInput, value) {
+      this.setState({ trigger: true }, () => {
+    // this.props.triggerNextStep(null,{ end });
+        if (triggerInput) {
+          this.props.triggerNextStep({ value: null, trigger: triggerInput })
+        } else this.props.triggerNextStep()
+      })
+    }
 
-  triggetNext (triggerInput, value) {
-    this.setState({ trigger: true }, () => {
-      // this.props.triggerNextStep(null,{ end });
-      if (triggerInput) {
-        console.log(value)
-        console.log(triggerInput)
-        this.props.triggerNextStep({ value: value, trigger: triggerInput })
-      } else this.props.triggerNextStep()
-    })
-  }
+    componentWillReceiveProps (nextProps) {
+      if (this.props.angerScore !== nextProps.angerScore) {
+        this.setState({
+          angerScore: nextProps.angerScore
+        })
+      }
+    }
+
+    shouldComponentUpdate (nextProps, nextState) {
+      console.log(this.props.angerScore !== nextProps.angerScore)
+      return this.props.angerScore !== nextProps.angerScore
+    }
+
+    componentWillUpdate () {
+      this.witCall()
+    }
 
   render () {
     const { loading, result, trigger, show } = this.state

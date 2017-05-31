@@ -20,9 +20,6 @@ export default class WitAi extends Component {
   witCall () {
     const self = this
     const { steps } = self.props
-    // const angerScore = self.props.angerScore
-
-
     const search = steps.intentinput.value
 
     const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'})
@@ -33,16 +30,18 @@ export default class WitAi extends Component {
       const { angerScore } = self.props
 
       console.log(Object.keys(entities).length)
-
-      console.log('Anger score is ' + angerScore)
+      // console.log('Anger score is ' + angerScore)
 
       if (angerScore >= 0.5) {
-        self.setState({ loading: false, result: 'operator', show: 'Chill!' })
+        // this is the angry man condition
+        self.setState({ loading: false, result: 'angry', show: 'Chill!' })
         self.triggetNext(self.state.result)
       } else if (entities && Object.keys(entities).length > 0) {
+        // this is triggered if there are intent entities from wit.ai
         self.setState({ loading: false, result: entities.intent[0].value })
         self.triggetNext(self.state.result)
       } else {
+        // this is the I'm unsure condition
         self.setState({ loading: false, result: 'unsure' })
         self.triggetNext(self.state.result)
       }
