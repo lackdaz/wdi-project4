@@ -60,6 +60,7 @@ class TextStep extends Component {
       bubbleStyle,
       hideBotAvatar,
       hideUserAvatar,
+      angerScore,
     } = this.props;
     const {
       avatar,
@@ -124,12 +125,14 @@ TextStep.propTypes = {
   previousStep: PropTypes.object,
   previousValue: PropTypes.any,
   steps: PropTypes.object,
+  angerScore: PropTypes.number,
 };
 
 TextStep.defaultProps = {
   previousStep: {},
   steps: {},
   previousValue: '',
+  angerScore: undefined,
 };
 
 export default TextStep;

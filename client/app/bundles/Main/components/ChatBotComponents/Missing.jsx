@@ -17,7 +17,8 @@ export default class WitAi extends Component {
     this.triggetNext = this.triggetNext.bind(this)
   }
 
-  componentWillReceiveProps(nextProps){
+  // componentWillReceiveProps(nextProps){
+componentsWillMount() {
     if (this.props.angerScore !== nextProps.angerScore) {
       const self = this
       // const { loading, result, show } = this.state
