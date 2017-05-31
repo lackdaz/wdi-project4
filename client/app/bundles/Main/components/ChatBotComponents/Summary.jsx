@@ -36,7 +36,10 @@ export default class Summary extends Component {
     render () {
       const { name, contactInput, addressInput, trackingInput } = this.state
       return (
-        <div style={{ width: '100%' }}>
+        <div style={{
+          textAlign: 'center',
+          width: '100%' 
+        }}>
           <h3>Summary</h3>
           <table>
             <tbody>

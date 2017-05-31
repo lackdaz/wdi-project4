@@ -166,7 +166,7 @@ export default class MainApp extends React.Component {
       {
         id: 'addressInput',
         user: true,
-        trigger: 'missing',
+        trigger: 'contact',
         validator: (value) => {
           if (!value) return 'Please try again!'
           else {

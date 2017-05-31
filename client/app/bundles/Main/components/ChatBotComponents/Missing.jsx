@@ -43,16 +43,15 @@ export default class WitAi extends Component {
           self.setState({ loading: false, result: 'angry', show: 'Chill!' })
           self.triggetNext(self.state.result)
         }
-        else if (entities && Object.keys(entities).length > 0 && entities.tracking[0].value && tonesObj.Sadness >= 0.5) {
+        else if (entities && Object.keys(entities).length > 0 && entities.tracking && tonesObj.Sadness >= 0.5) {
           self.setState({ loading: false, result: entities.tracking[0].value })
           self.triggetNext('trackingSuccessSad')
         }
-        else if (entities && Object.keys(entities).length > 0 && entities.tracking[0].value) {
-          // this is triggered if there are intent entities from wit.ai
+        else if (entities && Object.keys(entities).length > 0 && entities.tracking) {
           self.setState({ loading: false, result: entities.tracking[0].value })
-          self.triggetNext('unsure')
+          self.triggetNext('trackingSuccess')
         }
-        else if (entities && Object.keys(entities).length > 0 && entities.intent[0].value) {
+        else if (entities && Object.keys(entities).length > 0 && entities.intent) {
           // this is triggered if there are intent entities from wit.ai
           self.setState({ loading: false, result: entities.intent[0].value })
           self.triggetNext('unsure')
