@@ -237,6 +237,7 @@ export default class MainApp extends React.Component {
     const { opened, floating, steps, endDelay, inputValue, angerScore } = this.state;
     return (
       <div className="container">
+          {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
           <div className="row">
             <div  className="col-md-6">
               <ChatBot
@@ -261,6 +262,7 @@ export default class MainApp extends React.Component {
               <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
             </div>
             <SentimentBot response={this.state.inputValue} handleLoadingDone={ (angerScore) => this.handleLoadingDone(angerScore) } />
+
           </div>
         </div>
       </div>
