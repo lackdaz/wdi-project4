@@ -85,6 +85,7 @@ export default class MainApp extends React.Component {
       {
         id: 'intent',
         component: <Wit_ai />,
+        replace: true,
         waitAction: true,
         asMessage: true,
         trigger: 'askintent1'
@@ -148,7 +149,7 @@ export default class MainApp extends React.Component {
       {
         id: 'unsure',
         message: '?',
-        trigger: 'inputTrackingMissingOptions',
+        trigger: 'unsureInput',
       },
       {
         id: 'unsureInput',

@@ -32,17 +32,18 @@ class TextStep extends Component {
   }
 
   renderMessage() {
-    const { previousValue, step } = this.props;
+    const { previousValue, step, angerScore } = this.props;
     const { component } = step;
     let { message } = step;
 
     if (component) {
-      const { steps, previousStep, triggerNextStep } = this.props;
+      const { steps, previousStep, triggerNextStep, angerScore } = this.props;
       return React.cloneElement(component, {
         step,
         steps,
         previousStep,
         triggerNextStep,
+        angerScore,
       });
     }
 
@@ -125,14 +126,14 @@ TextStep.propTypes = {
   previousStep: PropTypes.object,
   previousValue: PropTypes.any,
   steps: PropTypes.object,
-  angerScore: PropTypes.number,
+  angerScore: PropTypes.any,
 };
 
 TextStep.defaultProps = {
   previousStep: {},
   steps: {},
   previousValue: '',
-  angerScore: undefined,
+  angerScore: '',
 };
 
 export default TextStep;

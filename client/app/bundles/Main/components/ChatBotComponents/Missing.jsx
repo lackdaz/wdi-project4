@@ -62,7 +62,7 @@ componentsWillMount() {
   componentWillUpdate () {
   }
 
-  triggetNext (value,triggerInput) {
+  triggetNext (triggerInput, value) {
     this.setState({ trigger: true }, () => {
       // this.props.triggerNextStep(null,{ end });
       if (triggerInput) {

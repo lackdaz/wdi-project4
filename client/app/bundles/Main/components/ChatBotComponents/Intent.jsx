@@ -14,66 +14,69 @@ export default class WitAi extends Component {
     }
 
     this.triggetNext = this.triggetNext.bind(this)
+    this.witCall = this.witCall.bind(this)
   }
 
-  // componentWillReceiveProps (nextProps) {
-  componentWillMount () {
+  witCall () {
+    const self = this
+    const { steps } = self.props
+    // const angerScore = self.props.angerScore
 
-    // console.log(this.props.angerScore)
-    // console.log(nextProps.angerScore)
 
-    // if (this.props.angerScore !== nextProps.angerScore) {
-      const self = this
-      const { steps } = this.props
-      // const { angerScore } = nextProps
-      const { angerScore } = this.props
+    const search = steps.intentinput.value
 
-      const search = steps.intentinput.value
-
-      const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'})
-      console.log(search)
-      client.message(search, {})
-    .then((data) => {
+    const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'})
+    console.log(search)
+    client.message(search, {}).then((data) => {
       console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
       const entities = data.entities
+      const { angerScore } = self.props
 
       console.log(Object.keys(entities).length)
 
       console.log('Anger score is ' + angerScore)
 
       if (angerScore >= 0.5) {
-        self.setState({ loading: false, result: entities.tracking[0].value, show: 'Chill!' })
-        self.triggetNext(this.state.result, 'operator')
+        self.setState({ loading: false, result: 'operator', show: 'Chill!' })
+        self.triggetNext(self.state.result)
       } else if (entities && Object.keys(entities).length > 0) {
         self.setState({ loading: false, result: entities.intent[0].value })
-        this.triggetNext(this.state.result)
+        self.triggetNext(self.state.result)
       } else {
-        self.setState({ loading: false, result: 'dunno' })
-        this.triggetNext(this.state.result)
+        self.setState({ loading: false, result: 'unsure' })
+        self.triggetNext(self.state.result)
       }
-    })
-    .catch(console.error)
-    // }
+    }).catch(console.error)
   }
 
-  triggetNext (triggerInput) {
+  triggetNext (triggerInput, value) {
     this.setState({ trigger: true }, () => {
-      // this.props.triggerNextStep(null,{ end });
+  // this.props.triggerNextStep(null,{ end });
       if (triggerInput) {
         this.props.triggerNextStep({ value: null, trigger: triggerInput })
       } else this.props.triggerNextStep()
     })
   }
 
-  // findAngerScore () {
-  //   if (this.props.findAngerScore) {
-  //     this.props.findAngerScore(message)
-  //   }
-  // }
+  componentWillReceiveProps (nextProps) {
+    if (this.props.angerScore !== nextProps.angerScore) {
+      this.setState({
+        angerScore: nextProps.angerScore
+      })
+    }
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    console.log(this.props.angerScore !== nextProps.angerScore)
+    return this.props.angerScore !== nextProps.angerScore
+  }
+
+  componentWillUpdate () {
+    this.witCall()
+  }
 
   render () {
     const { loading, result, trigger } = this.state
-
     return (
       <div className='dbpedia'>
 
@@ -115,7 +118,7 @@ WitAi.propTypes = {
   triggerNextStep: PropTypes.func,
   step: PropTypes.object,
   previousStep: PropTypes.object,
-  angerScore: PropTypes.number,
+  angerScore: PropTypes.number
 }
 
 WitAi.defaultProps = {
@@ -123,5 +126,5 @@ WitAi.defaultProps = {
   triggerNextStep: undefined,
   step: undefined,
   previousStep: undefined,
-  angerScore: undefined,
+  angerScore: undefined
 }

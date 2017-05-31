@@ -442,7 +442,7 @@ class ChatBot extends Component {
         />
       )
     }
-
+    console.log("before props :",angerScore)
     return (
       <TextStep
         key={index}
