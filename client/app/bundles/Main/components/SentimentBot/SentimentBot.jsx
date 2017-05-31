@@ -23,7 +23,12 @@ export default class SentimentBot extends React.Component {
         // this.state = { name: this.props.name };
     }
 
+    // componentDidMount() {
+    //
+    // }
+
     checktone(message) {
+      console.log('Message incoming:', message)
       if(message) {
         message = encodeURIComponent(message)
         // let message = encodeURIComponent(document.getElementById('message').value)

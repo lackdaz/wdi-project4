@@ -14,15 +14,17 @@ export default class CustomerServiceChat extends React.Component {
       this.setupSubscription();
     }
 
-    updateCommentList(comment) {
-      let message = JSON.parse(comment);
-      this.setState({message: message});
+    handleNewChat(message) {
+      this.props.handleNewChat(message);
+      // let message = JSON.parse(comment);
+      // this.setState({message: message});
     }
 
     setupSubscription() {
       let messages = $('#messages')
       if($('#messages').length > 0) {
         var messages_to_bottom;
+        let handleNewChat = this.handleNewChat.bind(this)
 
         messages_to_bottom = function() {
           return messages.scrollTop(messages.prop("scrollHeight"));
@@ -43,13 +45,21 @@ export default class CustomerServiceChat extends React.Component {
           received: function(data) {
             messages.append(data['message']);
             messages_to_bottom();
+
+            // parse HTML message back to actual message
+            let messageHTML = $.parseHTML( data['message'] )
+            let p = messageHTML[0].querySelector('.card-text')
+            let a = p.innerText.split('says')[1]
+            handleNewChat(a.replace(/(\r\n|\n|\r)/gm,"").trim());
           },
 
           send_message: function(message) {
             this.perform('send_message', {
               'message': message,
             })
-          }
+          },
+
+          // handleNewChat: this.handleNewChat
         });
 
         $('#new_message').submit(function(e) {
@@ -118,9 +128,9 @@ export default class CustomerServiceChat extends React.Component {
       // });
     }
 
-    handleMessage(e) {
-
-    }
+    // handleMessage(e) {
+    //
+    // }
 
     // updateName (name) {
     //   this.setState({ name });
@@ -130,9 +140,10 @@ export default class CustomerServiceChat extends React.Component {
       // this.checktone(this.props.response)
       return (
           <div className="chatbox">
+            <h3>Talk to our Customer Service</h3>
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h3 className="panel-title">Talk to our Customer Service</h3>
+                <h3 className="panel-title">Chats</h3>
               </div>
               <div className="panel-body" id="messages">
               </div>
@@ -142,7 +153,7 @@ export default class CustomerServiceChat extends React.Component {
                 <input className="form-control" type="text" id="message_body" placeholder="type something to chat" />
               </div>
               <div className="form-group">
-                <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Send</button>
+                <button className="btn btn-default" id="messageBtn">Send</button>
               </div>
             </form>
           </div>

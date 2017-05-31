@@ -17,9 +17,7 @@
       <% if alert %>
         <p class="alert alert-danger"><%= alert %></p>
       <% end %>
-      <p class="alert alert-info">
-        <%= current_user.try(:admin?)? 'logged in as admin' : '' %>
-      </p>
+      <%= current_user.try(:admin?)? "<p class=\"alert alert-info\">logged in as admin<p>".html_safe : '' %>
       <%= yield %>
     </div>
     <script src="https://d3js.org/d3.v4.min.js"></script>

@@ -189,6 +189,11 @@ export default class MainApp extends React.Component {
     this.setState({ inputValue });
   }
 
+  handleNewChat(message) {
+    this.setState({
+      inputValue: message
+    })
+  }
 
   componentDidMount() {
     this.handleEnd = this.handleEnd.bind(this);
@@ -221,10 +226,18 @@ export default class MainApp extends React.Component {
           </div>
           <div className="row">
             <div className="col-md-6">
-              <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
+              { this.props.is_Logged_in ? (
+                <CustomerServiceChat handleNewChat={ (chat) => this.handleNewChat.bind(this)(chat) } />
+              ) : (
+                <h5>Please sign in to talk to our customer service agent or chat with our bot on the lower right corner.</h5>
+              )}
             </div>
             <div className="col-md-6">
-              <CustomerServiceChat />
+              <h3>Sentiment Analysis</h3>
+              { this.props.isadmin ? (
+                <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
+              ) : ('') }
+
             </div>
         </div>
       </div>
