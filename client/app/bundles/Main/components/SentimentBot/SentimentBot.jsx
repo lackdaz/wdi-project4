@@ -28,7 +28,7 @@ export default class SentimentBot extends React.Component {
     // }
 
     checktone(message) {
-      console.log('Message incoming:', message)
+      // console.log('Messagse incoming:', message)
       if(message) {
         message = encodeURIComponent(message)
         // let message = encodeURIComponent(document.getElementById('message').value)

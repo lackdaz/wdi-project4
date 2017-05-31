@@ -344,7 +344,8 @@ export default class MainApp extends React.Component {
                 headerTitle={'Postal Bot'}
                 endDelay={endDelay}
                 tonesArr={tonesArr}
-            />
+              />
+            </div>
           </div>
           <div className="row">
             <div className="col-md-6">
@@ -355,11 +356,10 @@ export default class MainApp extends React.Component {
               )}
             </div>
             <div className="col-md-6">
+              { this.props.isadmin && <h3>Sentiment Analysis</h3> }
               { this.props.isadmin ? (
-                <h3>Sentiment Analysis</h3>
                 <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
               ) : ('') }
-
             </div>
         </div>
       </div>
