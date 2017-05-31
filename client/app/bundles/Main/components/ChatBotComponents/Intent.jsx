@@ -10,48 +10,85 @@ export default class WitAi extends Component {
     this.state = {
       loading: true,
       result: '',
+      show: '',
       trigger: false
     }
 
     this.triggetNext = this.triggetNext.bind(this)
+    this.witCall = this.witCall.bind(this)
   }
 
-  componentWillMount () {
+  witCall () {
     const self = this
-    const { steps } = this.props
+    const { steps } = self.props
     const search = steps.intentinput.value
+
 
     const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'})
     console.log(search)
-    client.message(search, {})
-    .then((data) => {
+    client.message(search, {}).then((data) => {
       console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
       const entities = data.entities
+      const { tonesArr } = self.props
+
+      /*iterating through objects for feelings
+      { Anger, Disgust, Fear, Joy, Sadness, Analytical, Confident, Tentative, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Range}
+      */
+      var tonesObj = {}
+      tonesArr.map((val, ind) => tonesObj[val.tone_name] = val.score)
 
       console.log(Object.keys(entities).length)
-      if (entities && Object.keys(entities).length > 0) {
-        self.setState({ loading: false, result: entities.intent[0].value })
-        this.triggetNext(this.state.result)
-      } else {
-        self.setState({ loading: false, result: 'dunno' })
-        this.triggetNext(this.state.result)
+
+      if (tonesObj.Anger >= 0.5) {
+        // this is the angry man condition
+        self.setState({ loading: false, result: 'angry', show: 'Chill!' })
+        self.triggetNext(self.state.result)
       }
-    })
-    .catch(console.error)
+      else if (entities && Object.keys(entities).length > 0 && entities.intent[0].value && tonesObj.Sadness >= 0.5) {
+      self.setState({ loading: false, result: entities.intent[0].value })
+      self.triggetNext('Are you looking for a parcel? Sad')
+    }
+      else if (entities && Object.keys(entities).length > 0) {
+        // this is triggered if there are intent entities from wit.ai
+        self.setState({ loading: false, result: entities.intent[0].value })
+        self.triggetNext(self.state.result)
+      }
+      else {
+        // this is the I'm unsure condition
+        self.setState({ loading: false, result: 'default' })
+        self.triggetNext(self.state.result)
+      }
+    }).catch(console.error)
   }
 
-  triggetNext (triggerInput) {
+  triggetNext (triggerInput, value) {
     this.setState({ trigger: true }, () => {
-      // this.props.triggerNextStep(null,{ end });
+  // this.props.triggerNextStep(null,{ end });
       if (triggerInput) {
         this.props.triggerNextStep({ value: null, trigger: triggerInput })
       } else this.props.triggerNextStep()
     })
   }
 
+  componentWillReceiveProps (nextProps) {
+
+    if (this.props.tonesArr !== nextProps.tonesArr) {
+      this.setState({
+        tonesArr: nextProps.tonesArr
+      })
+    }
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    return this.props.tonesArr !== nextProps.tonesArr
+  }
+
+  componentWillUpdate () {
+    this.witCall()
+  }
+
   render () {
     const { loading, result, trigger } = this.state
-
     return (
       <div className='dbpedia'>
 
@@ -90,10 +127,16 @@ export default class WitAi extends Component {
 
 WitAi.propTypes = {
   steps: PropTypes.object,
-  triggerNextStep: PropTypes.func
+  triggerNextStep: PropTypes.func,
+  step: PropTypes.object,
+  previousStep: PropTypes.object,
+  tonesArr: PropTypes.array,
 }
 
 WitAi.defaultProps = {
   steps: undefined,
-  triggerNextStep: undefined
+  triggerNextStep: undefined,
+  step: undefined,
+  previousStep: undefined,
+  tonesArr: undefined,
 }

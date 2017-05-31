@@ -3,6 +3,7 @@
 import SentimentBot from '../components/SentimentBot/SentimentBot'
 import Wit_ai from '../components/ChatBotComponents/Intent'
 import Missing from '../components/ChatBotComponents/Missing'
+import Summary from '../components/ChatBotComponents/Summary'
 import ChatBot from '../components/ReactSimpleChatBot/ChatBot'
 import { Wit, log } from 'node-wit'
 import CustomerServiceChat from './CustomerServiceChat/CustomerServiceChat'
@@ -52,6 +53,11 @@ export default class MainApp extends React.Component {
       {
         id: 'intent1',
         message: 'Hi {previousValue}!',
+        trigger: 'start'
+      },
+      {
+        id: 'start',
+        message: 'What would you like to do today?',
         trigger: 'intent2'
       },
       {
@@ -81,6 +87,7 @@ export default class MainApp extends React.Component {
       {
         id: 'intent',
         component: <Wit_ai />,
+        replace: true,
         waitAction: true,
         asMessage: true,
         trigger: 'askintent1'
@@ -96,12 +103,17 @@ export default class MainApp extends React.Component {
         trigger: 'Missing1'
       },
       {
-        id: 'Missing1',
-        message: 'What is your tracking number?',
-        trigger: 'inputTracking'
+        id: 'Are you looking for a parcel? Sad',
+        message: 'I\'m sorry for your loss. We\'re trying our best to locate your parcel',
+        trigger: 'Missing1'
       },
       {
-        id: 'inputTracking',
+        id: 'Missing1',
+        message: 'What is your tracking number?',
+        trigger: 'trackingInput'
+      },
+      {
+        id: 'trackingInput',
         user: true,
         trigger: 'missing',
         validator: (value) => {
@@ -120,6 +132,12 @@ export default class MainApp extends React.Component {
         trigger: 'inputTrackingMissing'
       },
       {
+        id: 'summary',
+        component: <Summary />,
+        asMessage: true,
+        trigger: 'confirmation'
+      },
+      {
         id: 'inputTrackingMissing',
         message: 'Whoops! Would you like to try again?',
         trigger: 'inputTrackingMissingOptions',
@@ -128,18 +146,115 @@ export default class MainApp extends React.Component {
         id: 'inputTrackingMissingOptions',
         options: [
             { value: 'yes', label: 'Yes', trigger: 'Missing1'},
-            { value: 'no', label: 'No', trigger: 'end-message'}
+            { value: 'no', label: 'No', trigger: 'before-end'}
         ]
       },
       {
         id: 'trackingSuccess',
-        message: 'We are currently checking the status of {previousValue}!',
-        trigger: 'trackingEnd',
+        message: 'We will be working on recovering your parcel shortly! I just need some more details',
+        trigger: 'address',
       },
       {
-        id: 'trackingEnd',
-        message: 'We will get back to you within 3 working days',
-        trigger: 'end-message',
+        id: 'trackingSuccessSad',
+        message: 'Cheer up! 90% of our missing parcels are redelivered within the first 48 hours',
+        trigger: 'before-end',
+      },
+      {
+        id: 'address',
+        message: 'What is your address?',
+        trigger: 'addressInput',
+      },
+      {
+        id: 'addressInput',
+        user: true,
+        trigger: 'contact',
+        validator: (value) => {
+          if (!value) return 'Please try again!'
+          else {
+            return true
+          }
+        }
+      },
+      {
+        id: 'contact',
+        message: 'What is your contact?',
+        trigger: 'contactInput',
+      },
+      {
+        id: 'contactInput',
+        user: true,
+        trigger: 'summary',
+        validator: (value) => {
+          if (!value) return 'Please try again!'
+          else {
+            return true
+          }
+        }
+      },
+      {
+        id: 'confirmation',
+        message: 'Before I forget, are these details correct?',
+        trigger: 'confirmationInput',
+      },
+      {
+        id: 'confirmationInput',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'before-end'},
+            { value: 'no', label: 'No', trigger: 'before-end'}
+        ]
+      },
+      {
+        id: 'angry',
+        message: 'I\'m sorry to have offended you, would you like to talk to an operator instead?',
+        trigger: 'angryInput',
+      },
+      {
+        id: 'angryInput',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'operator'},
+            { value: 'no', label: 'No', trigger: 'start'}
+        ]
+      },
+      {
+        id: 'operator',
+        message: 'Hello! Operator speaking here, how may I help you!',
+        trigger: 'before-end',
+      },
+      {
+        id: 'unsure',
+        message: 'No worries. Are you expecting a package from an online retailer?',
+        trigger: 'unsureInput',
+      },
+      {
+        id: 'unsureInput',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'start'},
+            { value: 'no', label: 'No', trigger: 'end-message'}
+        ]
+      },
+      {
+        id: 'default',
+        message: 'Sorry I don\t quite understand you. Would you like to try again?',
+        trigger: 'defaultInput',
+      },
+      {
+        id: 'defaultInput',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'start'},
+            { value: 'no', label: 'No', trigger: 'end-message'}
+        ]
+      },
+      {
+        id: 'before-end',
+        message: 'Do you still need any help?',
+        trigger: 'before-endInput',
+      },
+      {
+        id: 'before-endInput',
+        options: [
+            { value: 'yes', label: 'Yes', trigger: 'start'},
+            { value: 'end', label: 'End Session', trigger: 'end-message'}
+        ]
       },
       {
         id: 'end-message',
@@ -154,7 +269,8 @@ export default class MainApp extends React.Component {
       floating: true,
       inputValue: '',
       sentiment: '',
-      endDelay: 4000,
+      endDelay: 2000,
+      tonesArr: [],
     }
 
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
@@ -170,9 +286,11 @@ export default class MainApp extends React.Component {
     document.getElementById("messageBtn").setAttribute("disabled", "");
   }
 
-  handleLoadingDone() {
+  handleLoadingDone(tonesArr) {
+    // console.log(tonesArr)
     document.getElementById("messageBtn").innerHTML = "Submit"
     document.getElementById("messageBtn").removeAttribute("disabled");
+    this.setState({ tonesArr });
   }
 
   handleEnd ({ steps, values }) {
@@ -180,6 +298,7 @@ export default class MainApp extends React.Component {
     // console.log(values);
     setTimeout(() => {
       this.setState({ opened: false });
+      console.log('opened window')
     }, this.state.endDelay)
   }
 
@@ -198,13 +317,16 @@ export default class MainApp extends React.Component {
   componentDidMount() {
     this.handleEnd = this.handleEnd.bind(this);
     this.handleInputValue = this.handleInputValue.bind(this)
+    setTimeout(() => {
+      this.setState({ opened: true });
+    }, this.state.endDelay)
   }
 
   componentDidUpdate (prevProps, prevState) {
   }
 
   render () {
-    const { opened, floating, steps, endDelay, inputValue } = this.state;
+    const { opened, floating, steps, endDelay, inputValue, tonesArr } = this.state;
     return (
       <div className="container">
           {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
@@ -221,8 +343,8 @@ export default class MainApp extends React.Component {
                 testproc={'test'}
                 headerTitle={'Postal Bot'}
                 endDelay={endDelay}
-              />
-            </div>
+                tonesArr={tonesArr}
+            />
           </div>
           <div className="row">
             <div className="col-md-6">
@@ -233,8 +355,8 @@ export default class MainApp extends React.Component {
               )}
             </div>
             <div className="col-md-6">
-              <h3>Sentiment Analysis</h3>
               { this.props.isadmin ? (
+                <h3>Sentiment Analysis</h3>
                 <SentimentBot response={this.state.inputValue} handleLoadingDone={ () => this.handleLoadingDone() } />
               ) : ('') }
 
