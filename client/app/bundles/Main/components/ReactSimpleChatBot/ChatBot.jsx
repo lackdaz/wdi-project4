@@ -400,7 +400,8 @@ class ChatBot extends Component {
       customDelay,
       hideBotAvatar,
       hideUserAvatar,
-      angerScore
+      angerScore,
+      tonesArr,
     } = this.props
     const { options, component, asMessage } = step
     const steps = {}
@@ -428,6 +429,7 @@ class ChatBot extends Component {
           previousStep={previousStep}
           triggerNextStep={this.triggerNextStep}
           angerScore={angerScore}
+          tones={tonesArr}
         />
       )
     }
@@ -457,6 +459,7 @@ class ChatBot extends Component {
         isFirst={this.isFirstPosition(step)}
         isLast={this.isLastPosition(step)}
         angerScore={angerScore}
+        tonesArr={tonesArr}
       />
     )
   }
@@ -567,6 +570,7 @@ ChatBot.propTypes = {
   hideBotAvatar: PropTypes.bool,
   hideUserAvatar: PropTypes.bool,
   angerScore: PropTypes.number,
+  tonesArr: PropTypes.array,
   floating: PropTypes.bool,
   opened: PropTypes.bool,
   style: PropTypes.object,
@@ -602,6 +606,7 @@ ChatBot.defaultProps = {
   hideBotAvatar: false,
   hideUserAvatar: false,
   angerScore: 0,
+  tonesArr: [],
   floating: false,
   opened: undefined,
   style: {},

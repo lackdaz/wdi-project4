@@ -10,6 +10,7 @@ export default class WitAi extends Component {
     this.state = {
       loading: true,
       result: '',
+      show: '',
       trigger: false
     }
 
@@ -28,6 +29,7 @@ export default class WitAi extends Component {
       console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
       const entities = data.entities
       const { angerScore } = self.props
+      const { tonesArr } = self.props
 
       console.log(Object.keys(entities).length)
       // console.log('Anger score is ' + angerScore)
@@ -63,11 +65,16 @@ export default class WitAi extends Component {
         angerScore: nextProps.angerScore
       })
     }
+    if (this.props.tonesArr !== nextProps.tonesArr) {
+      this.setState({
+        tonesArr: nextProps.tonesArr
+      })
+    }
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    console.log(this.props.angerScore !== nextProps.angerScore)
-    return this.props.angerScore !== nextProps.angerScore
+    // console.log(this.props.angerScore !== nextProps.angerScore)
+    return this.props.tonesArr !== nextProps.tonesArr
   }
 
   componentWillUpdate () {
@@ -117,7 +124,8 @@ WitAi.propTypes = {
   triggerNextStep: PropTypes.func,
   step: PropTypes.object,
   previousStep: PropTypes.object,
-  angerScore: PropTypes.number
+  angerScore: PropTypes.number,
+  tonesArr: PropTypes.array,
 }
 
 WitAi.defaultProps = {
@@ -125,5 +133,6 @@ WitAi.defaultProps = {
   triggerNextStep: undefined,
   step: undefined,
   previousStep: undefined,
-  angerScore: undefined
+  angerScore: undefined,
+  tonesArr: undefined,
 }

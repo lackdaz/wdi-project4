@@ -197,6 +197,7 @@ export default class MainApp extends React.Component {
       sentiment: '',
       endDelay: 2000,
       angerScore: 0,
+      tonesArr: [],
     }
 
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
@@ -212,11 +213,12 @@ export default class MainApp extends React.Component {
     document.getElementById("messageBtn").setAttribute("disabled", "");
   }
 
-  handleLoadingDone(angerScore) {
-    console.log('handleLoadingDone is ' + angerScore)
+  handleLoadingDone(angerScore,tonesArr) {
+    console.log('MainApp is ' + angerScore)
+    console.log(tonesArr)
     document.getElementById("messageBtn").innerHTML = "Submit"
     document.getElementById("messageBtn").removeAttribute("disabled");
-    this.setState({ angerScore: angerScore });
+    this.setState({ angerScore, tonesArr });
   }
 
   handleEnd ({ steps, values }) {
@@ -247,7 +249,7 @@ export default class MainApp extends React.Component {
   }
 
   render () {
-    const { opened, floating, steps, endDelay, inputValue, angerScore } = this.state;
+    const { opened, floating, steps, endDelay, inputValue, angerScore, tonesArr } = this.state;
     return (
       <div className="container">
           {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
@@ -265,6 +267,7 @@ export default class MainApp extends React.Component {
                 headerTitle={'Postal Bot'}
                 endDelay={endDelay}
                 angerScore={angerScore}
+                tonesArr={tonesArr}
             />
           </div>
           <div className="col-md-6">
@@ -274,7 +277,7 @@ export default class MainApp extends React.Component {
             <div className="form-group">
               <button className="btn btn-default" id="messageBtn" onClick={ (e) => this.handleMessage(e)} >Submit</button>
             </div>
-            <SentimentBot response={this.state.inputValue} handleLoadingDone={ (angerScore) => this.handleLoadingDone(angerScore) } />
+            <SentimentBot response={this.state.inputValue} handleLoadingDone={ (angerScore,tonesArr) => this.handleLoadingDone(angerScore,tonesArr) } />
 
           </div>
         </div>

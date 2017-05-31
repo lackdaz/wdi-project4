@@ -55,7 +55,6 @@ export default class SentimentBot extends React.Component {
               tonesArr.push(toneObj)
             })
           })
-
           console.log('checktone is' + angerScore)
 
           this.renderGraph(tonesArr, angerScore)
@@ -69,7 +68,7 @@ export default class SentimentBot extends React.Component {
       }
     }
 
-    renderGraph(data, angerScore) {
+    renderGraph(data, angerScore) { // seth
       var svg = d3.select("#sentiment-graph"),
         margin = {top: 20, right: 20, bottom: 100, left: 40},
         width = +svg.attr("width") - margin.left - margin.right,
@@ -145,8 +144,7 @@ export default class SentimentBot extends React.Component {
           .call(d3.axisLeft(y).ticks(10, "%"))
 
       }
-      console.log('Before handleLoadingDone: ', angerScore)
-      this.props.handleLoadingDone(angerScore)
+      this.props.handleLoadingDone(angerScore, data) // seth
     }
 
     componentWillReceiveProps(nextProps) {

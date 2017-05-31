@@ -30,6 +30,7 @@ export default class WitAi extends Component {
         console.log('Yay, got Wit.ai response: ' + JSON.stringify(data))
         const entities = data.entities
         const { angerScore } = self.props
+        const { tonesArr } = self.props
 
         console.log(Object.keys(entities).length)
 
@@ -39,10 +40,10 @@ export default class WitAi extends Component {
           // this is the angry man condition
           self.setState({ loading: false, result: 'angry', show: 'Chill!' })
           self.triggetNext(self.state.result)
-        } else if (entities && Object.keys(entities).length > 0 && entities.intent[0].value) {
+        } else if (entities && Object.keys(entities).length > 0 && entities.tracking[0].value) {
           // this is triggered if there are intent entities from wit.ai
           self.setState({ loading: false, result: entities.tracking[0].value })
-          self.triggetNext(self.state.result)
+          self.triggetNext('trackingSuccess')
         } else {
           // this is the I'm unsure condition
           self.setState({ loading: false, result: 'inputTrackingMissing', show: 'Not Found' })
@@ -67,11 +68,16 @@ export default class WitAi extends Component {
           angerScore: nextProps.angerScore
         })
       }
+      if (this.props.tonesArr !== nextProps.tonesArr) {
+        this.setState({
+          tonesArr: nextProps.tonesArr
+        })
+      }
     }
 
     shouldComponentUpdate (nextProps, nextState) {
-      console.log(this.props.angerScore !== nextProps.angerScore)
-      return this.props.angerScore !== nextProps.angerScore
+      // console.log(this.props.angerScore !== nextProps.angerScore)
+      return this.props.tonesArr !== nextProps.tonesArr
     }
 
     componentWillUpdate () {
@@ -86,32 +92,6 @@ export default class WitAi extends Component {
 
         {/* change this to a different output */}
         { loading ? <Loading /> : show }
-        {/* {
-          !loading &&
-          <div
-            style={{
-              textAlign: 'center',
-              marginTop: 20
-            }}
-          >
-            {
-              !trigger &&
-              <button
-                onClick={() => this.triggetNext(result)}
-              >
-                Yes
-              </button>
-            }
-            {
-            !trigger &&
-            <button
-              onClick={() => this.triggetNext()}
-              >
-              Search Again
-            </button>
-          }
-          </div>
-        } */}
       </div>
     )
   }
@@ -123,6 +103,7 @@ WitAi.propTypes = {
   step: PropTypes.object,
   previousStep: PropTypes.object,
   angerScore: PropTypes.number,
+  tonesArr: PropTypes.array,
 }
 
 WitAi.defaultProps = {
@@ -131,4 +112,5 @@ WitAi.defaultProps = {
   step: undefined,
   previousStep: undefined,
   angerScore: undefined,
+  tonesArr: undefined,
 }
