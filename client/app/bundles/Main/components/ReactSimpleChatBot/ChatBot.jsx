@@ -106,19 +106,21 @@ class ChatBot extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log(this.props.tonesArr !== nextProps.tonesArr);
     if (this.props.tonesArr !== nextProps.tonesArr) {
       this.setState({
         update: true
       })
     }
-
-    // if (this.props.opened !== nextProps.opened) {
-    //   this.setState({
-    //     opened: nextProps.opened,
-    //     update: true
-    //   })
-    // }
   }
+
+  // componentDidUpdate (prevProps, prevState) {
+  //   if (this.props.tonesArr !== nextProps.tonesArr) {
+  //     this.setState({
+  //       update: true
+  //     })
+  //   }
+  // }
 
   // componentWillUpdate(nextProps, nextState) {
   //

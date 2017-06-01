@@ -55,7 +55,7 @@ export default class SentimentBot extends React.Component {
               // }
               var toneObj = {}
               toneObj.tone_name = tone['tone_name']
-              toneObj.score = tone['score']
+              toneObj.score = tone['score'] // + Math.random()*0.05
               tonesArr.push(toneObj)
             })
           })
