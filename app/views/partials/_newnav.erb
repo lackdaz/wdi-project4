@@ -4,13 +4,11 @@
             <div class="col-md-12">
                 <div class="block-left">
                     <nav class="navbar navbar-default" role="navigation">
-                        <div class="container-fluid">
+                        <div class="navbar-align">
                             <!-- Brand and toggle get grouped for better mobile display -->
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                                   <span class="sr-only">Toggle navigation</span>
-                                  <span class="icon-bar"></span>
-                                  <span class="icon-bar"></span>
                                   <span class="icon-bar"></span>
                                   </button>
                                 <div class="nav-logo">
@@ -19,9 +17,10 @@
                             </div>
 
                             <!-- Collect the nav links, forms, and other content for toggling -->
-                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <ul class="nav navbar-nav">
-                                    <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                            <div class="collapse navbar-collapse row justify-content-between" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav col-sm-8
+">
+                                    <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
                                     <li><%= link_to 'Chat With Us', chat_bot_path, :class => 'navbar-link' %></li>
                                     <% if user_signed_in? %>
                                       <li><%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %></li>
@@ -32,7 +31,9 @@
                                     <% end %>
                                 </ul>
                                 <% if user_signed_in? %>
-                                  <p class="navbar-text navbar-right">Logged in as <strong><%= current_user.email %></strong></p>
+                                <ul class="nav navbar-nav col-sm-4">
+                                  <p class="navbar-text navbar-center">Logged in as <strong><%= current_user.email %></strong></p>
+                                </ul>
                                 <% end %>
                             </div>
                             <!-- /.navbar-collapse -->

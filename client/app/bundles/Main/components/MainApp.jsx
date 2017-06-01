@@ -296,7 +296,7 @@ export default class MainApp extends React.Component {
     // console.log(values);
     setTimeout(() => {
       this.setState({ opened: false })
-      console.log('opened window')
+      console.log('closed window')
     }, this.state.endDelay)
   }
 
@@ -328,7 +328,7 @@ export default class MainApp extends React.Component {
     if (this.state.inputValue === nextState.inputValue) {
       this.setState({
         inputValue: undefined
-      })    
+      })
     }
   }
 
@@ -340,24 +340,7 @@ export default class MainApp extends React.Component {
     return (
       <div className='container'>
         {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
-        <div className='row'>
-          <div className='col-md-12'>
-            <ChatBot
-              userDelay={10}
-              opened={opened}
-              handleEnd={this.handleEnd.bind(this)}
-              handleInputValue={this.handleInputValue.bind(this)}
-              floating={floating}
-              botDelay={10}
-              steps={steps}
-              testproc={'test'}
-              headerTitle={'Postal Bot'}
-              endDelay={endDelay}
-              tonesArr={tonesArr}
-              />
-          </div>
-        </div>
-        <div className='row'>
+        <div className='row justify-content-around'>
           <div className='col-md-6'>
             { this.props.is_Logged_in ? (
               <CustomerServiceChat handleNewChat={(chat) => this.handleNewChat.bind(this)(chat)} current_user={this.props.current_user} />
@@ -366,10 +349,26 @@ export default class MainApp extends React.Component {
               )}
           </div>
           <div className='col-md-6'>
-            { this.props.isadmin && <h3>Sentiment Analysis</h3> }
-            {/* { this.props.isadmin ? ( */}
+            { this.props.isadmin && <h2 style={{
+              textAlign: 'center'
+            }}>Sentiment Analysis</h2> }
             <SentimentBot response={this.state.inputValue} handleLoadingDone={(tonesArr) => this.handleLoadingDone(tonesArr)} isadmin={this.props.isadmin} />
-            {/* ) : ('') } */}
+          </div>
+          <div className='col-md-12'>
+            <ChatBot
+              headerBgColor={'#5DCA88'}
+              botBubbleColor={'#5DCA88'}
+              userDelay={10}
+              opened={opened}
+              handleEnd={this.handleEnd.bind(this)}
+              handleInputValue={this.handleInputValue.bind(this)}
+              floating={floating}
+              botDelay={10}
+              steps={steps}
+              headerTitle={'Postal Bot'}
+              endDelay={endDelay}
+              tonesArr={tonesArr}
+              />
           </div>
         </div>
       </div>

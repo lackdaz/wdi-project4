@@ -514,7 +514,6 @@ class ChatBot extends Component {
       inputStyle,
       className
     } = this.props
-    console.log(opened)
 
     const header = headerComponent || (
       <Header

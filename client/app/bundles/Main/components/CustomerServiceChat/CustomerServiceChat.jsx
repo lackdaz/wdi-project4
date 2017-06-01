@@ -79,11 +79,12 @@ export default class CustomerServiceChat extends React.Component {
     render() {
       // this.checktone(this.props.response)
       return (
+        <section id="customer-service">
           <div className="chatbox">
-            <h3>Talk to our Customer Service</h3>
+            <h2>Chat with our friendly consultants</h2>
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h3 className="panel-title">Chats</h3>
+                <h2 className="panel-title">Chats</h2>
               </div>
               <div className="panel-body" id="messages">
               </div>
@@ -97,6 +98,7 @@ export default class CustomerServiceChat extends React.Component {
               </div>
             </form>
           </div>
+        </section>
       );
     }
 }

@@ -1,7 +1,10 @@
+<div class="col-md-12">
 <% if notice %>
-  <p class="alert alert-success"><%= notice %></p>
+<p class="alert alert-success"><%= notice %></p>
 <% end %>
 <% if alert %>
-  <p class="alert alert-danger"><%= alert %></p>
+<p class="alert alert-danger"><%= alert %></p>
 <% end %>
 <%= current_user.try(:admin?)? "<p class=\"alert alert-info\">logged in as admin<p>".html_safe : '' %>
+
+</div>
