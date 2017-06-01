@@ -25,6 +25,7 @@ export default class CustomerServiceChat extends React.Component {
       if($('#messages').length > 0) {
         var messages_to_bottom;
         let handleNewChat = this.handleNewChat.bind(this)
+        let email = this.props.current_user.email
 
         messages_to_bottom = function() {
           return messages.scrollTop(messages.prop("scrollHeight"));
@@ -56,10 +57,9 @@ export default class CustomerServiceChat extends React.Component {
           send_message: function(message) {
             this.perform('send_message', {
               'message': message,
+              'email': email,
             })
           },
-
-          // handleNewChat: this.handleNewChat
         });
 
         $('#new_message').submit(function(e) {
@@ -67,74 +67,14 @@ export default class CustomerServiceChat extends React.Component {
           $this = $(this);
           textinput = $this.find('#message_body');
           if ($.trim(textinput.val()).length > 1) {
-            App.global_chat.send_message(textinput.val());
+            App.global_chat.send_message(textinput.val(), );
             textinput.val('');
           }
           e.preventDefault();
           return false;
         });
       }
-
-
-
-      // let messages = document.getElementById('messages')
-      // messages_to_bottom = function() {
-      //   return messages.scrollTop(messages.prop("scrollHeight"));
-      // };
-      //
-      // messages_to_bottom();
-
-      // App.global_chat = App.cable.subscriptions.create({
-      //   channel: "CustomerSupportChannel"
-      // }, {
-      //   connected: function() {
-      //     // Called when the subscription is ready for use on the server
-      //   },
-      //
-      //   disconnected: function() {
-      //     // Called when the subscription has been terminated by the server
-      //   },
-      //
-      //   received: function(data) {
-      //     messages.innerHTML(data['message']);
-      //     // return messages_to_bottom();
-      //   },
-      //
-      //   send_message: function(message) {
-      //     @perform('send_message', {
-      //       message: message
-      //     })
-      //   }
-      // });
-
-
-
-      // App.comments = App.cable.subscriptions.create("CommentsChannel", {
-      //   message_id: this.state.message.id,
-      //
-      //   connected: function () {
-      //     // Timeout here is needed to make sure Subscription
-      //     // is setup properly, before we do any actions.
-      //     setTimeout(() => this.perform('follow',
-      //                                   {message_id: this.message_id}),
-      //                                   1000);
-      //   },
-      //
-      //   received: function(data) {
-      //     this.updateCommentList(data.comment);
-      //   },
-      //
-      //   updateCommentList: this.updateCommentList
-      // });
     }
-
-    // handleMessage(e) {
-    //
-    // }
-
-    // updateName (name) {
-    //   this.setState({ name });
-    // };
 
     render() {
       // this.checktone(this.props.response)

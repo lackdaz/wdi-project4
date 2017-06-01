@@ -349,7 +349,7 @@ export default class MainApp extends React.Component {
           <div className="row">
             <div className="col-md-6">
               { this.props.is_Logged_in ? (
-                <CustomerServiceChat handleNewChat={ (chat) => this.handleNewChat.bind(this)(chat) } />
+                <CustomerServiceChat handleNewChat={ (chat) => this.handleNewChat.bind(this)(chat) } current_user={this.props.current_user} />
               ) : (
                 <h5>Please sign in to talk to our customer service agent or chat with our bot on the lower right corner.</h5>
               )}
