@@ -267,10 +267,10 @@ export default class MainApp extends React.Component {
       steps: steps,
       opened: false,
       floating: true,
-      inputValue: '',
+      inputValue: undefined,
       sentiment: '',
       endDelay: 2000,
-      tonesArr: []
+      tonesArr: [],
     }
 
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
@@ -318,6 +318,18 @@ export default class MainApp extends React.Component {
     // setTimeout(() => {
     //   this.setState({ opened: true })
     // }, this.state.endDelay)
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    // console.log("called receive props!")
+    // console.log(this.props.opened)
+    // console.log(nextProps.opened)
+    // console.log(this.props.opened !== nextProps.opened)
+    if (this.state.inputValue === nextState.inputValue) {
+      this.setState({
+        inputValue: undefined
+      })    
+    }
   }
 
   componentDidUpdate (prevProps, prevState) {

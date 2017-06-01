@@ -96,8 +96,10 @@ class ChatBot extends Component {
     })
   }
 
-  componentDidMount () {
+  componentDidMount (prevProps, prevState) {
     const chatbotContent = document.querySelector('.rsc-content')
+
+
 
     /* istanbul ignore next */
     if (chatbotContent) {

@@ -157,7 +157,7 @@ export default class SentimentBot extends React.Component {
       // console.log(this.props.opened)
       // console.log(nextProps.opened)
       // console.log(this.props.opened !== nextProps.opened)
-      if (this.props.response !== nextProps.response) {
+      if (this.props.response !== nextProps.response && this.props.toneArr === nextProps.toneArr) {
         this.checktone(nextProps.response)
       }
     }
