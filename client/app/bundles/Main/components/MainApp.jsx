@@ -63,10 +63,18 @@ export default class MainApp extends React.Component {
       {
         id: 'intent2',
         options: [
-            { value: 'Rates', label: 'Rates', trigger: '' },
-            { value: 'Check Status', label: 'Check Status', trigger: 'status1' },
-            { value: 'Others', label: 'Others', trigger: 'askintent1'}
+            { value: 'Inquire Missing parcel', label: 'Report Missing', trigger: 'askintent1' },
+            { value: 'Operator', label: 'Operator', trigger: 'operator' },
+            { value: 'Others', label: 'Others', trigger: 'askintent1'},
+            { value: 'Rates', label: 'Rates', trigger: 'dummy' },
+            { value: 'Check Status', label: 'Check Status', trigger: 'dummy' },
+            { value: 'Nearest Post Office', label: 'Rates', trigger: 'dummy' },
         ]
+      },
+      {
+        id: 'dummy',
+        message: 'Sorry! This feature is not ready yet!',
+        trigger: 'start'
       },
       {
         id: 'askintent1',
@@ -139,7 +147,7 @@ export default class MainApp extends React.Component {
       },
       {
         id: 'inputTrackingMissing',
-        message: 'Whoops! Would you like to try again?',
+        message: 'Whoops! Would you like to try again? (hint: G123**9)',
         trigger: 'inputTrackingMissingOptions'
       },
       {
@@ -294,11 +302,18 @@ export default class MainApp extends React.Component {
   handleEnd ({ steps, values }) {
     // console.log(steps);
     // console.log(values);
-    setTimeout(() => {
-      this.setState({ opened: false })
-      console.log('closed window')
-    }, this.state.endDelay)
+    // setTimeout(() => {
+    //   this.setState({ opened: false })
+    //   console.log('closed window')
+    // }, this.state.endDelay)
   }
+
+
+  // toggleFloating({opened}) {
+  //   console.log(opened)
+  //   console.log({opened})
+  //   this.setState({ opened })
+  // }
 
   handleInputValue (inputValue, res) {
     console.log(inputValue)
@@ -315,6 +330,7 @@ export default class MainApp extends React.Component {
   componentDidMount () {
     this.handleEnd = this.handleEnd.bind(this)
     this.handleInputValue = this.handleInputValue.bind(this)
+    this.toggleFloating.bind(this)
     // setTimeout(() => {
     //   this.setState({ opened: true })
     // }, this.state.endDelay)
@@ -368,6 +384,7 @@ export default class MainApp extends React.Component {
               headerTitle={'Postal Bot'}
               endDelay={endDelay}
               tonesArr={tonesArr}
+              // toggleFloating={this.toggleFloating.bind(this)}
               />
           </div>
         </div>

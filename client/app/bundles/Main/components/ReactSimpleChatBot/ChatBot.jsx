@@ -276,6 +276,7 @@ class ChatBot extends Component {
     if (this.props.handleEnd) {
       this.props.handleEnd({ renderedSteps, steps, values })
     }
+
     setTimeout(() => {
 
       let empty = []
