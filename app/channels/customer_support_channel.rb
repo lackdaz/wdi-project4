@@ -9,7 +9,7 @@ class CustomerSupportChannel < ApplicationCable::Channel
   end
 
   def send_message(data)
-    MessageBroadcastJob.perform_later(data['message'])
+    MessageBroadcastJob.perform_later(data['message'], data['email'])
     # current_user.messages.create!(body: data['message'], chat_room_id: data['chat_room_id'])
   end
 end

@@ -281,14 +281,14 @@ export default class MainApp extends React.Component {
     this.setState({
       inputValue: document.getElementById("inputText").value
     })
-    document.getElementById("messageBtn").innerHTML = "loading"
-    document.getElementById("messageBtn").setAttribute("disabled", "");
+    // document.getElementById("messageBtn").innerHTML = "loading"
+    // document.getElementById("messageBtn").setAttribute("disabled", "");
   }
 
   handleLoadingDone(tonesArr) {
     // console.log(tonesArr)
-    document.getElementById("messageBtn").innerHTML = "Submit"
-    document.getElementById("messageBtn").removeAttribute("disabled");
+    // document.getElementById("messageBtn").innerHTML = "Send"
+    // document.getElementById("messageBtn").removeAttribute("disabled");
     this.setState({ tonesArr });
   }
 
@@ -349,16 +349,16 @@ export default class MainApp extends React.Component {
           <div className="row">
             <div className="col-md-6">
               { this.props.is_Logged_in ? (
-                <CustomerServiceChat handleNewChat={ (chat) => this.handleNewChat.bind(this)(chat) } />
+                <CustomerServiceChat handleNewChat={ (chat) => this.handleNewChat.bind(this)(chat) } current_user={this.props.current_user} />
               ) : (
                 <h5>Please sign in to talk to our customer service agent or chat with our bot on the lower right corner.</h5>
               )}
             </div>
             <div className="col-md-6">
               { this.props.isadmin && <h3>Sentiment Analysis</h3> }
-              { this.props.isadmin ? (
-                <SentimentBot response={this.state.inputValue} handleLoadingDone={ (tonesArr) => this.handleLoadingDone(tonesArr) } />
-              ) : ('') }
+              {/* { this.props.isadmin ? ( */}
+                <SentimentBot response={this.state.inputValue} handleLoadingDone={ (tonesArr) => this.handleLoadingDone(tonesArr) } isadmin={ this.props.isadmin } />
+              {/* ) : ('') } */}
             </div>
         </div>
       </div>

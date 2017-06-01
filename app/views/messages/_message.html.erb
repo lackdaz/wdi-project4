@@ -6,7 +6,7 @@
       <!-- </div> -->
       <div class="col-md-12">
         <p class="card-text">
-          <span class="text-muted"><%= 'raymond' %> at <%= '12:00 midnight ' %> says</span><br>
+          <span class="text-muted"><strong><%= email %></strong> at <strong><%= Time.now.strftime('%d %B %Y %H:%M:%S') %></strong> says</span><br>
           <%= message %>
         </p>
       </div>
