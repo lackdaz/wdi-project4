@@ -33,7 +33,7 @@ class ChatBot extends Component {
       defaulBotSettings: {},
       defaulUserSettings: {},
       update: false,
-      reset: true,
+      reset: true
     }
 
     this.renderStep = this.renderStep.bind(this)
@@ -52,7 +52,7 @@ class ChatBot extends Component {
       endDelay,
       userAvatar,
       userBubbleColor,
-      userFontColor,
+      userFontColor
     } = this.props
     const steps = {}
 
@@ -91,7 +91,7 @@ class ChatBot extends Component {
       steps,
       currentStep,
       renderedSteps,
-      previousSteps,
+      previousSteps
     })
   }
 
@@ -105,23 +105,22 @@ class ChatBot extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-
     if (this.props.tonesArr !== nextProps.tonesArr) {
       this.setState({
-        update: true,
-       })
+        update: true
+      })
     }
 
     if (this.props.opened !== nextProps.opened) {
       this.setState({
         opened: nextProps.opened,
-        update: true,
-       })
+        update: true
+      })
     }
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    if (this.state.update === true ) {
+    if (this.state.update === true) {
       return true
     }
     return false
@@ -359,7 +358,7 @@ class ChatBot extends Component {
           renderedSteps,
           previousSteps,
           disabled: true,
-          inputValue: '',
+          inputValue: ''
         })
       }
     }
@@ -406,7 +405,7 @@ class ChatBot extends Component {
       customDelay,
       hideBotAvatar,
       hideUserAvatar,
-      tonesArr,
+      tonesArr
     } = this.props
     const { options, component, asMessage } = step
     const steps = {}
@@ -485,7 +484,7 @@ class ChatBot extends Component {
       contentStyle,
       footerStyle,
       inputStyle,
-      className,
+      className
     } = this.props
 
     const header = headerComponent || (

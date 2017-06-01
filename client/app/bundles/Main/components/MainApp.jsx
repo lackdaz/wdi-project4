@@ -140,7 +140,7 @@ export default class MainApp extends React.Component {
       {
         id: 'inputTrackingMissing',
         message: 'Whoops! Would you like to try again?',
-        trigger: 'inputTrackingMissingOptions',
+        trigger: 'inputTrackingMissingOptions'
       },
       {
         id: 'inputTrackingMissingOptions',
@@ -152,17 +152,17 @@ export default class MainApp extends React.Component {
       {
         id: 'trackingSuccess',
         message: 'We will be working on recovering your parcel shortly! I just need some more details',
-        trigger: 'address',
+        trigger: 'address'
       },
       {
         id: 'trackingSuccessSad',
         message: 'Cheer up! 90% of our missing parcels are redelivered within the first 48 hours',
-        trigger: 'before-end',
+        trigger: 'before-end'
       },
       {
         id: 'address',
         message: 'What is your address?',
-        trigger: 'addressInput',
+        trigger: 'addressInput'
       },
       {
         id: 'addressInput',
@@ -178,7 +178,7 @@ export default class MainApp extends React.Component {
       {
         id: 'contact',
         message: 'What is your contact?',
-        trigger: 'contactInput',
+        trigger: 'contactInput'
       },
       {
         id: 'contactInput',
@@ -194,7 +194,7 @@ export default class MainApp extends React.Component {
       {
         id: 'confirmation',
         message: 'Before I forget, are these details correct?',
-        trigger: 'confirmationInput',
+        trigger: 'confirmationInput'
       },
       {
         id: 'confirmationInput',
@@ -206,7 +206,7 @@ export default class MainApp extends React.Component {
       {
         id: 'angry',
         message: 'I\'m sorry to have offended you, would you like to talk to an operator instead?',
-        trigger: 'angryInput',
+        trigger: 'angryInput'
       },
       {
         id: 'angryInput',
@@ -218,12 +218,12 @@ export default class MainApp extends React.Component {
       {
         id: 'operator',
         message: 'Hello! Operator speaking here, how may I help you!',
-        trigger: 'before-end',
+        trigger: 'before-end'
       },
       {
         id: 'unsure',
         message: 'No worries. Are you expecting a package from an online retailer?',
-        trigger: 'unsureInput',
+        trigger: 'unsureInput'
       },
       {
         id: 'unsureInput',
@@ -235,7 +235,7 @@ export default class MainApp extends React.Component {
       {
         id: 'default',
         message: 'Sorry I don\t quite understand you. Would you like to try again?',
-        trigger: 'defaultInput',
+        trigger: 'defaultInput'
       },
       {
         id: 'defaultInput',
@@ -247,7 +247,7 @@ export default class MainApp extends React.Component {
       {
         id: 'before-end',
         message: 'Do you still need any help?',
-        trigger: 'before-endInput',
+        trigger: 'before-endInput'
       },
       {
         id: 'before-endInput',
@@ -270,96 +270,95 @@ export default class MainApp extends React.Component {
       inputValue: '',
       sentiment: '',
       endDelay: 2000,
-      tonesArr: [],
+      tonesArr: []
     }
 
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
   }
 
-
-  handleMessage(e) {
+  handleMessage (e) {
     this.setState({
-      inputValue: document.getElementById("inputText").value
+      inputValue: document.getElementById('inputText').value
     })
     // document.getElementById("messageBtn").innerHTML = "loading"
     // document.getElementById("messageBtn").setAttribute("disabled", "");
   }
 
-  handleLoadingDone(tonesArr) {
+  handleLoadingDone (tonesArr) {
     // console.log(tonesArr)
     // document.getElementById("messageBtn").innerHTML = "Send"
     // document.getElementById("messageBtn").removeAttribute("disabled");
-    this.setState({ tonesArr });
+    this.setState({ tonesArr })
   }
 
   handleEnd ({ steps, values }) {
     // console.log(steps);
     // console.log(values);
     setTimeout(() => {
-      this.setState({ opened: false });
+      this.setState({ opened: false })
       console.log('opened window')
     }, this.state.endDelay)
   }
 
   handleInputValue (inputValue, res) {
-    console.log(inputValue);
-    console.log(res);
-    this.setState({ inputValue });
+    console.log(inputValue)
+    console.log(res)
+    this.setState({ inputValue })
   }
 
-  handleNewChat(message) {
+  handleNewChat (message) {
     this.setState({
       inputValue: message
     })
   }
 
-  componentDidMount() {
-    this.handleEnd = this.handleEnd.bind(this);
+  componentDidMount () {
+    this.handleEnd = this.handleEnd.bind(this)
     this.handleInputValue = this.handleInputValue.bind(this)
-    setTimeout(() => {
-      this.setState({ opened: true });
-    }, this.state.endDelay)
+    // setTimeout(() => {
+    //   this.setState({ opened: true })
+    // }, this.state.endDelay)
   }
 
   componentDidUpdate (prevProps, prevState) {
   }
 
   render () {
-    const { opened, floating, steps, endDelay, inputValue, tonesArr } = this.state;
+    const { opened, floating, steps, endDelay, inputValue, tonesArr } = this.state
     return (
-      <div className="container">
-          {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
-          <div className="row">
-            <div className="col-md-12">
-              <ChatBot
-                userDelay={10}
-                opened={opened}
-                handleEnd={this.handleEnd.bind(this)}
-                handleInputValue={this.handleInputValue.bind(this)}
-                floating={floating}
-                botDelay={10}
-                steps={steps}
-                testproc={'test'}
-                headerTitle={'Postal Bot'}
-                endDelay={endDelay}
-                tonesArr={tonesArr}
+      <div className='container'>
+        {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
+        <div className='row'>
+          <div className='col-md-12'>
+            <ChatBot
+              userDelay={10}
+              opened={opened}
+              handleEnd={this.handleEnd.bind(this)}
+              handleInputValue={this.handleInputValue.bind(this)}
+              floating={floating}
+              botDelay={10}
+              steps={steps}
+              testproc={'test'}
+              headerTitle={'Postal Bot'}
+              endDelay={endDelay}
+              tonesArr={tonesArr}
               />
-            </div>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              { this.props.is_Logged_in ? (
-                <CustomerServiceChat handleNewChat={ (chat) => this.handleNewChat.bind(this)(chat) } current_user={this.props.current_user} />
+        </div>
+        <div className='row'>
+          <div className='col-md-6'>
+            { this.props.is_Logged_in ? (
+              <CustomerServiceChat handleNewChat={(chat) => this.handleNewChat.bind(this)(chat)} current_user={this.props.current_user} />
               ) : (
                 <h5>Please sign in to talk to our customer service agent or chat with our bot on the lower right corner.</h5>
               )}
-            </div>
-            <div className="col-md-6">
-              { this.props.isadmin && <h3>Sentiment Analysis</h3> }
-              {/* { this.props.isadmin ? ( */}
-                <SentimentBot response={this.state.inputValue} handleLoadingDone={ (tonesArr) => this.handleLoadingDone(tonesArr) } isadmin={ this.props.isadmin } />
-              {/* ) : ('') } */}
-            </div>
+          </div>
+          <div className='col-md-6'>
+            { this.props.isadmin && <h3>Sentiment Analysis</h3> }
+            {/* { this.props.isadmin ? ( */}
+            <SentimentBot response={this.state.inputValue} handleLoadingDone={(tonesArr) => this.handleLoadingDone(tonesArr)} isadmin={this.props.isadmin} />
+            {/* ) : ('') } */}
+          </div>
         </div>
       </div>
     )
