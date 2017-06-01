@@ -25,7 +25,7 @@ export default class CustomerServiceChat extends React.Component {
       if($('#messages').length > 0) {
         var messages_to_bottom;
         let handleNewChat = this.handleNewChat.bind(this)
-        let email = this.props.current_user.email
+        let name = this.props.current_user.name
 
         messages_to_bottom = function() {
           return messages.scrollTop(messages.prop("scrollHeight"));
@@ -57,7 +57,7 @@ export default class CustomerServiceChat extends React.Component {
           send_message: function(message) {
             this.perform('send_message', {
               'message': message,
-              'email': email,
+              'name': name,
             })
           },
         });
