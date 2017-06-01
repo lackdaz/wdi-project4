@@ -22,9 +22,7 @@
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav">
                                     <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
-                                    <!-- <li><a href="/signup">Sign Up</a></li>
-                                    <li><a href="/login">Login</a></li>
-                                    <li><a href="/logout">Logout</a></li> -->
+                                    <li><%= link_to 'Chat With Us', chat_bot_path, :class => 'navbar-link' %></li>
                                     <% if user_signed_in? %>
                                       <li><%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %></li>
                                       <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
@@ -32,7 +30,6 @@
                                       <li><%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %></li>
                                       <li><%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %></li>
                                     <% end %>
-                                    <li><%= link_to 'Chat With Us', chat_bot_path, :class => 'navbar-link' %></li>
                                 </ul>
                                 <% if user_signed_in? %>
                                   <p class="navbar-text navbar-right">Logged in as <strong><%= current_user.email %></strong></p>
