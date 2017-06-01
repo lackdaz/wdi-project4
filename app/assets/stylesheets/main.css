@@ -360,12 +360,16 @@ h1, h2, h3, h4, h5, h6 {font-weight:normal;margin:0 0 15px;}
 	3) slider Start
 ===========================*/
 
-#slider{background: url(../img/background-resized.png) no-repeat; background-size: cover; background-position: center center; padding-bottom: 255px;padding-top: 180px;}
+#slider{background: url(../img/background-resized.png) no-repeat; background-size: cover; background-position: center center; }
+#slider .sliderBackground{background-color: rgba(1,1,1,0.64); padding-bottom: 255px;padding-top: 180px;}
 #slider .block{}
-#slider .block h2{color: #fff;font-family: 'Raleway', sans-serif; font-weight: 700; margin:0px; font-size: 36px}
+#slider .block h1{color: #fff;font-family: 'Raleway', sans-serif; font-weight: 700; margin:0px; font-size: 72px;}
+#slider .block h2{color: #fff;font-family: 'Raleway', sans-serif; font-weight: 700; margin:0px; font-size: 48px; color: #5DCA88;}
+#slider .contant-2-header h2{height: 60px;}
+
 .slider-text-area{}
 .sub-slider-text{margin: 0px; font-size: 36px; color:#C7D0D5;font-family: 'Raleway', sans-serif; font-weight: 300;line-height: 43px;}
-.slider-p{margin: 0px; color:#90BBC5; font-size: 16px;padding-top: 40px;max-width: 40%;text-align: justify;}
+.slider-p{margin: 0px; color: #fff; font-size: 16px;padding-top: 40px;max-width: 40%;text-align: justify; font-family: 'Raleway'}
 .edit-button-1{background: none; border: 3px solid #91B1B5;  color: #FFF; font-family: 'Raleway', sans-serif; font-weight: 700; border-radius: 30px;padding: 10px 52px; display: inline-block; overflow: heidden; margin-top: 50px}
 .edit-button-1:hover{background: none; color: #fff; border: 3px solid #91B1B5;}
 
