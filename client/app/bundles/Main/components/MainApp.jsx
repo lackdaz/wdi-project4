@@ -355,6 +355,7 @@ export default class MainApp extends React.Component {
           </div>
           <div className='col-md-6'>
             { this.props.isadmin && <h3>Sentiment Analysis</h3> }
+            { this.props.isadmin && <a href="https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understand-tone.html" target="_blank">Sentiment Score Guide</a> }
             {/* { this.props.isadmin ? ( */}
             <SentimentBot response={this.state.inputValue} handleLoadingDone={(tonesArr) => this.handleLoadingDone(tonesArr)} isadmin={this.props.isadmin} />
             {/* ) : ('') } */}
