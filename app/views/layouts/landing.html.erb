@@ -17,17 +17,9 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
 
-    <%= stylesheet_link_tag "slicknav", "font-awesome.min", "main", "custom", "responsive" %>
-    <%= javascript_include_tag "plugins", "main", "owl.carousel.min" %>
+    <%= stylesheet_link_tag "font-awesome.min", "main", "responsive" %>
+    <%= javascript_include_tag "plugins", "main", "owl.carousel.min", "jquery.typer" %>
 
-    <!-- <link rel="stylesheet" href="css/slicknav.css">
-    <link rel="stylesheet" href="css/owl.theme.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/owl.transitions.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/custom.css">
-    <link rel="stylesheet" href="css/responsive.css"> -->
     <!-- <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 
@@ -55,9 +47,17 @@
                     <div class="block">
                         <div class="slider-text-area">
                             <div class="slider-text">
-                                <h2>Meet the SML Chatbot<br></h2>
-                                <p class="sub-slider-text">SentimentBot + ML Bot</p>
-                                <p class="slider-p"> Sentinel is an open-source home automation platform that allows you to observe, control and automate personnel access to your home environment <br> </p> <p class="slider-p"> Sign up now! No email verification is needed</p>
+                                <h1>Meet the SML Chatbot<br></h1>
+                                <div class="contant-2-header">
+                                  <h2>
+                                    <span  data-typer-targets="Chatbot, Machine Learning, Sentiment Analysis"></span>
+                                  </h2>
+                                </div>
+
+
+                                <p class="slider-p"> A customers service robot that seamlessly integrates a clean and light-weight React chatbot with real-time interaction analysis powered by the IBM Watson Tone Analyzer and trained Wit.Ai decision-aggregation models.<br> </p>
+
+                                <p class="slider-p"> Sign up now! No email verification is needed</p>
                                 <a href="/signup"><button type="button" class="btn btn-default edit-button-1">SIGN UP</button></a>
                                 <a href="/login"><button type="button" class="btn btn-default edit-button-1">LOGIN</button></a>
                             </div>
@@ -89,7 +89,7 @@
                             </div>
                             <div class="contant-1-text">
                                 <h2>How it came about</h2>
-                                <p>This is my first full-stack web application, and I wanted to combine the best of both hardware and software had to offer for home automation. So meet Sentinel, the brainchild of my love for hardware, and Thingies, a platform to coordinate all the smarts! <br> As this is only a work in progress, please feel free to reach out to me for any known issues!</p>
+                                <p> The offshore outsourcing of customer service operations has distanced customers from seeking previously  </p>
                                 <a href="https://github.com/lackdaz/wdi-project-2"><button type="button" class="btn btn-default edit-button-2">LEARN MORE</button></a>
                             </div>
                         </div>
@@ -112,38 +112,41 @@
     <!-- #contant-1 close -->
 
 
+    <!-- contant-2 start
+        ===================================================== -->
 
-    <!-- Submit Start
-        ======================================================== -->
-
-    <section id="submit-area">
+    <section id="contant-2">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="block">
-                        <div class="submit-contant">
-                            <div class="submit-header">
-                                <i class="fa fa-envelope-o"></i>
-                                <h3>Subscribe our Newsletter</h3>
+                <div class="col-md-6">
+                    <div class="block-left">
+                        <div class="contant-2-text-area">
+                            <div class="contant-2-head">
+                                <h1>Chatbots that care</h1>
                             </div>
-                            <div class="submit-area">
-                                <div class="submit-bottom">
-                                    <form action="">
-                                        <input type="text" placeholder="your email address">
-                                        <input type="submit" value="submit">
-                                    </form>
-                                </div>
+                            <div class="contant-2-text">
+                                <h2>How it came about</h2>
+                                <p> The offshore outsourcing of customer service operations has distanced customers from seeking previously  </p>
+                                <a href="https://github.com/lackdaz/wdi-project-2"><button type="button" class="btn btn-default edit-button-2">LEARN MORE</button></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- .col-md-12 -->
+                <!-- .col-md-6 close -->
+                <div class="col-md-6">
+                    <div class="block-right">
+                        <div class="block-right-img">
+                            <!-- SETH <img src="img/thing.jpeg" alt="img"> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- .col-md-6 close -->
             </div>
             <!-- .row close -->
         </div>
         <!-- .container close -->
     </section>
-    <!-- #submit close -->
+    <!-- #contant-2 close -->
 
 
     <!-- footer Start
@@ -155,22 +158,17 @@
                 <div class="col-md-12">
                     <div class="block">
                         <div class="footer-contant">
-                            <h3>Say Hi, Get In Touch</h3>
+                            <h3>We are on the job market!</h3>
                             <div class="social-icon">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-tumblr"></i></a>
-                                <a href="#"><i class="fa fa-google"></i></a>
-                                <a href="#"><i class="fa fa-flickr"></i></a>
-                                <a href="#"><i class="fa fa-youtube"></i></a>
+                                <a href="#"><i class="fa fa-github"></i></a>
+
                             </div>
                             <div class="support-link">
                                 <ul>
                                     <li><a href="#">Contact</a></li>
-                                    <li><a href="#">Twitter</a></li>
-                                    <li><a href="#">Press</a></li>
                                     <li><a href="#">Support</a></li>
                                     <li><a href="#">Developers</a></li>
-                                    <li><a href="#">Privacy</a></li>
                                 </ul>
                             </div>
                         </div>
