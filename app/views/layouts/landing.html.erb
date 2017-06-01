@@ -14,23 +14,187 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,300,700,600,500' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic,700' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" href="css/slicknav.css">
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+
+    <%= stylesheet_link_tag "slicknav", "font-awesome.min", "main", "custom", "responsive" %>
+    <%= javascript_include_tag "plugins", "main", "owl.carousel.min" %>
+
+    <!-- <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="css/owl.theme.css">
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="css/owl.transitions.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/custom.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <link rel="stylesheet" href="css/responsive.css"> -->
+    <!-- <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 
 <body>
-  <%- include('./partials/mainheader') %>
-  <%- include('./partials/flash') %>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-  <%- body %>
+    <!-- Add your site or application content here -->
+
+    <!-- header Start
+         ================================================= -->
+
+    <section id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="block-left">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								  </button>
+                                    <div class="nav-logo">
+                                      <!-- <%= image_tag "logo2.png" %> -->
+                                        <!-- <a href="/"><img class="logo" src="images/logo2.png" alt="logo"></a> -->
+                                    </div>
+                                </div>
+
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                                        <li><a href="/signup">Sign Up</a></li>
+                                        <li><a href="/login">Login</a></li>
+                                        <li><a href="/logout">Logout</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /.navbar-collapse -->
+                            </div>
+                            <!-- /.container-fluid -->
+                        </nav>
+                    </div>
+                </div>
+                <!-- .col-md-6 -->
+
+                <div class="col-md-6">
+                    <div class="block-right">
+                        <div class="contact-area">
+                            <ul>
+                                <%# <li><i class="fa fa-phone-square"></i>800-123-456</li>%>
+                                    <li><i class="fa fa-envelope-o"></i>seth@gmail.com</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .col-md-6 close -->
+            </div>
+            <!-- .row close -->
+        </div>
+        <!-- .container close -->
+    </section>
+    <!-- #heder close -->
+
+    <!-- Slider Start
+        ============================================================== -->
+
+    <section id="slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="block">
+                        <div class="slider-text-area">
+                            <div class="slider-text">
+                                <h2>Meet Sentinel <br></h2>
+                                <p class="sub-slider-text">IoT Access Control</p>
+                                <p class="slider-p"> Sentinel is an open-source home automation platform that allows you to observe, control and automate personnel access to your home environment <br> </p> <p class="slider-p"> Sign up now! No email verification is needed</p>
+                                <a href="/signup"><button type="button" class="btn btn-default edit-button-1">SIGN UP</button></a>
+                                <a href="/login"><button type="button" class="btn btn-default edit-button-1">LOGIN</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- .col-md-12 close -->
+            </div>
+            <!-- .row close -->
+        </div>
+        <!-- .container close -->
+    </section>
+    <!-- #slider close -->
+
+
+    <!-- contant-1 start
+        ===================================================== -->
+
+    <section id="contant-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="block-left">
+                        <div class="contant-1-text-area">
+                            <div class="contant-1-head">
+                                <h1>For Makers, by Makers</h1>
+                            </div>
+                            <div class="contant-1-text">
+                                <h2>How it came about</h2>
+                                <p>This is my first full-stack web application, and I wanted to combine the best of both hardware and software had to offer for home automation. So meet Sentinel, the brainchild of my love for hardware, and Thingies, a platform to coordinate all the smarts! <br> As this is only a work in progress, please feel free to reach out to me for any known issues!</p>
+                                <a href="https://github.com/lackdaz/wdi-project-2"><button type="button" class="btn btn-default edit-button-2">LEARN MORE</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- .col-md-6 close -->
+                <div class="col-md-6">
+                    <div class="block-right">
+                        <div class="block-right-img">
+                            <!-- SETH <img src="img/thing.jpeg" alt="img"> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- .col-md-6 close -->
+            </div>
+            <!-- .row close -->
+        </div>
+        <!-- .container close -->
+    </section>
+    <!-- #contant-1 close -->
+
+
+
+    <!-- Submit Start
+        ======================================================== -->
+
+    <section id="submit-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="block">
+                        <div class="submit-contant">
+                            <div class="submit-header">
+                                <i class="fa fa-envelope-o"></i>
+                                <h3>Subscribe our Newsletter</h3>
+                            </div>
+                            <div class="submit-area">
+                                <div class="submit-bottom">
+                                    <form action="">
+                                        <input type="text" placeholder="your email address">
+                                        <input type="submit" value="submit">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- .col-md-12 -->
+            </div>
+            <!-- .row close -->
+        </div>
+        <!-- .container close -->
+    </section>
+    <!-- #submit close -->
+
 
     <!-- footer Start
         ====================================================================== -->
@@ -70,14 +234,10 @@
     </section>
     <!-- #footer -->
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
-        window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')
+        // window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')
     </script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
+
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>

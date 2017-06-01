@@ -18,8 +18,8 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # rails directories. In that case, you would not add these paths here.
 # If you have a different server bundle file than your client bundle, you'll
 # need to add it here, like this:
-Rails.application.config.assets.precompile += %w( server-bundle.js )
-Rails.application.config.assets.precompile += %w( slicknav.css font-awesome.min.css main.css custom.css responsive.css )
+# Rails.application.config.assets.precompile += %w( server-bundle.js )
+Rails.application.config.assets.precompile += %w( slicknav.css font-awesome.min.css main.css custom.css responsive.css main.js plugins.js owl.carousel.min.js)
 
 
 # Add folder with webpack generated assets to assets.paths

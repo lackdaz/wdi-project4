@@ -360,7 +360,7 @@ h1, h2, h3, h4, h5, h6 {font-weight:normal;margin:0 0 15px;}
 	3) slider Start
 ===========================*/
 
-#slider{background: url(../img/slider.jpg) no-repeat; background-size: cover; background-position: center center; padding-bottom: 255px;padding-top: 180px;}
+#slider{background: url(../img/background-resized.png) no-repeat; background-size: cover; background-position: center center; padding-bottom: 255px;padding-top: 180px;}
 #slider .block{}
 #slider .block h2{color: #fff;font-family: 'Raleway', sans-serif; font-weight: 700; margin:0px; font-size: 36px}
 .slider-text-area{}
