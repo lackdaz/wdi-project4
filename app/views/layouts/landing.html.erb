@@ -41,61 +41,8 @@
     <!-- header Start
          ================================================= -->
 
-    <section id="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="block-left">
-                        <nav class="navbar navbar-default" role="navigation">
-                            <div class="container-fluid">
-                                <!-- Brand and toggle get grouped for better mobile display -->
-                                <div class="navbar-header">
-                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-									<span class="sr-only">Toggle navigation</span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-								  </button>
-                                    <div class="nav-logo">
-                                      <!-- <%= image_tag "logo2.png" %> -->
-                                        <!-- <a href="/"><img class="logo" src="images/logo2.png" alt="logo"></a> -->
-                                    </div>
-                                </div>
-
-                                <!-- Collect the nav links, forms, and other content for toggling -->
-                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                    <ul class="nav navbar-nav">
-                                        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-                                        <li><a href="/signup">Sign Up</a></li>
-                                        <li><a href="/login">Login</a></li>
-                                        <li><a href="/logout">Logout</a></li>
-                                    </ul>
-                                </div>
-                                <!-- /.navbar-collapse -->
-                            </div>
-                            <!-- /.container-fluid -->
-                        </nav>
-                    </div>
-                </div>
-                <!-- .col-md-6 -->
-
-                <div class="col-md-6">
-                    <div class="block-right">
-                        <div class="contact-area">
-                            <ul>
-                                <%# <li><i class="fa fa-phone-square"></i>800-123-456</li>%>
-                                    <li><i class="fa fa-envelope-o"></i>seth@gmail.com</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- .col-md-6 close -->
-            </div>
-            <!-- .row close -->
-        </div>
-        <!-- .container close -->
-    </section>
-    <!-- #heder close -->
+    <%= render "partials/nav" %>
+    <%= render "partials/flash" %>
 
     <!-- Slider Start
         ============================================================== -->
@@ -107,7 +54,7 @@
                     <div class="block">
                         <div class="slider-text-area">
                             <div class="slider-text">
-                                <h2>Meet Sentinel <br></h2>
+                                <h2>Chatbots that care<br></h2>
                                 <p class="sub-slider-text">IoT Access Control</p>
                                 <p class="slider-p"> Sentinel is an open-source home automation platform that allows you to observe, control and automate personnel access to your home environment <br> </p> <p class="slider-p"> Sign up now! No email verification is needed</p>
                                 <a href="/signup"><button type="button" class="btn btn-default edit-button-1">SIGN UP</button></a>
@@ -135,7 +82,7 @@
                     <div class="block-left">
                         <div class="contant-1-text-area">
                             <div class="contant-1-head">
-                                <h1>For Makers, by Makers</h1>
+                                <h1>Chatbots that care</h1>
                             </div>
                             <div class="contant-1-text">
                                 <h2>How it came about</h2>
