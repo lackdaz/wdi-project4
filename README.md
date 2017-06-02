@@ -32,12 +32,46 @@ Cons
 * Node.js
 * CSS
 * [ReactSimpleChatBot](https://github.com/LucasBassetti/react-simple-chatbot)
-* [D3](https://d3js.org/)
 * [Type.js.JQuery](type.js)
 
 ## APIs
 * [IBM Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/tone-analyzer.html)
 * [Wit.ai](https://wit.ai/)
+* [D3](https://d3js.org/)]
+
+## IBM Watson Tone Analyzer
+
+The IBM Watson™ Tone Analyzer service uses linguistic analysis to detect emotional, social, and language tones in written text. API has two endpoints: general purpose and customer engagement. Due to the time constraint, we only managed to implement the general tone analyzer.
+
+API is available for several clients such node, python, java. This is how we implemented the API call from react component/javascript.
+
+```javascript
+// message = encodeURIComponent(message);
+//  fetch(`https://watson-api-explorer.mybluemix.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=${message}`)
+// .then((response) => {
+//   return response.json();
+// })
+// .then((json) => {
+  // do something with response from api
+}
+```
+
+Part of the api output:
+
+```javascript
+"tones": [
+    {
+      "score": 0.134622,
+      "tone_id": "anger",
+      "tone_name": "Anger"
+    },
+```
+
+## D3 for Data Visualization
+
+D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 has a very good documentation and lots of examples on what can be achieved with this library.
+
+However, it can be overwhelming while trying to explore this library and has to admit that there is a high learning curve in the beginning. With the limited time that we have, we only managed to implement a simple bar chart and that has taken us huge amount of time.
 
 ------
 ## Development
