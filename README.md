@@ -31,13 +31,141 @@ We chose the [React on Rails](https://github.com/shakacode/react_on_rails) by Sh
 * Node.js
 * CSS
 * [ReactSimpleChatBot](https://github.com/LucasBassetti/react-simple-chatbot)
-* [D3](https://d3js.org/)
 * [Type.js.JQuery](type.js)
 * [Bootstrap Dashboard](https://startbootstrap.com/template-overviews/sb-admin/)
 
 ## APIs
-* [IBM Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/tone-analyzer.html)
 * [Wit.ai](https://wit.ai/)
+* [IBM Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/tone-analyzer.html)
+* [D3](https://d3js.org/)
+
+### Wit.ai
+
+Natural Language Processing Bot with features like intent parser and customizable user stories.
+
+Example of how we have implemented in our chat program, together with IBM tone analyzer
+
+```javascript
+const client = new Wit({accessToken: 'IGHNEYS623KKCXIK6HZQRHXHC6Q43QWX'})
+client.message(search, {}).then((data) => {
+  const entities = data.entities
+  const { tonesArr } = self.props
+
+  /*iterating through objects for feelings
+  { Anger, Disgust, Fear, Joy, Sadness, Analytical, Confident, Tentative, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Range}
+  */
+  var tonesObj = {}
+  tonesArr.map((val, ind) => tonesObj[val.tone_name] = val.score)
+
+  console.log(Object.keys(entities).length)
+
+  if (tonesObj.Anger >= 0.5) {
+    // this is the angry man condition
+    self.setState({ loading: false, result: 'angry', show: 'Chill!' })
+    self.triggetNext(self.state.result)
+  }
+  else if (entities && Object.keys(entities).length > 0 && entities.intent[0].value && tonesObj.Sadness >= 0.5) {
+  self.setState({ loading: false, result: entities.intent[0].value })
+  self.triggetNext('Are you looking for a parcel? Sad')
+}
+  else if (entities && Object.keys(entities).length > 0) {
+    // this is triggered if there are intent entities from wit.ai
+    self.setState({ loading: false, result: entities.intent[0].value })
+    self.triggetNext(self.state.result)
+  }
+  else {
+    // this is the I'm unsure condition
+    self.setState({ loading: false, result: 'default' })
+    self.triggetNext(self.state.result)
+  }
+}).catch(console.error)
+```
+
+### ReactSimpleChatBot
+
+Bot logic behind ReactSimpleChatBot
+
+```javascript
+{
+  id: 'intent2',
+  options: [
+      { value: 'Inquire Missing parcel', label: 'Report Missing', trigger: 'askintent1' },
+      { value: 'Operator', label: 'Operator', trigger: 'operator' },
+      { value: 'Others', label: 'Others', trigger: 'askintent1'},
+      { value: 'Rates', label: 'Rates', trigger: 'dummy' },
+      { value: 'Check Status', label: 'Check Status', trigger: 'dummy' },
+      { value: 'Nearest Post Office', label: 'Rates', trigger: 'dummy' },
+  ]
+},
+{
+  id: 'dummy',
+  message: 'Sorry! This feature is not ready yet!',
+  trigger: 'start'
+},
+{
+  id: 'askintent1',
+  message: 'I\'m all ears',
+  trigger: 'intentinput'
+},
+{
+  id: 'intentinput',
+  user: true,
+  trigger: 'intent',
+  validator: (value) => {
+    if (!value) return 'Please try again!'
+    else {
+      return true
+    }
+  }
+},
+{
+  id: 'intent',
+  component: <Wit_ai />,
+  replace: true,
+  waitAction: true,
+  asMessage: true,
+  trigger: 'askintent1'
+},
+
+```
+
+### IBM Watson Tone Analyzer
+
+The IBM Watson™ Tone Analyzer service uses linguistic analysis to detect emotional, social, and language tones in written text. API has two endpoints: general purpose and customer engagement. Due to the time constraint, we only managed to implement the general tone analyzer.
+
+API is available for several clients such node, python, java. This is how we implemented the API call from react component/javascript.
+
+```
+message = encodeURIComponent(message);
+ fetch(`https://watson-api-explorer.mybluemix.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=${message}`)
+.then((response) => {
+  return response.json();
+})
+.then((json) => {
+  do something with response from api
+}
+```
+
+Part of the api output:
+
+```javascript
+"tones": [
+    {
+      "score": 0.134622,
+      "tone_id": "anger",
+      "tone_name": "Anger"
+    },
+```
+
+### D3 for Data Visualization
+
+D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 has a very good documentation and lots of examples on what can be achieved with this library.
+
+With the limited time that we have, we only managed to implement a simple bar chart and it was a challenge tweaking the graph a bit here and there.
+
+![Graph](https://github.com/lackdaz/wdi-project4/blob/master/graph.png)
+
+[Full code can be viewed here](https://github.com/lackdaz/wdi-project4/blob/master/client/app/bundles/Main/components/SentimentBot/SentimentBot.jsx)
 
 ------
 ## Development

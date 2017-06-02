@@ -1,11 +1,9 @@
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
 body {
   font-family: 'Raleway', sans-serif;
 }
-
 h2 {
   color: rgba(#2e3030, 0.72);
 }
@@ -33,40 +31,30 @@ h2 {
 .bar {
   fill: steelblue;
 }
-
 .bar:hover {
   fill: brown;
 }
-
 .axis--x path {
   display: none;
 }
-
 .graph {
   margin-top:50px;
 }
-
 #messages {
   max-height: 350px;
   overflow: auto;
 }
-
-
 .sliderBackground {
   background-color: rgba(#111011, 0.64);
 }
-
 .button-align {
   margin: 0 auto;
   width: 50%;
   align-content: center;
 }
-
-
 .navbar-toggle {
   padding: 20px, 0, 0, 0;
 }
-
 #service-center .main-header {
   margin-left: 15px;
   font-family: 'Raleway', sans-serif;
@@ -75,7 +63,6 @@ h2 {
   color: #5DCA88;
   margin-top: 12vh;
 }
-
 #service-center .row:after{background: rgba(#2e3030, 0.72);
 content: "";
 height: 2px;

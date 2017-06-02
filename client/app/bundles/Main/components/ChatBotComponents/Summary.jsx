@@ -1,9 +1,7 @@
 import ChatBot, { Loading } from 'react-simple-chatbot'
 import React, { Component } from 'react'
 import { Wit, log } from 'node-wit'
-
 import PropTypes from 'prop-types'
-
 export default class Summary extends Component {
   constructor (props) {
     super(props)
@@ -13,10 +11,8 @@ export default class Summary extends Component {
       show: '',
       trigger: false,
     }
-
     this.triggetNext = this.triggetNext.bind(this)
   }
-
     triggetNext (triggerInput, value) {
       this.setState({ trigger: true }, () => {
     // this.props.triggerNextStep(null,{ end });
@@ -25,14 +21,11 @@ export default class Summary extends Component {
         } else this.props.triggerNextStep()
       })
     }
-
     componentWillMount() {
       const { steps } = this.props;
       const { name, contactInput, addressInput, trackingInput } = steps;
       this.setState({ name, contactInput, addressInput, trackingInput });
     }
-
-
     render () {
       const { name, contactInput, addressInput, trackingInput } = this.state
       return (
@@ -80,7 +73,6 @@ export default class Summary extends Component {
       );
     }
 }
-
 Summary.propTypes = {
   steps: PropTypes.object,
   triggerNextStep: PropTypes.func,
@@ -88,7 +80,6 @@ Summary.propTypes = {
   previousStep: PropTypes.object,
   tonesArr: PropTypes.array,
 }
-
 Summary.defaultProps = {
   steps: undefined,
   triggerNextStep: undefined,
