@@ -14,13 +14,14 @@ The proliferation of offshore customer service operations has distanced users fr
 ## Framework
 We chose the [React on Rails](https://github.com/shakacode/react_on_rails) by Shakacode. Like the react-rails gem, React on Rails is capable of server-side rendering with fragment caching and is compatible with turbolinks. Unlike react-rails, which depends heavily on sprockets and jquery-ujs, React on Rails uses webpack and does not depend on jQuery. While the initial setup is slightly more involved, it allows for advanced functionality such as:
 
+### Pros
 1. Redux (for action cables)
 2. Webpack optimization functionality
-3. React Router
-4. Ability to use **both** ruby gems and npm packages
+3. Choose between rails or React routers
+4. Ability to use **both** ruby gems and npm packages(yarn)
 5. Can optimize for SEO (through use of pre-renders)
 
-Cons
+### Cons
 1. Native modules tend to break down on some module installations - cost us a lot of time
 2. Debugging was difficult because of webpack
 
