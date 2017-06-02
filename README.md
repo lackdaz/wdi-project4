@@ -100,6 +100,7 @@ This is a proof-of-concept project and naturally all contributions are welcome.
 * [Yi Sheng](https://github.com/yisheng90) for the useful guidance
 * [Sharona](https://github.com/sharona1610) for the ERD advice
 * [Prima](https://github.com/primaulia) for the massive amount of patience and debugging help!
+* [Arif](https://github.com/ayepRahman)
 * All of GA coursemates for being supportive and the good humour
 
 ### Image credits:

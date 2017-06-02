@@ -10,6 +10,26 @@ h2 {
   color: rgba(#2e3030, 0.72);
 }
 
+.divider {
+  height: 2px;
+  background-color: rgba(255,255,255, 0.72);
+  width:100%;
+  display:block;
+  overflow:hidden;
+  margin: 5px 5px;
+}
+
+.leftTableElement {
+  width: 100%;
+  text-align:left;
+}
+
+.rightTableElement {
+  width: 100%;
+  text-align:center;
+  padding-left: 5px;
+}
+
 .bar {
   fill: steelblue;
 }

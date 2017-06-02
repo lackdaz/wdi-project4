@@ -38,26 +38,41 @@ export default class Summary extends Component {
       return (
         <div style={{
           textAlign: 'center',
-          width: '100%' 
+          width: '100%'
         }}>
-          <h3>Summary</h3>
+          <p>Summary</p>
           <table>
             <tbody>
               <tr>
-                <td>Name</td>
-                <td>{name.value}</td>
+                <td className='divider'></td>
               </tr>
               <tr>
-                <td>Contact</td>
-                <td>{contactInput.value}</td>
+                <td className='leftTableElement'>Name:</td>
+                <td className='rightTableElement'>{name.value}</td>
               </tr>
               <tr>
-                <td>Address</td>
-                <td>{addressInput.value}</td>
+                <td className='divider'></td>
               </tr>
               <tr>
-                <td>Tracking</td>
-                <td>{trackingInput.value}</td>
+                <td className='leftTableElement'>Contact:</td>
+                <td className='rightTableElement'>{contactInput.value}</td>
+              </tr>
+              <tr>
+                <td className='divider'></td>
+              </tr>
+              <tr>
+                <td className='leftTableElement'>Address:</td>
+                <td className='rightTableElement'>{addressInput.value}</td>
+              </tr>
+              <tr>
+                <td className='divider'></td>
+              </tr>
+              <tr>
+                <td className='leftTableElement'>Tracking:</td>
+                <td className='rightTableElement' style={{
+                  fontSize: '12px',
+                  width: '100%'
+                }}>{trackingInput.value}</td>
               </tr>
             </tbody>
           </table>
