@@ -340,7 +340,7 @@ export default class MainApp extends React.Component {
   componentDidMount () {
     this.handleEnd = this.handleEnd.bind(this)
     this.handleInputValue = this.handleInputValue.bind(this)
-    this.toggleFloating.bind(this)
+    // this.toggleFloating.bind(this)
     // setTimeout(() => {
     //   this.setState({ opened: true })
     // }, this.state.endDelay)
@@ -378,7 +378,9 @@ export default class MainApp extends React.Component {
             { this.props.isadmin && <h2 style={{
               textAlign: 'center'
             }}>Sentiment Analysis</h2> }
-            { this.props.isadmin && <a href="https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understand-tone.html" target="_blank">Sentiment Score Guide</a> }
+            { this.props.isadmin && <div style={{
+              textAlign: 'center'
+            }}><a  href="https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understand-tone.html" target="_blank">Sentiment Score Guide</a></div> }
             <SentimentBot response={this.state.inputValue} handleLoadingDone={(tonesArr) => this.handleLoadingDone(tonesArr)} isadmin={this.props.isadmin} />
           </div>
           <div className='col-md-12'>
