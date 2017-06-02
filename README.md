@@ -35,9 +35,9 @@ Cons
 * [Bootstrap Dashboard](https://startbootstrap.com/template-overviews/sb-admin/)
 
 ## APIs
-* [IBM Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/tone-analyzer.html)
 * [Wit.ai](https://wit.ai/)
-* [D3](https://d3js.org/)]
+* [IBM Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/tone-analyzer.html)
+* [D3](https://d3js.org/)
 
 ## IBM Watson Tone Analyzer
 
@@ -45,14 +45,14 @@ The IBM Watson™ Tone Analyzer service uses linguistic analysis to detect emoti
 
 API is available for several clients such node, python, java. This is how we implemented the API call from react component/javascript.
 
-```javascript
-// message = encodeURIComponent(message);
-//  fetch(`https://watson-api-explorer.mybluemix.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=${message}`)
-// .then((response) => {
-//   return response.json();
-// })
-// .then((json) => {
-  // do something with response from api
+```
+message = encodeURIComponent(message);
+ fetch(`https://watson-api-explorer.mybluemix.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=${message}`)
+.then((response) => {
+  return response.json();
+})
+.then((json) => {
+  do something with response from api
 }
 ```
 
@@ -71,7 +71,11 @@ Part of the api output:
 
 D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3 has a very good documentation and lots of examples on what can be achieved with this library.
 
-However, it can be overwhelming while trying to explore this library and has to admit that there is a high learning curve in the beginning. With the limited time that we have, we only managed to implement a simple bar chart and that has taken us huge amount of time.
+With the limited time that we have, we only managed to implement a simple bar chart and it was a challenge tweaking the graph a bit here and there.
+
+![Graph](https://github.com/lackdaz/wdi-project4/blob/master/graph.png)
+
+[Full code can be viewed here](https://github.com/lackdaz/wdi-project4/blob/master/client/app/bundles/Main/components/SentimentBot/SentimentBot.jsx)
 
 ------
 ## Development
