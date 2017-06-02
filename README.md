@@ -9,7 +9,7 @@
 The proliferation of offshore customer service operations has distanced users from seeking answers to time-sensitive problems, or even questions they might be facing. Navigating complex websites is daunting and places unnecessary road blocks in the way of the user. Energized by a less-than-satisfactory experience locating a mis-delivered package by one of our members, our team set out to explore ways to facilitate meaningful front-facing customer interaction - with deep learning capabilities focused on listening to the user.
 
 ### Objective
-* Make agit  chatbot that can make API calls -- and can be deployed on a website
+* Make a chatbot that can make API calls -- and can be deployed on a website
 
 ## Framework
 We chose the [React on Rails](https://github.com/shakacode/react_on_rails) by Shakacode. Like the react-rails gem, React on Rails is capable of server-side rendering with fragment caching and is compatible with turbolinks. Unlike react-rails, which depends heavily on sprockets and jquery-ujs, React on Rails uses webpack and does not depend on jQuery. While the initial setup is slightly more involved, it allows for advanced functionality such as:
