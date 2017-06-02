@@ -292,6 +292,16 @@ export default class MainApp extends React.Component {
   }
 
   handleEnd ({ steps, values }) {
+    // convert to jsonstring
+    let stepsObjArr = []
+    for(let id in steps) {
+      stepsObjArr.push(steps[id])
+    }
+    $.ajax({
+        url : "/bot_histories",
+        type : "post",
+        data : { "bot_history[steps]": JSON.stringify(stepsObjArr), "bot_history[values]": JSON.stringify(values) }
+    });
     // console.log(steps);
     // console.log(values);
     setTimeout(() => {
