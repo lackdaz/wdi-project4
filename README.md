@@ -1,5 +1,4 @@
 # CSM Bot
-https://thingies.herokuapp.com/
 
 [Heroku Deployment](https://postalcsbot.herokuapp.com/)
 
@@ -80,7 +79,7 @@ We opened a number of issues, and gave some recommendations for modest improveme
 * Chatbots are very, very useful --- especially when used with the ReactDOM router. It can help to direct you to relevant pages.
 * Introducing dynamic chat routing increases your code complexity exponentially
 
-#### Performance
+### Performance
 * There are definitely performance issues -- particular with new initializing new sessions and large chat sessions. We've noticed that all the previous chat messages are re-rendered each update, and finding shouldComponentUpdate conditions that limit needless re-rendering and not break the code is **very challenging**
 
 ### Future
