@@ -46,17 +46,17 @@ Cons
 
 * Week 2 - We found a recent-release react-simple-chatbot by (LucasBassetti)[https://github.com/LucasBassetti] and found it to be a really light-weight UI with styling options and somewhat flexible integration. But we had to **hack a lot**. For instance, dynamic chat routing was not supported:
 
-![Dynamic Trigger Issue](/https://github.com/lackdaz/wdi-project4/blob/master/public/img/issues1.png)
+![Dynamic Trigger Issue](https://github.com/lackdaz/wdi-project4/blob/master/public/img/issues1.png)
 
 But we found a solution buried deep in documentation:
 
-![Breakout](/https://github.com/lackdaz/wdi-project4/blob/master/public/img/solution1.png)
+![Breakout](https://github.com/lackdaz/wdi-project4/blob/master/public/img/solution1.png)
 
 which opened up to the possibility -- and *complexities* of doing (req,res) callbacks within the chat engine. We spent a lot of time debating, experimenting and integrating this feature, and understanding the chat engine and design.
 
 We opened a number of issues, and gave some recommendations for modest improvement on the engine -- and changes were implemented very quickly!:
 
-![Feedback](/https://github.com/lackdaz/wdi-project4/blob/master/public/img/feedback.png)
+![Feedback](https://github.com/lackdaz/wdi-project4/blob/master/public/img/feedback.png)
 
 
 * Week 3 - Ultimately, in the final product sprint, we downloaded the source codes and made several modifications to allow for bi-directional flow of information between our components -- and this allowed us a lot of creative and programming freedom for passing states and props between the parent component and child components.
