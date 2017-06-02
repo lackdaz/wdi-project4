@@ -25,9 +25,9 @@ const FloatButton = styled.a`
   -ms-animation: ${props => !props.opened ? 'pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1)' : 'ms-animation: none'};
   -animation: ${props => !props.opened ? 'pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1)' : 'animation: none'};
 
-  this:hover  {
+  ${''/* this:hover  {
     -webkit-animation: none;-moz-animation: none;-ms-animation: none;animation: none;
-}git 
+}git  */}
 
   @-webkit-keyframes pulse{box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
   @-moz-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
@@ -35,6 +35,5 @@ const FloatButton = styled.a`
   @keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
 `;
 
-// FloatButton:hover = styled.a`-webkit-animation: none;-moz-animation: none;-ms-animation: none;animation: none; `;
 
 export default FloatButton;
