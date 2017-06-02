@@ -9,6 +9,9 @@ https://thingies.herokuapp.com/
 ## Introduction / Problem Statement
 The proliferation of offshore customer service operations has distanced users from seeking answers to time-sensitive problems, or even questions they might be facing. Navigating complex websites is daunting and places unnecessary road blocks in the way of the user. Energized by a less-than-satisfactory experience locating a mis-delivered package by one of our members, our team set out to explore ways to facilitate meaningful front-facing customer interaction - with deep learning capabilities focused on listening to the user.
 
+### Objective
+* Make agit  chatbot that can make API calls -- and can be deployed on a website
+
 ## Framework
 We chose the [React on Rails](https://github.com/shakacode/react_on_rails) by Shakacode. Like the react-rails gem, React on Rails is capable of server-side rendering with fragment caching and is compatible with turbolinks. Unlike react-rails, which depends heavily on sprockets and jquery-ujs, React on Rails uses webpack and does not depend on jQuery. While the initial setup is slightly more involved, it allows for advanced functionality such as:
 
@@ -21,10 +24,6 @@ We chose the [React on Rails](https://github.com/shakacode/react_on_rails) by Sh
 Cons
 1. Native modules tend to break down on some module installations - cost us a lot of time
 2. Debugging was difficult because of webpack
-
-### Prerequisites
-1. Wemos D1 mini
-2. MFRC 422
 
 ## Built with
 ------
@@ -54,13 +53,8 @@ Cons
 * Day 5 = Finished CRUD, routes in one day!
 * Day 6 = Debugging, CSS and documentation (barely made it)
 
-### Background
-I wanted to start a project featuring home automation - something I'm very passionate about as the proud inventor of a self-sensing deodoriser and a passive IR evening/dark light system. I have always wanted to not only use but understand the websockets that make the I in my IoT work! My inspiration was some user-controlled [Iot lights](http://adityatannu.com/blog/post/2016/01/24/ESP8266-Websockets-demo-using-NeoPixels.html) and some of my previous work in RFID readers and tags. Essentially, I wanted to implementation a project that would authenticate with a webserver (with encryption!), allow for guess access, and also provide some forms of data analytics in the form of a dashboard.
 
-Some of the features from the project were not planned from the get-go, e.g. card UID extraction and was the product of experimentation. I cannot think of something node.js can't accomplish!
 
-### Objective
-* To achieve server-client authentication and use of websockets for event handling
 
 ## ERD
 ![ScreenShot](https://github.com/lackdaz/wdi-project-2/blob/master/uploads/ERD.jpeg)
