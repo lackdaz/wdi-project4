@@ -63,10 +63,18 @@ export default class MainApp extends React.Component {
       {
         id: 'intent2',
         options: [
-            { value: 'Rates', label: 'Rates', trigger: '' },
-            { value: 'Check Status', label: 'Check Status', trigger: 'status1' },
-            { value: 'Others', label: 'Others', trigger: 'askintent1'}
+            { value: 'Inquire Missing parcel', label: 'Report Missing', trigger: 'askintent1' },
+            { value: 'Operator', label: 'Operator', trigger: 'operator' },
+            { value: 'Others', label: 'Others', trigger: 'askintent1'},
+            { value: 'Rates', label: 'Rates', trigger: 'dummy' },
+            { value: 'Check Status', label: 'Check Status', trigger: 'dummy' },
+            { value: 'Nearest Post Office', label: 'Rates', trigger: 'dummy' },
         ]
+      },
+      {
+        id: 'dummy',
+        message: 'Sorry! This feature is not ready yet!',
+        trigger: 'start'
       },
       {
         id: 'askintent1',
@@ -139,7 +147,7 @@ export default class MainApp extends React.Component {
       },
       {
         id: 'inputTrackingMissing',
-        message: 'Whoops! Would you like to try again?',
+        message: 'Whoops! Would you like to try again? (hint: G123**9)',
         trigger: 'inputTrackingMissingOptions'
       },
       {
@@ -267,10 +275,10 @@ export default class MainApp extends React.Component {
       steps: steps,
       opened: false,
       floating: true,
-      inputValue: '',
+      inputValue: undefined,
       sentiment: '',
       endDelay: 2000,
-      tonesArr: []
+      tonesArr: [],
     }
 
     // Callback function to trigger next step when user attribute is true. Optionally you can pass a object with value to be setted in the step and the next step to be triggered
@@ -304,11 +312,18 @@ export default class MainApp extends React.Component {
     });
     // console.log(steps);
     // console.log(values);
-    setTimeout(() => {
-      this.setState({ opened: false })
-      console.log('opened window')
-    }, this.state.endDelay)
+    // setTimeout(() => {
+    //   this.setState({ opened: false })
+    //   console.log('closed window')
+    // }, this.state.endDelay)
   }
+
+
+  // toggleFloating({opened}) {
+  //   console.log(opened)
+  //   console.log({opened})
+  //   this.setState({ opened })
+  // }
 
   handleInputValue (inputValue, res) {
     console.log(inputValue)
@@ -325,9 +340,22 @@ export default class MainApp extends React.Component {
   componentDidMount () {
     this.handleEnd = this.handleEnd.bind(this)
     this.handleInputValue = this.handleInputValue.bind(this)
+    this.toggleFloating.bind(this)
     // setTimeout(() => {
     //   this.setState({ opened: true })
     // }, this.state.endDelay)
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    // console.log("called receive props!")
+    // console.log(this.props.opened)
+    // console.log(nextProps.opened)
+    // console.log(this.props.opened !== nextProps.opened)
+    if (this.state.inputValue === nextState.inputValue) {
+      this.setState({
+        inputValue: undefined
+      })
+    }
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -338,24 +366,7 @@ export default class MainApp extends React.Component {
     return (
       <div className='container'>
         {/* { this.props.isadmin ? <div>Is Admin</div> : 'no leh'} */}
-        <div className='row'>
-          <div className='col-md-12'>
-            <ChatBot
-              userDelay={10}
-              opened={opened}
-              handleEnd={this.handleEnd.bind(this)}
-              handleInputValue={this.handleInputValue.bind(this)}
-              floating={floating}
-              botDelay={10}
-              steps={steps}
-              testproc={'test'}
-              headerTitle={'Postal Bot'}
-              endDelay={endDelay}
-              tonesArr={tonesArr}
-              />
-          </div>
-        </div>
-        <div className='row'>
+        <div className='row justify-content-around'>
           <div className='col-md-6'>
             { this.props.is_Logged_in ? (
               <CustomerServiceChat handleNewChat={(chat) => this.handleNewChat.bind(this)(chat)} current_user={this.props.current_user} />
@@ -364,11 +375,28 @@ export default class MainApp extends React.Component {
               )}
           </div>
           <div className='col-md-6'>
-            { this.props.isadmin && <h3>Sentiment Analysis</h3> }
+            { this.props.isadmin && <h2 style={{
+              textAlign: 'center'
+            }}>Sentiment Analysis</h2> }
             { this.props.isadmin && <a href="https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understand-tone.html" target="_blank">Sentiment Score Guide</a> }
-            {/* { this.props.isadmin ? ( */}
             <SentimentBot response={this.state.inputValue} handleLoadingDone={(tonesArr) => this.handleLoadingDone(tonesArr)} isadmin={this.props.isadmin} />
-            {/* ) : ('') } */}
+          </div>
+          <div className='col-md-12'>
+            <ChatBot
+              headerBgColor={'#5DCA88'}
+              botBubbleColor={'#5DCA88'}
+              userDelay={10}
+              opened={opened}
+              handleEnd={this.handleEnd.bind(this)}
+              handleInputValue={this.handleInputValue.bind(this)}
+              floating={floating}
+              botDelay={10}
+              steps={steps}
+              headerTitle={'Postal Bot'}
+              endDelay={endDelay}
+              tonesArr={tonesArr}
+              // toggleFloating={this.toggleFloating.bind(this)}
+              />
           </div>
         </div>
       </div>

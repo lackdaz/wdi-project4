@@ -11,7 +11,8 @@ export default class WitAi extends Component {
       loading: true,
       result: '',
       show: '',
-      trigger: false
+      trigger: false,
+      steps: {}
     }
 
     this.triggetNext = this.triggetNext.bind(this)
@@ -59,6 +60,7 @@ export default class WitAi extends Component {
         self.triggetNext(self.state.result)
       }
     }).catch(console.error)
+
   }
 
   triggetNext (triggerInput, value) {
@@ -74,13 +76,19 @@ export default class WitAi extends Component {
 
     if (this.props.tonesArr !== nextProps.tonesArr) {
       this.setState({
-        tonesArr: nextProps.tonesArr
+        tonesArr: nextProps.tonesArr,
+        steps: nextProps.steps
       })
     }
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    return this.props.tonesArr !== nextProps.tonesArr
+    // if (this.props.tonesArr !== nextProps.tonesArr || this.steps !== nextProps.steps) {
+    if (this.props.tonesArr !== nextProps.tonesArr) {
+      
+      return true
+    }
+    return false
   }
 
   componentWillUpdate () {

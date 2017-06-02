@@ -27,7 +27,7 @@ class ChatBot extends Component {
       previousStep: {},
       steps: {},
       disabled: true,
-      opened: props.opened,
+      opened: props.opened || !props.floating,
       inputValue: '',
       inputInvalid: false,
       defaulBotSettings: {},
@@ -35,7 +35,8 @@ class ChatBot extends Component {
       update: false,
       reset: true
     }
-
+    this.closeChatBot = this.closeChatBot.bind(this)
+    this.openChatBot = this.openChatBot.bind(this)
     this.renderStep = this.renderStep.bind(this)
     this.triggerNextStep = this.triggerNextStep.bind(this)
     this.onValueChange = this.onValueChange.bind(this)
@@ -95,8 +96,10 @@ class ChatBot extends Component {
     })
   }
 
-  componentDidMount () {
+  componentDidMount (prevProps, prevState) {
     const chatbotContent = document.querySelector('.rsc-content')
+
+
 
     /* istanbul ignore next */
     if (chatbotContent) {
@@ -105,26 +108,38 @@ class ChatBot extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log(this.props.tonesArr !== nextProps.tonesArr);
     if (this.props.tonesArr !== nextProps.tonesArr) {
       this.setState({
         update: true
       })
     }
-
-    if (this.props.opened !== nextProps.opened) {
-      this.setState({
-        opened: nextProps.opened,
-        update: true
-      })
-    }
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    if (this.state.update === true) {
-      return true
-    }
-    return false
-  }
+  // componentDidUpdate (prevProps, prevState) {
+  //   if (this.props.tonesArr !== nextProps.tonesArr) {
+  //     this.setState({
+  //       update: true
+  //     })
+  //   }
+  // }
+
+  // componentWillUpdate(nextProps, nextState) {
+  //
+  // }
+
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   // console.log('checking opened state')
+  //   // console.log(this.state.opened)
+  //   // console.log(nextState.opened)
+  //   // console.log('update is')
+  //   // console.log(nextState.update)
+  //
+  //   if (nextState.update === true) {
+  //     return true
+  //   }
+  //   return false
+  // }
 
   componentWillUnmount () {
     const chatbotContent = document.querySelector('.rsc-content')
@@ -261,12 +276,9 @@ class ChatBot extends Component {
     if (this.props.handleEnd) {
       this.props.handleEnd({ renderedSteps, steps, values })
     }
+
     setTimeout(() => {
-      // let empty = []
-      // this.setState({
-      //   renderedSteps: empty,
-      //   previousSteps: empty,
-      // });
+
       let empty = []
       let emptyObj = {}
       this.setState({
@@ -281,6 +293,7 @@ class ChatBot extends Component {
         defaulBotSettings: emptyObj,
         defaulUserSettings: emptyObj
       })
+      this.closeChatBot({ opened: false })
       this.componentWillMount()
     }, this.props.endDelay)
   }
@@ -396,6 +409,22 @@ class ChatBot extends Component {
     return false
   }
 
+  closeChatBot({ opened }) {
+    if (this.props.toggleFloating) {
+      this.props.toggleFloating({ opened });
+    } else {
+      this.setState({ opened });
+    }
+  }
+
+  openChatBot({ opened }) {
+    if (this.props.toggleFloating) {
+      this.props.toggleFloating({ opened });
+    } else {
+      this.setState({ opened });
+    }
+  }
+
   renderStep (step, index) {
     const { renderedSteps, previousSteps } = this.state
     const {
@@ -500,7 +529,7 @@ class ChatBot extends Component {
           floating &&
           <HeaderIcon
             className='rsc-header-close-button'
-            onClick={() => this.setState({ opened: false })}
+            onClick={() => this.closeChatBot({ opened: false })}
           >
             <CloseIcon />
           </HeaderIcon>
@@ -517,7 +546,7 @@ class ChatBot extends Component {
             headerBgColor={headerBgColor}
             headerFontColor={headerFontColor}
             opened={opened}
-            onClick={() => this.setState({ opened: true })}
+            onClick={() => this.openChatBot({ opened: true })}
           >
             <ChatIcon />
           </FloatButton>

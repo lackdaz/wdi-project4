@@ -2,6 +2,13 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+h2 {
+  color: rgba(#2e3030, 0.72);
+}
 
 .bar {
   fill: steelblue;
@@ -27,4 +34,32 @@
 
 .sliderBackground {
   background-color: rgba(#111011, 0.64);
+}
+
+.button-align {
+  margin: 0 auto;
+  width: 50%;
+  align-content: center;
+}
+
+
+.navbar-toggle {
+  padding: 20px, 0, 0, 0;
+}
+
+#service-center .main-header {
+  margin-left: 15px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  color: #5DCA88;
+  margin-top: 12vh;
+}
+
+#service-center .row:after{background: rgba(#2e3030, 0.72);
+content: "";
+height: 2px;
+position: absolute;
+width: 102px;
+margin-left: 15px;
 }
