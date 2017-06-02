@@ -330,7 +330,7 @@ export default class MainApp extends React.Component {
   componentDidMount () {
     this.handleEnd = this.handleEnd.bind(this)
     this.handleInputValue = this.handleInputValue.bind(this)
-    this.toggleFloating.bind(this)
+    // this.toggleFloating.bind(this)
     // setTimeout(() => {
     //   this.setState({ opened: true })
     // }, this.state.endDelay)

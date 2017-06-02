@@ -1,9 +1,7 @@
 import ChatBot, { Loading } from 'react-simple-chatbot'
 import React, { Component } from 'react'
 import { Wit, log } from 'node-wit'
-
 import PropTypes from 'prop-types'
-
 export default class Summary extends Component {
   constructor (props) {
     super(props)
@@ -13,10 +11,8 @@ export default class Summary extends Component {
       show: '',
       trigger: false,
     }
-
     this.triggetNext = this.triggetNext.bind(this)
   }
-
     triggetNext (triggerInput, value) {
       this.setState({ trigger: true }, () => {
     // this.props.triggerNextStep(null,{ end });
@@ -25,39 +21,51 @@ export default class Summary extends Component {
         } else this.props.triggerNextStep()
       })
     }
-
     componentWillMount() {
       const { steps } = this.props;
       const { name, contactInput, addressInput, trackingInput } = steps;
       this.setState({ name, contactInput, addressInput, trackingInput });
     }
-
-
     render () {
       const { name, contactInput, addressInput, trackingInput } = this.state
       return (
         <div style={{
           textAlign: 'center',
-          width: '100%' 
+          width: '100%'
         }}>
-          <h3>Summary</h3>
+          <p>Summary</p>
           <table>
             <tbody>
               <tr>
-                <td>Name</td>
-                <td>{name.value}</td>
+                <td className='divider'></td>
               </tr>
               <tr>
-                <td>Contact</td>
-                <td>{contactInput.value}</td>
+                <td className='leftTableElement'>Name:</td>
+                <td className='rightTableElement'>{name.value}</td>
               </tr>
               <tr>
-                <td>Address</td>
-                <td>{addressInput.value}</td>
+                <td className='divider'></td>
               </tr>
               <tr>
-                <td>Tracking</td>
-                <td>{trackingInput.value}</td>
+                <td className='leftTableElement'>Contact:</td>
+                <td className='rightTableElement'>{contactInput.value}</td>
+              </tr>
+              <tr>
+                <td className='divider'></td>
+              </tr>
+              <tr>
+                <td className='leftTableElement'>Address:</td>
+                <td className='rightTableElement'>{addressInput.value}</td>
+              </tr>
+              <tr>
+                <td className='divider'></td>
+              </tr>
+              <tr>
+                <td className='leftTableElement'>Tracking:</td>
+                <td className='rightTableElement' style={{
+                  fontSize: '12px',
+                  width: '100%'
+                }}>{trackingInput.value}</td>
               </tr>
             </tbody>
           </table>
@@ -65,7 +73,6 @@ export default class Summary extends Component {
       );
     }
 }
-
 Summary.propTypes = {
   steps: PropTypes.object,
   triggerNextStep: PropTypes.func,
@@ -73,7 +80,6 @@ Summary.propTypes = {
   previousStep: PropTypes.object,
   tonesArr: PropTypes.array,
 }
-
 Summary.defaultProps = {
   steps: undefined,
   triggerNextStep: undefined,
