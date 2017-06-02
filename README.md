@@ -1,5 +1,5 @@
 # CSM Bot
-
+---
 [Heroku Deployment](https://postalcsbot.herokuapp.com/)
 
 ## Short
@@ -26,7 +26,6 @@ We chose the [React on Rails](https://github.com/shakacode/react_on_rails) by Sh
 2. Debugging was difficult because of webpack
 
 ## Built with
-------
 * React
 * Rails
 * Node.js
@@ -79,6 +78,7 @@ We opened a number of issues, and gave some recommendations for modest improveme
 ### Points of Interest
 * Chatbots are very, very useful --- especially when used with the ReactDOM router. It can help to direct you to relevant pages.
 * Introducing dynamic chat routing increases your code complexity exponentially
+* Training models with Wit.ai was relatively straightforward and easy -- and allows for capture and validation of responses that is not predicted in your workflow
 
 ### Performance
 * There are definitely performance issues -- particular with new initializing new sessions and large chat sessions. We've noticed that all the previous chat messages are re-rendered each update, and finding shouldComponentUpdate conditions that limit needless re-rendering and not break the code is **very challenging**
