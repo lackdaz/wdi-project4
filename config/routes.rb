@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'hello_world', to: 'hello_world#index'
   get 'chat_bot', to: 'chat_bot#index'
   get 'prototype', to: 'prototype#index'
+  post 'bot_histories', to: 'bot_history#create'
 
   root to: "hello_world#index"
 

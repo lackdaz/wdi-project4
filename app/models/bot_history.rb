@@ -1,0 +1,2 @@
+class BotHistory < ApplicationRecord
+end
