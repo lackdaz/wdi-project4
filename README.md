@@ -34,6 +34,7 @@ Cons
 * [ReactSimpleChatBot](https://github.com/LucasBassetti/react-simple-chatbot)
 * [D3](https://d3js.org/)
 * [Type.js.JQuery](type.js)
+* [Bootstrap Dashboard](https://startbootstrap.com/template-overviews/sb-admin/)
 
 ## APIs
 * [IBM Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/tone-analyzer.html)
@@ -42,104 +43,64 @@ Cons
 ------
 ## Development
 * Week 1 - We explored **a lot** of APIs -- Google Vision API (Object recognition, Geocoding, Face recognition, Natural Language Processing, Sentiment Analysis), Twitter real-time streaming API (using Python), Wit.Ai and narrowed our focus to a chatbot that can make API calls -- and can be deployed on a website. Raymond explored app integrations using both the React-Rails and React-on-Rails.
+
 * Week 2 - We found a recent-release react-simple-chatbot by (LucasBassetti)[https://github.com/LucasBassetti] and found it to be a really light-weight UI with styling options and somewhat flexible integration. But we had to **hack a lot**. For instance, dynamic chat routing was not supported:
 
-![Dynamic Trigger Issue](/issues1.png)
+![Dynamic Trigger Issue](/https://github.com/lackdaz/wdi-project4/blob/master/public/img/issues1.png)
+
+But we found a solution buried deep in documentation:
+
+![Breakout](/https://github.com/lackdaz/wdi-project4/blob/master/public/img/solution1.png)
+
+which opened up to the possibility -- and *complexities* of doing (req,res) callbacks within the chat engine. We spent a lot of time debating, experimenting and integrating this feature, and understanding the chat engine and design.
+
+We opened a number of issues, and gave some recommendations for modest improvement on the engine -- and changes were implemented very quickly!:
+
+![Feedback](/https://github.com/lackdaz/wdi-project4/blob/master/public/img/feedback.png)
 
 
+* Week 3 - Ultimately, in the final product sprint, we downloaded the source codes and made several modifications to allow for bi-directional flow of information between our components -- and this allowed us a lot of creative and programming freedom for passing states and props between the parent component and child components.
 
-* Day 3 = Learn MQTT, rigged up a simple connection
-* Day 4 = Successfully executed flash, user authentication and models
-* Day 5 = Finished CRUD, routes in one day!
-* Day 6 = Debugging, CSS and documentation (barely made it)
+## Components
 
-
-
-
-## ERD
-![ScreenShot](https://github.com/lackdaz/wdi-project-2/blob/master/uploads/ERD.jpeg)
-
-
-## Models, Routes, Controllers
-Sentinel
-![Thingies Sentinel] (photo link here "Sentinel")
-
-| mqttController | eventController | thingController | userController |
-| ------ |:------:| ------:| ------: |
-| index: | -- | -- | index: |
-| open: | list: | list: | list: |
-| openForX: | new: | new: | new: |
-| lock: | -- | -- | login: |
-| superlock: | create: | create: | create: |
-| listen: | -- | -- | dashboard: |
-| listenNoUser: | show: | show: | -- |
-| -- | edit: | edit: | -- |
-| -- | -- | createUser: | -- |
-| -- | update: | update: | update: |
-| -- | delete: | delete: | -- |
-| -- | -- | -- | settings: |
-| -- | -- | -- | editChild: |
-| -- | -- | -- | updateChild: |
-| -- | -- | -- | logout: |
-
-#### Models
-| Model #1: User       | Model #2: Thing | Model #3: Event |
-| -------------------- |:----------------|:----------------:
-| name                 | name            | uid             |
-| email                | thingId         | time            |
-| password             | userId          | isEntry         |
-| isAdmin              | owner           |                 |
-| cardUid              |                 |                 |
-| related              |                 |                 |
+| Parent | Child                | Child  |
+|:------:|:------:              |:------:|
+| MainApp| Chatbot (NPM)        | Many   |
+| --     | SentimentBot         | --     |
+| --     | CustomerServiceChat  | --     |
 
 
 ### Obstacles
-* Understanding websockets! Enigmatic but fascinating stuff!
-* Deploying a user-study in a full-stack application within a week - I 'pivoted' my ideas 3 times
-* Server-end: big problems on assigning topics without hosting the websocket
-* Device-end: without the ability to update and compile the code remotely, it was difficult to implement any purposeful and flexible multi-device applications - one solution is to embed the different functions into topic messages themselves, or the use of cloud-based compilers like Particle.io or AWS. I've also read that new npm mqtt server routers have recently popped up but I didn't have the time to try these out - do let me know if you have any experience!
+* Implementing user stories for chatbots is difficult!
+* The React Component lifecycle was very challenging -- especially to API calls that have the same message/response
+* Webpacks crash your Atom if you're not careful! It basically disabled search-all functions
+* The webpack precompiling of .css and .js files doesn't seem to work very well with .scss files. I had to modify custom bootstrap css to do CSS styling
 
 ### Points of Interest
-* The helper function to extract the cardUid
-* Sending messages as an array of characters!
+* Chatbots are very, very useful --- especially when used with the ReactDOM router. It can help to direct you to relevant pages.
+* Introducing dynamic chat routing increases your code complexity exponentially
 
 #### Performance
-* There are definitely a lot of security issues - that I do not yet know how to fix yet, and I'm not too certain about how the application is robust enough to handle multiple access requests.
-
-#### Design
-![ScreenShot](https://github.com/lackdaz/wdi-project-2/blob/master/uploads/Design.jpeg)
-
-More wireframing and previous models/plans can be found: [here](https://github.com/lackdaz/wdi-project-2/tree/master/uploads)
+* There are definitely performance issues -- particular with new initializing new sessions and large chat sessions. We've noticed that all the previous chat messages are re-rendered each update, and finding shouldComponentUpdate conditions that limit needless re-rendering and not break the code is **very challenging**
 
 ### Future
-* User profiles! I kept the model for future development of saving 'user preferences' to achieve more 'ambient' forms of UX. Essentially, I predict that manual applications like RFID card-reading would be replaced by remote authentication - like beacons, chip implants, blockchain - so hopefully this runs along the same grain
-* Smart lights are the natural next step, the original intention of the project was to achieve [this](http://adityatannu.com/blog/post/2016/01/24/ESP8266-Websockets-demo-using-NeoPixels.html), but with more user-friendly documentation
-* This requires better encryption, more security features to be ever considered for public-access use. As of writing, I cannot guarantee the safety of any personal data
-
+* More emotional chatbot profiles!
+* For practical/innovative use cases [here](https://keyreply.com/botspeak/). I particularly liked IKEA Bot
 ------
 
 ## Credit
-This is a live project; all code contributions are welcome.
+This is a proof-of-concept project and naturally all contributions are welcome.
 
-### Author
-* Seth Loh Wei Chen, GA Web Dev Student and Exploring Maker
+### Contributors
+* Raymond Aung Pyae Sone, GA Full-stack Developer
+* Seth Loh Wei Chen, GA Full-stack Developer
 
 ### Acknowledgements
-* [Cleavan](https://www.linkedin.com/in/cleavan/) for the food, patience and user testing, and running my 3D prints for me!
-* [Han Sheng](https://github.com/hsquek) for the timely advice, and observant eye at helping me to debug my code
-* [John](https://github.com/johnacs) for the help in MQTT, CSS tricks and inspiration for this project
-* [Xavier](https://github.com/random-9) for the bootstrap and logo hacks
+* We are incredibly thankful to the developer [LucasBassetti](https://github.com/LucasBassetti) for giving us helpful pointers along the way since this was our first React project and graciously allowed us to use his base codes.
 * [Yi Sheng](https://github.com/yisheng90) for the useful guidance
 * [Sharona](https://github.com/sharona1610) for the ERD advice
-* [Raymond](https://github.com/ijmeister) for the massive amount of patience and debugging help!
-* [Kenneth](https://github.com/DarkArtistry) for the few lines of code and helper functions that got me off in the right direction.
-
-### Resources
-
-* [Bootstrap Dashboard](https://startbootstrap.com/template-overviews/sb-admin/)
-* [Landing Page Theme](https://www.bootstrapzero.com/bootstrap-template/small-apps-themefisher)
+* [Prima](https://github.com/primaulia) for the massive amount of patience and debugging help!
+* All of GA coursemates for being supportive and the good humour
 
 ### Image credits:
-* [Icons](http://fontawesome.io/3.2.1/icons/)
-* [Logo](https://www.logomaker.com/)
-* [Logo](http://www.cnx-software.com/wp-content/uploads/2016/02/Wemos_D1_mini.jpg)
+* [Images](https://unsplash.com/@halgatewood
