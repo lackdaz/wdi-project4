@@ -300,6 +300,16 @@ export default class MainApp extends React.Component {
   }
 
   handleEnd ({ steps, values }) {
+    // convert to jsonstring
+    let stepsObjArr = []
+    for(let id in steps) {
+      stepsObjArr.push(steps[id])
+    }
+    $.ajax({
+        url : "/bot_histories",
+        type : "post",
+        data : { "bot_history[steps]": JSON.stringify(stepsObjArr), "bot_history[values]": JSON.stringify(values) }
+    });
     // console.log(steps);
     // console.log(values);
     // setTimeout(() => {
@@ -368,6 +378,9 @@ export default class MainApp extends React.Component {
             { this.props.isadmin && <h2 style={{
               textAlign: 'center'
             }}>Sentiment Analysis</h2> }
+            { this.props.isadmin && <div style={{
+              textAlign: 'center'
+            }}><a  href="https://www.ibm.com/watson/developercloud/doc/tone-analyzer/understand-tone.html" target="_blank">Sentiment Score Guide</a></div> }
             <SentimentBot response={this.state.inputValue} handleLoadingDone={(tonesArr) => this.handleLoadingDone(tonesArr)} isadmin={this.props.isadmin} />
           </div>
           <div className='col-md-12'>

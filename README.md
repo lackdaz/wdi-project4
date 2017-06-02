@@ -1,5 +1,5 @@
 # CSM Bot
-
+---
 [Heroku Deployment](https://postalcsbot.herokuapp.com/)
 
 ## Short
@@ -14,18 +14,18 @@ The proliferation of offshore customer service operations has distanced users fr
 ## Framework
 We chose the [React on Rails](https://github.com/shakacode/react_on_rails) by Shakacode. Like the react-rails gem, React on Rails is capable of server-side rendering with fragment caching and is compatible with turbolinks. Unlike react-rails, which depends heavily on sprockets and jquery-ujs, React on Rails uses webpack and does not depend on jQuery. While the initial setup is slightly more involved, it allows for advanced functionality such as:
 
+### Pros
 1. Redux (for action cables)
 2. Webpack optimization functionality
-3. React Router
-4. Ability to use **both** ruby gems and npm packages
+3. Choose between rails or React routers
+4. Ability to use **both** ruby gems and npm packages(yarn)
 5. Can optimize for SEO (through use of pre-renders)
 
-Cons
+### Cons
 1. Native modules tend to break down on some module installations - cost us a lot of time
 2. Debugging was difficult because of webpack
 
 ## Built with
-------
 * React
 * Rails
 * Node.js
@@ -206,6 +206,7 @@ We opened a number of issues, and gave some recommendations for modest improveme
 ### Points of Interest
 * Chatbots are very, very useful --- especially when used with the ReactDOM router. It can help to direct you to relevant pages.
 * Introducing dynamic chat routing increases your code complexity exponentially
+* Training models with Wit.ai was relatively straightforward and easy -- and allows for capture and validation of responses that is not predicted in your workflow
 
 ### Performance
 * There are definitely performance issues -- particular with new initializing new sessions and large chat sessions. We've noticed that all the previous chat messages are re-rendered each update, and finding shouldComponentUpdate conditions that limit needless re-rendering and not break the code is **very challenging**
